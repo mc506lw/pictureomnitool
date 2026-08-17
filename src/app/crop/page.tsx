@@ -71,46 +71,63 @@ function CropEditor({
   const [rect, setRect] = React.useState<Rect | null>(null);
   const [display, setDisplay] = React.useState({ w: 0, h: 0 });
   const [active, setActive] = React.useState(false);
-  const dragState = React.useRef<{ x: number; y: number } | null>(null);
+  const dragState = React.useRef<{
+    startX: number;
+    startY: number;
+    rectStartX: number;
+    rectStartY: number;
+    mode: "move" | "draw";
+  } | null>(null);
 
   const srcW = canvas.width;
   const srcH = canvas.height;
 
-  // 初始化 / 重置默认选区
+  // 坐标锚点（左上角）
+  const anchorRect = (w: number, h: number): Rect => {
+    const x = Math.max(0, (srcW - w) / 2);
+    const y = Math.max(0, (srcH - h) / 2);
+    return { x, y, w: Math.min(w, srcW), h: Math.min(h, srcH) };
+  };
+
+  /** 生成指定比例下的默认选区（居中），free 为整张图 */
+  const defaultRectForAspect = (asp: CropAspect): Rect => {
+    const ratio = getAspectRatio(asp);
+    if (!ratio || asp === "circle") {
+      // free / circle 默认 80% 居中
+      const w = srcW * 0.8;
+      const h = srcH * 0.8;
+      return { x: srcW * 0.1, y: srcH * 0.1, w, h };
+    }
+    let w = srcW * 0.8;
+    let h = w / ratio;
+    if (h > srcH * 0.8) {
+      h = srcH * 0.8;
+      w = h * ratio;
+    }
+    return anchorRect(w, h);
+  };
+
+  // 初始化显示区域
   React.useEffect(() => {
     const scale = Math.min(MAX_DISPLAY_W / srcW, MAX_DISPLAY_H / srcH, 1);
     const dw = Math.round(srcW * scale);
     const dh = Math.round(srcH * scale);
     setDisplay({ w: dw, h: dh });
-
     const d = displayRef.current;
     if (d) {
       d.width = dw;
       d.height = dh;
-      const ctx = d.getContext("2d")!;
-      // 棋盘格背景
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, dw, dh);
-      ctx.fillStyle = "#e8e8e8";
-      for (let y = 0; y < dh; y += 8) {
-        for (let x = 0; x < dw; x += 8) {
-          if ((x / 8 + y / 8) % 2 === 1) ctx.fillRect(x, y, 8, 8);
-        }
-      }
-      ctx.drawImage(canvas, 0, 0, dw, dh);
     }
-
-    // 默认选区：居中 80%
-    const defaultRect: Rect = {
-      x: srcW * 0.1,
-      y: srcH * 0.1,
-      w: srcW * 0.8,
-      h: srcH * 0.8,
-    };
-    setRect(defaultRect);
-    onChange(defaultRect);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvas, srcW, srcH]);
+
+  // aspect 变化 → 即时更换为对应比例的裁剪框（居中）
+  React.useEffect(() => {
+    const r = defaultRectForAspect(aspect);
+    setRect(r);
+    onChange(r);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canvas, aspect, srcW, srcH]);
 
   // 绘制选区遮罩
   React.useEffect(() => {
@@ -180,7 +197,7 @@ function CropEditor({
     const ratio = getAspectRatio(aspect);
     let w = cur.x - start.x;
     let h = cur.y - start.y;
-    if (ratio) {
+    if (ratio && Math.abs(w) > 1 && Math.abs(h) > 1) {
       if (Math.abs(w) / ratio > Math.abs(h)) h = w / ratio;
       else w = h * ratio;
     }
@@ -201,18 +218,55 @@ function CropEditor({
   };
 
   const handlePointerDown = (e: React.PointerEvent) => {
+    if (!rect) return;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     const p = toSource(e);
-    dragState.current = { x: p.x, y: p.y };
+    const inside =
+      p.x >= rect.x &&
+      p.x <= rect.x + rect.w &&
+      p.y >= rect.y &&
+      p.y <= rect.y + rect.h;
+
+    if (e.shiftKey || !inside) {
+      // shift 或点击框外 → 重新框选
+      dragState.current = {
+        startX: p.x,
+        startY: p.y,
+        rectStartX: 0,
+        rectStartY: 0,
+        mode: "draw",
+      };
+    } else {
+      // 默认左键在框内 → 拖动整个裁剪框
+      dragState.current = {
+        startX: p.x,
+        startY: p.y,
+        rectStartX: rect.x,
+        rectStartY: rect.y,
+        mode: "move",
+      };
+    }
     setActive(true);
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!dragState.current) return;
+    const ds = dragState.current;
+    if (!ds) return;
     const cur = toSource(e);
-    const r = buildRect(dragState.current, cur);
-    setRect(r);
-    onChange(r);
+    if (ds.mode === "draw") {
+      const r = buildRect({ x: ds.startX, y: ds.startY }, cur);
+      setRect(r);
+      onChange(r);
+    } else {
+      // 移动：约束在画布内
+      const dx = cur.x - ds.startX;
+      const dy = cur.y - ds.startY;
+      const nx = Math.max(0, Math.min(srcW - rect!.w, ds.rectStartX + dx));
+      const ny = Math.max(0, Math.min(srcH - rect!.h, ds.rectStartY + dy));
+      const r = { ...rect!, x: nx, y: ny };
+      setRect(r);
+      onChange(r);
+    }
   };
 
   const handlePointerUp = () => {
@@ -231,7 +285,7 @@ function CropEditor({
           onPointerLeave={handlePointerUp}
           className={cn(
             "max-w-full rounded-lg border shadow-sm",
-            active ? "cursor-crosshair" : "cursor-crosshair"
+            active ? "cursor-crosshair" : "cursor-move"
           )}
           style={{ touchAction: "none", maxHeight: MAX_DISPLAY_H }}
         />
@@ -431,7 +485,8 @@ export default function CropPage() {
                         onChange={handleRectChange}
                       />
                       <p className="text-muted-foreground text-center text-[11px]">
-                        在图上按住拖动即可框选裁剪区域
+                        拖动框内 = 移动裁剪框 · Shift+拖拽 = 重新框选 ·
+                        点击尺寸即时切换
                       </p>
                     </div>
                   )}

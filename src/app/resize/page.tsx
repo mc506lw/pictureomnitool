@@ -160,7 +160,7 @@ export default function ResizePage() {
             {/* 参数输入 */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               {mode === "percent" && (
-                <div className="space-y-2 sm:col-span-2">
+                <div className="space-y-3 sm:col-span-2">
                   <Label>
                     缩放比例：
                     <span className="text-primary font-medium">{percent}%</span>
@@ -172,10 +172,44 @@ export default function ResizePage() {
                     step={1}
                     onValueChange={(v) => setPercent(v[0])}
                   />
-                  <div className="text-muted-foreground flex justify-between text-[11px]">
-                    <span>1%</span>
-                    <span>原图 100%</span>
-                    <span>400%</span>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-muted/60 flex h-8 items-center gap-1 rounded-md border px-2">
+                      <Input
+                        type="number"
+                        min={1}
+                        max={1000}
+                        value={percent}
+                        onChange={(e) =>
+                          setPercent(
+                            Math.min(
+                              1000,
+                              Math.max(1, Number(e.target.value) || 1)
+                            )
+                          )
+                        }
+                        className="h-6 w-16 bg-transparent px-1 text-sm"
+                      />
+                      <span className="text-muted-foreground text-xs">%</span>
+                    </div>
+                    <div className="flex flex-1 flex-wrap gap-1">
+                      {[10, 25, 50, 75, 100, 150, 200, 300].map((p) => (
+                        <button
+                          key={p}
+                          onClick={() => setPercent(p)}
+                          className={cn(
+                            "rounded border px-2 py-1 text-[11px] font-medium transition-colors",
+                            percent === p
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : "bg-muted/40 text-muted-foreground hover:bg-accent"
+                          )}
+                        >
+                          {p}%
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-muted-foreground text-[11px]">
+                    原图 100%
                   </div>
                 </div>
               )}

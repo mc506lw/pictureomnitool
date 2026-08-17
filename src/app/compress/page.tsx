@@ -32,6 +32,14 @@ export default function CompressPage() {
 
   const lossy = format === "jpeg" || format === "webp" || format === "avif";
 
+  const formats: { value: EncodeFormat; label: string; hint: string }[] = [
+    { value: "webp", label: "WebP", hint: "压缩率最高，无损/有损" },
+    { value: "jpeg", label: "JPEG", hint: "兼容性最好，有损" },
+    { value: "avif", label: "AVIF", hint: "新一代，体积更小" },
+    { value: "png", label: "PNG", hint: "无损，适合带透明" },
+    { value: "bmp", label: "BMP", hint: "无压缩，不推荐" },
+  ];
+
   const process = useBatchProcess({
     items,
     getItemId: (i) => i.id,
@@ -84,24 +92,25 @@ export default function CompressPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="space-y-2">
                 <Label>输出格式</Label>
-                <div className="flex gap-2">
-                  {(["webp", "jpeg", "avif"] as const).map((f) => (
+                <div className="flex flex-wrap gap-2">
+                  {formats.map((f) => (
                     <button
-                      key={f}
-                      onClick={() => setFormat(f)}
+                      key={f.value}
+                      title={f.hint}
+                      onClick={() => setFormat(f.value)}
                       className={cn(
                         "flex-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
-                        format === f
+                        format === f.value
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-background text-muted-foreground hover:bg-accent"
                       )}
                     >
-                      {f.toUpperCase()}
+                      {f.label}
                     </button>
                   ))}
                 </div>
                 <p className="text-muted-foreground text-[11px]">
-                  WebP 压缩率最高，JPEG 兼容性最好
+                  WebP 压缩率最高，JPEG 兼容性最好，PNG 无损保透明
                 </p>
               </div>
 

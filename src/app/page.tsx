@@ -117,7 +117,7 @@ export default function Home() {
                 <Link
                   key={tool.url}
                   href={tool.url}
-                  className="bg-card hover:bg-accent group hover:border-accent-foreground/20 flex items-start gap-4 rounded-lg border p-4 text-left transition-all"
+                  className="bg-card hover:bg-accent group hover:border-accent-foreground/20 flex h-full items-start gap-4 rounded-lg border p-4 text-left transition-all"
                 >
                   <div className="bg-primary/10 group-hover:bg-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors">
                     <tool.icon className="text-primary h-5 w-5" />
@@ -129,7 +129,7 @@ export default function Home() {
                         {tool.tag}
                       </span>
                     </div>
-                    <div className="text-muted-foreground text-xs leading-relaxed">
+                    <div className="text-muted-foreground line-clamp-2 min-h-8 text-xs leading-relaxed">
                       {tool.description}
                     </div>
                   </div>

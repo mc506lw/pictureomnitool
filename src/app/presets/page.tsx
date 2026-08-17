@@ -9,7 +9,7 @@ import { BatchTable } from "@/components/batch-table";
 import { ZipExportButton, DownloadAllButton, type ZipEntry } from "@/lib/zip";
 import { useBatchStore } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
-import { PRESET_PACKS, type PresetPack, type SizePreset } from "@/lib/presets";
+import { PRESET_PACKS, type PresetPack } from "@/lib/presets";
 import { resizeCanvas, type Interpolation } from "@/lib/resample";
 import { encodeCanvas } from "@/lib/image-utils";
 import { formatBytes, sanitizeFileName } from "@/lib/utils";
@@ -66,9 +66,7 @@ export default function PresetsPage() {
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [packId, setPackId] = React.useState<string>(PRESET_PACKS[0].id);
-  const [selectedSizes, setSelectedSizes] = React.useState<Set<string>>(
-    new Set()
-  );
+  const [selectedIdxs, setSelectedIdxs] = React.useState<number[]>([]);
   const [fitMode, setFitMode] = React.useState<FitMode>("contain");
   const [interpolation, setInterpolation] =
     React.useState<Interpolation>("bicubic");
@@ -76,23 +74,18 @@ export default function PresetsPage() {
   const [whiteBg, setWhiteBg] = React.useState(false);
 
   const pack = PRESET_PACKS.find((p) => p.id === packId) ?? PRESET_PACKS[0];
+  const allSelected = selectedIdxs.length === pack.presets.length;
 
   React.useEffect(() => {
     // 切换预设包时默认全选
-    setSelectedSizes(
-      new Set(pack.presets.map((p) => `${p.width}x${p.height}`))
-    );
+    setSelectedIdxs(pack.presets.map((_, i) => i));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [packId]);
 
-  const toggleSize = (p: SizePreset) => {
-    const key = `${p.width}x${p.height}`;
-    setSelectedSizes((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return next;
-    });
+  const toggleIdx = (idx: number) => {
+    setSelectedIdxs((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
   };
 
   const process = useBatchProcess({
@@ -102,9 +95,7 @@ export default function PresetsPage() {
       updateItem(i.id, { status: "processing", error: undefined }),
     task: async (item) => {
       if (!item.canvas) throw new Error("图片尚未解码完成");
-      const sizes = pack.presets.filter((p) =>
-        selectedSizes.has(`${p.width}x${p.height}`)
-      );
+      const sizes = pack.presets.filter((_, i) => selectedIdxs.includes(i));
       if (sizes.length === 0) throw new Error("未选择任何尺寸");
       const base = sanitizeFileName(item.name.replace(/\.[^.]+$/, ""));
       const outputs: { blob: Blob; name: string; size: number }[] = [];
@@ -197,28 +188,21 @@ export default function PresetsPage() {
               </div>
               <button
                 onClick={() => {
-                  if (selectedSizes.size === pack.presets.length)
-                    setSelectedSizes(new Set());
-                  else
-                    setSelectedSizes(
-                      new Set(pack.presets.map((p) => `${p.width}x${p.height}`))
-                    );
+                  if (allSelected) setSelectedIdxs([]);
+                  else setSelectedIdxs(pack.presets.map((_, i) => i));
                 }}
                 className="text-muted-foreground hover:text-primary text-xs font-medium transition-colors"
               >
-                {selectedSizes.size === pack.presets.length
-                  ? "取消全选"
-                  : "全选"}
+                {allSelected ? "取消全选" : "全选"}
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {pack.presets.map((p) => {
-                const key = `${p.width}x${p.height}`;
-                const selected = selectedSizes.has(key);
+              {pack.presets.map((p, idx) => {
+                const selected = selectedIdxs.includes(idx);
                 return (
                   <button
-                    key={key}
-                    onClick={() => toggleSize(p)}
+                    key={`${p.width}x${p.height}-${idx}`}
+                    onClick={() => toggleIdx(idx)}
                     className={cn(
                       "relative flex items-center justify-between rounded-md border px-3 py-2.5 text-left transition-colors",
                       selected
@@ -314,8 +298,8 @@ export default function PresetsPage() {
                   <option value="lanczos">Lanczos-3</option>
                 </select>
                 <p className="text-muted-foreground text-[11px]">
-                  已选 {selectedSizes.size} 个尺寸 × {items.length} 张图片 ={" "}
-                  {selectedSizes.size * items.length} 个输出
+                  已选 {selectedIdxs.length} 个尺寸 × {items.length} 张图片 ={" "}
+                  {selectedIdxs.length * items.length} 个输出
                 </p>
               </div>
             </div>
@@ -362,11 +346,11 @@ export default function PresetsPage() {
                   <>
                     <button
                       onClick={process.start}
-                      disabled={items.length === 0 || selectedSizes.size === 0}
+                      disabled={items.length === 0 || selectedIdxs.length === 0}
                       className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center gap-2 rounded-md px-5 text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-40"
                     >
                       <Play className="h-4 w-4" />
-                      开始生成（{selectedSizes.size * items.length} 个输出）
+                      开始生成（{selectedIdxs.length * items.length} 个输出）
                     </button>
                     {entries.length > 0 && (
                       <>

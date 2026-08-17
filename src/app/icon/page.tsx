@@ -7,8 +7,7 @@ import { PageHeader } from "@/components/page-header";
 import { decodeImageFile } from "@/lib/image-utils";
 import { canvasToIco, canvasToIcns } from "@/lib/icons";
 import { downloadZip, type ZipEntry } from "@/lib/zip";
-import { downloadBlob, formatBytes } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
+import { downloadBlob } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -85,9 +84,109 @@ interface PackResult {
   single?: { name: string; blob: Blob };
 }
 
+/** 每个图标包的尺寸清单（key 用于勾选） */
+interface PackSizeDef {
+  key: string;
+  /** 可选显示标签；缺省用 fileName 或 size */
+  label?: string;
+  /** 若设置了 fileName 则有独立文件名；ime：ico 多尺寸合成到单文件 */
+  fileName?: string;
+  size?: number;
+  sizes?: number[];
+}
+
+const PACK_SIZE_DEFS: { id: string; defs: PackSizeDef[] }[] = [
+  {
+    id: "ico",
+    defs: [{ key: "ico", label: "ICO 单文件（16~256px）", size: 256 }],
+  },
+  {
+    id: "favicon",
+    defs: [
+      { key: "favicon-16", fileName: "favicon-16x16.png", size: 16 },
+      { key: "favicon-32", fileName: "favicon-32x32.png", size: 32 },
+      { key: "favicon-48", fileName: "favicon-48x48.png", size: 48 },
+      { key: "apple-180", fileName: "apple-touch-icon.png", size: 180 },
+      { key: "android-192", fileName: "android-chrome-192x192.png", size: 192 },
+      { key: "android-512", fileName: "android-chrome-512x512.png", size: 512 },
+      { key: "mstile-150", fileName: "mstile-150x150.png", size: 150 },
+      { key: "favicon-ico", label: "favicon.ico（16/32/48）", size: 32 },
+    ],
+  },
+  {
+    id: "ios",
+    defs: [
+      { key: "20", fileName: "AppIcon-20@1x.png", size: 20 },
+      { key: "40", fileName: "AppIcon-20@2x.png", size: 40 },
+      { key: "60", fileName: "AppIcon-20@3x.png", size: 60 },
+      { key: "29", fileName: "AppIcon-29@1x.png", size: 29 },
+      { key: "58", fileName: "AppIcon-29@2x.png", size: 58 },
+      { key: "87", fileName: "AppIcon-29@3x.png", size: 87 },
+      { key: "40b", fileName: "AppIcon-40@1x.png", size: 40 },
+      { key: "80", fileName: "AppIcon-40@2x.png", size: 80 },
+      { key: "120", fileName: "AppIcon-40@3x.png", size: 120 },
+      { key: "120b", fileName: "AppIcon-60@2x.png", size: 120 },
+      { key: "180", fileName: "AppIcon-60@3x.png", size: 180 },
+      { key: "76", fileName: "AppIcon-76@1x.png", size: 76 },
+      { key: "152", fileName: "AppIcon-76@2x.png", size: 152 },
+      { key: "167", fileName: "AppIcon-83.5@2x.png", size: 167 },
+      { key: "1024", fileName: "AppIcon-1024.png", size: 1024 },
+    ],
+  },
+  {
+    id: "android",
+    defs: [
+      { key: "mdpi", fileName: "mipmap-mdpi/ic_launcher.png", size: 48 },
+      { key: "hdpi", fileName: "mipmap-hdpi/ic_launcher.png", size: 72 },
+      { key: "xhdpi", fileName: "mipmap-xhdpi/ic_launcher.png", size: 96 },
+      { key: "xxhdpi", fileName: "mipmap-xxhdpi/ic_launcher.png", size: 144 },
+      { key: "xxxhdpi", fileName: "mipmap-xxxhdpi/ic_launcher.png", size: 192 },
+      { key: "playstore", fileName: "playstore-icon.png", size: 512 },
+    ],
+  },
+  {
+    id: "windows",
+    defs: [
+      { key: "sq44", fileName: "Square44x44Logo.png", size: 44 },
+      {
+        key: "sq44u",
+        fileName: "Square44x44Logo.targetsize-44_altform-unplated.png",
+        size: 44,
+      },
+      { key: "sq71", fileName: "Square71x71Logo.png", size: 71 },
+      { key: "sq150", fileName: "Square150x150Logo.png", size: 150 },
+      { key: "sq310", fileName: "Square310x310Logo.png", size: 310 },
+      { key: "wid310", fileName: "Wide310x150Logo.png", size: 310 },
+      { key: "store", fileName: "StoreLogo.png", size: 50 },
+    ],
+  },
+  {
+    id: "macos",
+    defs: [
+      { key: "16", fileName: "icon_16x16.png", size: 16 },
+      { key: "32", fileName: "icon_16x16@2x.png", size: 32 },
+      { key: "32b", fileName: "icon_32x32.png", size: 32 },
+      { key: "64", fileName: "icon_32x32@2x.png", size: 64 },
+      { key: "128", fileName: "icon_128x128.png", size: 128 },
+      { key: "256", fileName: "icon_128x128@2x.png", size: 256 },
+      { key: "256b", fileName: "icon_256x256.png", size: 256 },
+      { key: "512", fileName: "icon_256x256@2x.png", size: 512 },
+      { key: "512b", fileName: "icon_512x512.png", size: 512 },
+      { key: "1024", fileName: "icon_512x512@2x.png", size: 1024 },
+      { key: "icns", label: "ICNS 单文件", size: 1024 },
+    ],
+  },
+];
+
+/** 各包默认全选的 key 集合 */
+function defaultPackSelection(defs: PackSizeDef[]): string[] {
+  return defs.map((d) => d.key);
+}
+
 async function buildPacks(
   source: HTMLCanvasElement,
-  opts: IconOptions
+  opts: IconOptions,
+  packSel: Record<string, string[]>
 ): Promise<PackResult[]> {
   const draw = (size: number) => drawAppIcon(source, size, opts);
   const toPng = (canvas: HTMLCanvasElement) =>
@@ -99,6 +198,8 @@ async function buildPacks(
     );
 
   const packs: PackResult[] = [];
+  const has = (pid: string, key: string) =>
+    packSel[pid]?.includes(key) ?? false;
 
   // 1. Windows ICO
   {
@@ -107,61 +208,74 @@ async function buildPacks(
       id: "ico",
       label: "Windows ICO",
       description: "单文件多尺寸图标（16~256px）",
-      single: { name: "favicon.ico", blob: ico },
+      single: has("ico", "ico")
+        ? { name: "favicon.ico", blob: ico }
+        : undefined,
       files: [],
     });
   }
 
   // 2. Favicon 全套
   {
+    const defs = PACK_SIZE_DEFS.find((p) => p.id === "favicon")!.defs;
     const files: ZipEntry[] = [];
-    const sizes: [string, number][] = [
-      ["favicon-16x16.png", 16],
-      ["favicon-32x32.png", 32],
-      ["favicon-48x48.png", 48],
-      ["apple-touch-icon.png", 180],
-      ["android-chrome-192x192.png", 192],
-      ["android-chrome-512x512.png", 512],
-      ["mstile-150x150.png", 150],
-    ];
-    for (const [name, size] of sizes) {
-      files.push({ name, blob: await toPng(draw(size)) });
+    for (const d of defs) {
+      if (!has("favicon", d.key)) continue;
+      if (d.key === "favicon-ico") {
+        files.push({
+          name: "favicon.ico",
+          blob: await canvasToIco(draw(48), [16, 32, 48]),
+        });
+      } else if (d.fileName && d.size) {
+        files.push({ name: d.fileName, blob: await toPng(draw(d.size)) });
+      }
     }
-    const ico = await canvasToIco(draw(48), [16, 32, 48]);
-    files.push({ name: "favicon.ico", blob: ico });
-    files.push({
-      name: "site.webmanifest",
-      blob: new Blob(
-        [
-          JSON.stringify(
-            {
-              name: "App",
-              short_name: "App",
-              icons: [
-                {
-                  src: "/android-chrome-192x192.png",
-                  sizes: "192x192",
-                  type: "image/png",
-                },
-                {
-                  src: "/android-chrome-512x512.png",
-                  sizes: "512x512",
-                  type: "image/png",
-                },
-              ],
-              theme_color:
-                opts.background === "color" ? opts.bgColor : "#ffffff",
-              background_color:
-                opts.background === "color" ? opts.bgColor : "#ffffff",
-              display: "standalone",
-            },
-            null,
-            2
-          ),
-        ],
-        { type: "application/manifest+json" }
-      ),
-    });
+    // manifest 引用的图标若被勾选则一并生成 manifest
+    const have192 = has("favicon", "android-192");
+    const have512 = has("favicon", "android-512");
+    if (have192 || have512) {
+      files.push({
+        name: "site.webmanifest",
+        blob: new Blob(
+          [
+            JSON.stringify(
+              {
+                name: "App",
+                short_name: "App",
+                icons: [
+                  ...(have192
+                    ? [
+                        {
+                          src: "/android-chrome-192x192.png",
+                          sizes: "192x192",
+                          type: "image/png",
+                        },
+                      ]
+                    : []),
+                  ...(have512
+                    ? [
+                        {
+                          src: "/android-chrome-512x512.png",
+                          sizes: "512x512",
+                          type: "image/png",
+                        },
+                      ]
+                    : []),
+                ],
+                theme_color:
+                  opts.background === "color" ? opts.bgColor : "#ffffff",
+                background_color:
+                  opts.background === "color" ? opts.bgColor : "#ffffff",
+                display: "standalone",
+              },
+              null,
+              2
+            ),
+          ],
+          { type: "application/manifest+json" }
+        ),
+      });
+    }
     packs.push({
       id: "favicon",
       label: "Favicon 全套",
@@ -172,58 +286,45 @@ async function buildPacks(
 
   // 3. iOS AppIcon
   {
-    const iosSizes: [string, number][] = [
-      ["AppIcon-20@1x.png", 20],
-      ["AppIcon-20@2x.png", 40],
-      ["AppIcon-20@3x.png", 60],
-      ["AppIcon-29@1x.png", 29],
-      ["AppIcon-29@2x.png", 58],
-      ["AppIcon-29@3x.png", 87],
-      ["AppIcon-40@1x.png", 40],
-      ["AppIcon-40@2x.png", 80],
-      ["AppIcon-40@3x.png", 120],
-      ["AppIcon-60@2x.png", 120],
-      ["AppIcon-60@3x.png", 180],
-      ["AppIcon-76@1x.png", 76],
-      ["AppIcon-76@2x.png", 152],
-      ["AppIcon-83.5@2x.png", 167],
-      ["AppIcon-1024.png", 1024],
-    ];
+    const defs = PACK_SIZE_DEFS.find((p) => p.id === "ios")!.defs;
     const images: Record<string, unknown>[] = [];
     const files: ZipEntry[] = [];
-    for (const [name, size] of iosSizes) {
-      files.push({ name, blob: await toPng(draw(size)) });
-      const match = name.match(/AppIcon-([\d.]+)@(\d)x\.png/);
+    for (const d of defs) {
+      if (!has("ios", d.key) || !d.fileName || !d.size) continue;
+      files.push({ name: d.fileName, blob: await toPng(draw(d.size)) });
+      const match = d.fileName.match(/AppIcon-([\d.]+)@(\d)x\.png/);
       const point = match?.[1];
       const scale = match?.[2];
       const idiom =
-        size === 1024
+        d.size === 1024
           ? "ios-marketing"
           : Number(point) >= 76
             ? "ipad"
             : "iphone";
       images.push({
-        filename: name,
+        filename: d.fileName,
         idiom,
-        scale: size === 1024 ? "1x" : `${scale}x`,
-        size: size === 1024 ? "1024x1024" : `${point}x${point}`,
+        scale: d.size === 1024 ? "1x" : `${scale}x`,
+        size: d.size === 1024 ? "1024x1024" : `${point}x${point}`,
       });
     }
-    files.push({
-      name: "Contents.json",
-      blob: new Blob(
-        [
-          JSON.stringify(
-            { images, info: { author: "xcode", version: 1 } },
-            null,
-            2
-          ),
-        ],
-        {
-          type: "application/json",
-        }
-      ),
-    });
+    if (images.length > 0) {
+      files.push({
+        name: "Contents.json",
+        blob: new Blob(
+          [
+            JSON.stringify(
+              { images, info: { author: "xcode", version: 1 } },
+              null,
+              2
+            ),
+          ],
+          {
+            type: "application/json",
+          }
+        ),
+      });
+    }
     packs.push({
       id: "ios",
       label: "iOS AppIcon",
@@ -234,17 +335,11 @@ async function buildPacks(
 
   // 4. Android mipmap
   {
-    const androidSizes: [string, number][] = [
-      ["mipmap-mdpi/ic_launcher.png", 48],
-      ["mipmap-hdpi/ic_launcher.png", 72],
-      ["mipmap-xhdpi/ic_launcher.png", 96],
-      ["mipmap-xxhdpi/ic_launcher.png", 144],
-      ["mipmap-xxxhdpi/ic_launcher.png", 192],
-      ["playstore-icon.png", 512],
-    ];
+    const defs = PACK_SIZE_DEFS.find((p) => p.id === "android")!.defs;
     const files: ZipEntry[] = [];
-    for (const [name, size] of androidSizes) {
-      files.push({ name, blob: await toPng(draw(size)) });
+    for (const d of defs) {
+      if (!has("android", d.key) || !d.fileName || !d.size) continue;
+      files.push({ name: d.fileName, blob: await toPng(draw(d.size)) });
     }
     packs.push({
       id: "android",
@@ -256,18 +351,11 @@ async function buildPacks(
 
   // 5. Windows UWP
   {
-    const winSizes: [string, number][] = [
-      ["Square44x44Logo.png", 44],
-      ["Square44x44Logo.targetsize-44_altform-unplated.png", 44],
-      ["Square71x71Logo.png", 71],
-      ["Square150x150Logo.png", 150],
-      ["Square310x310Logo.png", 310],
-      ["Wide310x150Logo.png", 310],
-      ["StoreLogo.png", 50],
-    ];
+    const defs = PACK_SIZE_DEFS.find((p) => p.id === "windows")!.defs;
     const files: ZipEntry[] = [];
-    for (const [name, size] of winSizes) {
-      files.push({ name, blob: await toPng(draw(size)) });
+    for (const d of defs) {
+      if (!has("windows", d.key) || !d.fileName || !d.size) continue;
+      files.push({ name: d.fileName, blob: await toPng(draw(d.size)) });
     }
     packs.push({
       id: "windows",
@@ -279,54 +367,50 @@ async function buildPacks(
 
   // 6. macOS ICNS + iconset
   {
-    const icns = await canvasToIcns(draw(1024));
-    const macSizes: [string, number][] = [
-      ["icon_16x16.png", 16],
-      ["icon_16x16@2x.png", 32],
-      ["icon_32x32.png", 32],
-      ["icon_32x32@2x.png", 64],
-      ["icon_128x128.png", 128],
-      ["icon_128x128@2x.png", 256],
-      ["icon_256x256.png", 256],
-      ["icon_256x256@2x.png", 512],
-      ["icon_512x512.png", 512],
-      ["icon_512x512@2x.png", 1024],
-    ];
+    const defs = PACK_SIZE_DEFS.find((p) => p.id === "macos")!.defs;
     const files: ZipEntry[] = [];
     const images: Record<string, unknown>[] = [];
-    for (const [name, size] of macSizes) {
-      files.push({ name, blob: await toPng(draw(size)) });
-      const match = name.match(/icon_(\d+)x(\d+)(@2x)?\.png/);
-      if (match) {
-        images.push({
-          filename: name,
-          idiom: "mac",
-          scale: match[3] ? "2x" : "1x",
-          size: `${match[1]}x${match[2]}`,
-        });
+    for (const d of defs) {
+      if (!has("macos", d.key)) continue;
+      if (d.key === "icns") continue; // 单独处理
+      if (d.fileName && d.size) {
+        files.push({ name: d.fileName, blob: await toPng(draw(d.size)) });
+        const match = d.fileName.match(/icon_(\d+)x(\d+)(@2x)?\.png/);
+        if (match) {
+          images.push({
+            filename: d.fileName,
+            idiom: "mac",
+            scale: match[3] ? "2x" : "1x",
+            size: `${match[1]}x${match[2]}`,
+          });
+        }
       }
     }
-    files.push({
-      name: "Contents.json",
-      blob: new Blob(
-        [
-          JSON.stringify(
-            { images, info: { author: "xcode", version: 1 } },
-            null,
-            2
-          ),
-        ],
-        {
-          type: "application/json",
-        }
-      ),
-    });
+    if (images.length > 0) {
+      files.push({
+        name: "Contents.json",
+        blob: new Blob(
+          [
+            JSON.stringify(
+              { images, info: { author: "xcode", version: 1 } },
+              null,
+              2
+            ),
+          ],
+          {
+            type: "application/json",
+          }
+        ),
+      });
+    }
     packs.push({
       id: "macos",
       label: "macOS 图标",
       description: "ICNS + AppIcon.appiconset 全套",
       files,
-      single: { name: "app-icon.icns", blob: icns },
+      single: has("macos", "icns")
+        ? { name: "app-icon.icns", blob: await canvasToIcns(draw(1024)) }
+        : undefined,
     });
   }
 
@@ -341,6 +425,12 @@ export default function IconPage() {
   const [packs, setPacks] = React.useState<PackResult[]>([]);
   const [busy, setBusy] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  // 每个包的尺寸选择（默认全选）
+  const [packSel, setPackSel] = React.useState<Record<string, string[]>>(() => {
+    const init: Record<string, string[]> = {};
+    for (const p of PACK_SIZE_DEFS) init[p.id] = defaultPackSelection(p.defs);
+    return init;
+  });
 
   const patch = (p: Partial<IconOptions>) =>
     setOpts((prev) => ({ ...prev, ...p }));
@@ -360,11 +450,29 @@ export default function IconPage() {
     }
   };
 
+  const togglePackKey = (pid: string, key: string) => {
+    setPackSel((prev) => {
+      const cur = prev[pid] ?? [];
+      return {
+        ...prev,
+        [pid]: cur.includes(key) ? cur.filter((k) => k !== key) : [...cur, key],
+      };
+    });
+  };
+
+  const setPackAll = (pid: string, all: boolean) => {
+    const defs = PACK_SIZE_DEFS.find((p) => p.id === pid)!.defs;
+    setPackSel((prev) => ({
+      ...prev,
+      [pid]: all ? defs.map((d) => d.key) : [],
+    }));
+  };
+
   const handleGenerate = async () => {
     if (!source) return;
     setBusy(true);
     try {
-      const result = await buildPacks(source, opts);
+      const result = await buildPacks(source, opts, packSel);
       setPacks(result);
       toast.success("图标生成完成");
     } catch (err) {
@@ -375,10 +483,11 @@ export default function IconPage() {
     }
   };
 
-  const allEntries: { folder: string; pack: PackResult }[] = packs.map((p) => ({
-    folder: p.id,
-    pack: p,
-  }));
+  const hasContent = (p: PackResult) =>
+    p.files.length > 0 || p.single !== undefined;
+  const allEntries: { folder: string; pack: PackResult }[] = packs
+    .filter(hasContent)
+    .map((p) => ({ folder: p.id, pack: p }));
 
   const handleDownloadAll = async () => {
     const entries: ZipEntry[] = [];
@@ -551,6 +660,83 @@ export default function IconPage() {
                 </div>
               </div>
 
+              {/* 输出尺寸选择 */}
+              {source && (
+                <div className="bg-card space-y-4 rounded-lg border p-5">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-sm font-medium">输出尺寸选择</h2>
+                    <span className="text-muted-foreground text-xs">
+                      {
+                        Object.keys(packSel).filter(
+                          (pid) => (packSel[pid] ?? []).length > 0
+                        ).length
+                      }{" "}
+                      / {PACK_SIZE_DEFS.length} 个平台
+                    </span>
+                  </div>
+                  <div className="max-h-80 space-y-3 overflow-auto pr-1">
+                    {PACK_SIZE_DEFS.map(({ id, defs }) => {
+                      const sel = packSel[id] ?? [];
+                      const all = sel.length === defs.length;
+                      return (
+                        <div key={id} className="rounded-md border p-3">
+                          <div className="mb-2 flex items-center justify-between">
+                            <span className="text-xs font-medium">
+                              {
+                                [
+                                  { id: "ico", label: "Windows ICO" },
+                                  { id: "favicon", label: "Favicon" },
+                                  { id: "ios", label: "iOS AppIcon" },
+                                  { id: "android", label: "Android" },
+                                  { id: "windows", label: "Windows UWP" },
+                                  { id: "macos", label: "macOS" },
+                                ].find((p) => p.id === id)?.label
+                              }
+                            </span>
+                            <button
+                              onClick={() => setPackAll(id, !all)}
+                              className="text-muted-foreground hover:text-primary text-[11px] font-medium"
+                            >
+                              {all ? "取消全部" : "选全部"}
+                            </button>
+                          </div>
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {defs.map((d) => {
+                              const on = sel.includes(d.key);
+                              return (
+                                <label
+                                  key={d.key}
+                                  className={cn(
+                                    "flex cursor-pointer items-center gap-1.5 rounded border px-2 py-1 text-[11px] transition-colors",
+                                    on
+                                      ? "bg-primary/10 border-primary"
+                                      : "bg-background hover:bg-accent"
+                                  )}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={on}
+                                    onChange={() => togglePackKey(id, d.key)}
+                                    className="accent-foreground h-3.5 w-3.5"
+                                  />
+                                  <span className="truncate">
+                                    {d.fileName ??
+                                      d.label ??
+                                      (d.sizes
+                                        ? `ICO ${d.sizes.join("/")}px`
+                                        : `${d.size}px`)}
+                                  </span>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               <button
                 onClick={handleGenerate}
                 disabled={!source || busy}
@@ -561,7 +747,7 @@ export default function IconPage() {
                 ) : (
                   <Stamp className="h-4 w-4" />
                 )}
-                {busy ? "正在生成…" : "生成全部图标包"}
+                {busy ? "正在生成…" : "生成所选图标包"}
               </button>
             </div>
 
@@ -617,7 +803,7 @@ export default function IconPage() {
                   </div>
 
                   <div className="space-y-2">
-                    {packs.map((pack) => (
+                    {allEntries.map(({ pack }) => (
                       <div
                         key={pack.id}
                         className="bg-card flex items-center justify-between rounded-lg border p-3"
