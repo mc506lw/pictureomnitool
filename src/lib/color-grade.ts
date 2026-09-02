@@ -81,10 +81,7 @@ export const DEFAULT_GRADE_OPTIONS: ColorGradeOptions = {
 };
 
 // 贝塞尔曲线插值
-function interpolateCurve(
-  points: CurvePoint[],
-  x: number
-): number {
+function interpolateCurve(points: CurvePoint[], x: number): number {
   if (points.length === 0) return x;
   if (points.length === 1) return points[0].y;
 
@@ -117,7 +114,11 @@ function buildCurveLUT(points: CurvePoint[]): Uint8Array {
   return lut;
 }
 
-function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: number } {
+function rgbToHsl(
+  r: number,
+  g: number,
+  b: number
+): { h: number; s: number; l: number } {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -146,7 +147,11 @@ function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: n
   return { h, s, l };
 }
 
-function hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
+function hslToRgb(
+  h: number,
+  s: number,
+  l: number
+): { r: number; g: number; b: number } {
   const c = (1 - Math.abs(2 * l - 1)) * s;
   const hp = h / 60;
   const x = c * (1 - Math.abs((hp % 2) - 1));
@@ -223,7 +228,10 @@ function applyVignette(
       const dx = x - cx;
       const dy = y - cy;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const vignette = Math.max(0, 1 - Math.pow(Math.max(0, dist - radius) / (maxDist - radius), 2));
+      const vignette = Math.max(
+        0,
+        1 - Math.pow(Math.max(0, dist - radius) / (maxDist - radius), 2)
+      );
       const factor = 1 - intensity * (1 - vignette);
       const idx = (y * width + x) * 4;
       data[idx] = Math.round(data[idx] * factor);

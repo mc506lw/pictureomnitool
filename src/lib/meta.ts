@@ -140,7 +140,12 @@ export async function readImageMeta(file: File): Promise<ImageMeta> {
       iso: exif.ISO as number | undefined,
       focalLength: exif.FocalLength ? `${exif.FocalLength}mm` : undefined,
       lensModel: exif.LensModel as string | undefined,
-      whiteBalance: exif.WhiteBalance === 0 ? "自动" : exif.WhiteBalance === 1 ? "手动" : undefined,
+      whiteBalance:
+        exif.WhiteBalance === 0
+          ? "自动"
+          : exif.WhiteBalance === 1
+            ? "手动"
+            : undefined,
       flash: exif.Flash as string | undefined,
       gpsLatitude: exif.GPSLatitude as number | undefined,
       gpsLongitude: exif.GPSLongitude as number | undefined,

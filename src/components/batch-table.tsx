@@ -150,9 +150,7 @@ export function BatchTable({
                 {renderResult && (
                   <th className="px-2 py-2 font-medium">结果</th>
                 )}
-                {renderExtra && (
-                  <th className="px-2 py-2 font-medium">信息</th>
-                )}
+                {renderExtra && <th className="px-2 py-2 font-medium">信息</th>}
                 <th className="px-2 py-2 text-right font-medium">操作</th>
               </tr>
             </thead>
@@ -221,9 +219,7 @@ export function BatchTable({
                     </td>
                   )}
                   {renderExtra && (
-                    <td className="px-2 py-2 text-xs">
-                      {renderExtra(item)}
-                    </td>
+                    <td className="px-2 py-2 text-xs">{renderExtra(item)}</td>
                   )}
                   <td className="px-2 py-2 text-right">
                     {renderActions ? (

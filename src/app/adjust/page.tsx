@@ -105,7 +105,9 @@ function CurveEditor({
     }
   }, [points, color]);
 
-  const getCanvasPoint = (e: React.MouseEvent<HTMLCanvasElement>): { x: number; y: number } | null => {
+  const getCanvasPoint = (
+    e: React.MouseEvent<HTMLCanvasElement>
+  ): { x: number; y: number } | null => {
     const canvas = canvasRef.current;
     if (!canvas) return null;
     const rect = canvas.getBoundingClientRect();
@@ -179,7 +181,9 @@ export default function ColorGradePage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [opts, setOpts] = React.useState<ColorGradeOptions>(DEFAULT_GRADE_OPTIONS);
+  const [opts, setOpts] = React.useState<ColorGradeOptions>(
+    DEFAULT_GRADE_OPTIONS
+  );
   const [activeTab, setActiveTab] = React.useState("basic");
 
   const patch = (partial: Partial<ColorGradeOptions>) =>
@@ -241,19 +245,27 @@ export default function ColorGradePage() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div className="space-y-2">
                         <Label>
-                          亮度：<span className="text-primary font-medium">{opts.brightness.toFixed(2)}</span>
+                          亮度：
+                          <span className="text-primary font-medium">
+                            {opts.brightness.toFixed(2)}
+                          </span>
                         </Label>
                         <Slider
                           value={[opts.brightness * 100]}
                           min={0}
                           max={200}
                           step={1}
-                          onValueChange={(v) => patch({ brightness: v[0] / 100 })}
+                          onValueChange={(v) =>
+                            patch({ brightness: v[0] / 100 })
+                          }
                         />
                       </div>
                       <div className="space-y-2">
                         <Label>
-                          对比度：<span className="text-primary font-medium">{opts.contrast.toFixed(2)}</span>
+                          对比度：
+                          <span className="text-primary font-medium">
+                            {opts.contrast.toFixed(2)}
+                          </span>
                         </Label>
                         <Slider
                           value={[opts.contrast * 100]}
@@ -265,19 +277,27 @@ export default function ColorGradePage() {
                       </div>
                       <div className="space-y-2">
                         <Label>
-                          饱和度：<span className="text-primary font-medium">{opts.saturation.toFixed(2)}</span>
+                          饱和度：
+                          <span className="text-primary font-medium">
+                            {opts.saturation.toFixed(2)}
+                          </span>
                         </Label>
                         <Slider
                           value={[opts.saturation * 100]}
                           min={0}
                           max={200}
                           step={1}
-                          onValueChange={(v) => patch({ saturation: v[0] / 100 })}
+                          onValueChange={(v) =>
+                            patch({ saturation: v[0] / 100 })
+                          }
                         />
                       </div>
                       <div className="space-y-2">
                         <Label>
-                          色相：<span className="text-primary font-medium">{opts.hueRotate}°</span>
+                          色相：
+                          <span className="text-primary font-medium">
+                            {opts.hueRotate}°
+                          </span>
                         </Label>
                         <Slider
                           value={[opts.hueRotate]}
@@ -347,20 +367,34 @@ export default function ColorGradePage() {
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>色温</span>
-                              <span className="text-primary">{opts.temperature > 0 ? "暖" : opts.temperature < 0 ? "冷" : "中性"}</span>
+                              <span className="text-primary">
+                                {opts.temperature > 0
+                                  ? "暖"
+                                  : opts.temperature < 0
+                                    ? "冷"
+                                    : "中性"}
+                              </span>
                             </div>
                             <Slider
                               value={[opts.temperature + 100]}
                               min={0}
                               max={200}
                               step={1}
-                              onValueChange={(v) => patch({ temperature: v[0] - 100 })}
+                              onValueChange={(v) =>
+                                patch({ temperature: v[0] - 100 })
+                              }
                             />
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>色调</span>
-                              <span className="text-primary">{opts.tint > 0 ? "绿" : opts.tint < 0 ? "品红" : "中性"}</span>
+                              <span className="text-primary">
+                                {opts.tint > 0
+                                  ? "绿"
+                                  : opts.tint < 0
+                                    ? "品红"
+                                    : "中性"}
+                              </span>
                             </div>
                             <Slider
                               value={[opts.tint + 100]}
@@ -379,27 +413,35 @@ export default function ColorGradePage() {
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>色相</span>
-                              <span className="text-primary">{opts.shadowHue}°</span>
+                              <span className="text-primary">
+                                {opts.shadowHue}°
+                              </span>
                             </div>
                             <Slider
                               value={[opts.shadowHue + 180]}
                               min={0}
                               max={360}
                               step={1}
-                              onValueChange={(v) => patch({ shadowHue: v[0] - 180 })}
+                              onValueChange={(v) =>
+                                patch({ shadowHue: v[0] - 180 })
+                              }
                             />
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>饱和度</span>
-                              <span className="text-primary">{opts.shadowSat}%</span>
+                              <span className="text-primary">
+                                {opts.shadowSat}%
+                              </span>
                             </div>
                             <Slider
                               value={[opts.shadowSat + 100]}
                               min={0}
                               max={200}
                               step={1}
-                              onValueChange={(v) => patch({ shadowSat: v[0] - 100 })}
+                              onValueChange={(v) =>
+                                patch({ shadowSat: v[0] - 100 })
+                              }
                             />
                           </div>
                         </div>
@@ -411,27 +453,35 @@ export default function ColorGradePage() {
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>色相</span>
-                              <span className="text-primary">{opts.midtoneHue}°</span>
+                              <span className="text-primary">
+                                {opts.midtoneHue}°
+                              </span>
                             </div>
                             <Slider
                               value={[opts.midtoneHue + 180]}
                               min={0}
                               max={360}
                               step={1}
-                              onValueChange={(v) => patch({ midtoneHue: v[0] - 180 })}
+                              onValueChange={(v) =>
+                                patch({ midtoneHue: v[0] - 180 })
+                              }
                             />
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>饱和度</span>
-                              <span className="text-primary">{opts.midtoneSat}%</span>
+                              <span className="text-primary">
+                                {opts.midtoneSat}%
+                              </span>
                             </div>
                             <Slider
                               value={[opts.midtoneSat + 100]}
                               min={0}
                               max={200}
                               step={1}
-                              onValueChange={(v) => patch({ midtoneSat: v[0] - 100 })}
+                              onValueChange={(v) =>
+                                patch({ midtoneSat: v[0] - 100 })
+                              }
                             />
                           </div>
                         </div>
@@ -443,27 +493,35 @@ export default function ColorGradePage() {
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>色相</span>
-                              <span className="text-primary">{opts.highlightHue}°</span>
+                              <span className="text-primary">
+                                {opts.highlightHue}°
+                              </span>
                             </div>
                             <Slider
                               value={[opts.highlightHue + 180]}
                               min={0}
                               max={360}
                               step={1}
-                              onValueChange={(v) => patch({ highlightHue: v[0] - 180 })}
+                              onValueChange={(v) =>
+                                patch({ highlightHue: v[0] - 180 })
+                              }
                             />
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>饱和度</span>
-                              <span className="text-primary">{opts.highlightSat}%</span>
+                              <span className="text-primary">
+                                {opts.highlightSat}%
+                              </span>
                             </div>
                             <Slider
                               value={[opts.highlightSat + 100]}
                               min={0}
                               max={200}
                               step={1}
-                              onValueChange={(v) => patch({ highlightSat: v[0] - 100 })}
+                              onValueChange={(v) =>
+                                patch({ highlightSat: v[0] - 100 })
+                              }
                             />
                           </div>
                         </div>
@@ -485,27 +543,35 @@ export default function ColorGradePage() {
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>强度</span>
-                              <span className="text-primary">{Math.round(opts.vignette * 100)}%</span>
+                              <span className="text-primary">
+                                {Math.round(opts.vignette * 100)}%
+                              </span>
                             </div>
                             <Slider
                               value={[opts.vignette * 100]}
                               min={0}
                               max={100}
                               step={1}
-                              onValueChange={(v) => patch({ vignette: v[0] / 100 })}
+                              onValueChange={(v) =>
+                                patch({ vignette: v[0] / 100 })
+                              }
                             />
                           </div>
                           <div className="space-y-2">
                             <div className="flex justify-between text-xs">
                               <span>柔和度</span>
-                              <span className="text-primary">{Math.round(opts.vignetteSoftness * 100)}%</span>
+                              <span className="text-primary">
+                                {Math.round(opts.vignetteSoftness * 100)}%
+                              </span>
                             </div>
                             <Slider
                               value={[opts.vignetteSoftness * 100]}
                               min={0}
                               max={100}
                               step={1}
-                              onValueChange={(v) => patch({ vignetteSoftness: v[0] / 100 })}
+                              onValueChange={(v) =>
+                                patch({ vignetteSoftness: v[0] / 100 })
+                              }
                             />
                           </div>
                         </div>
@@ -514,7 +580,9 @@ export default function ColorGradePage() {
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
                           <span>锐化</span>
-                          <span className="text-primary">{opts.sharpen.toFixed(2)}</span>
+                          <span className="text-primary">
+                            {opts.sharpen.toFixed(2)}
+                          </span>
                         </div>
                         <Slider
                           value={[opts.sharpen * 100]}
@@ -530,7 +598,12 @@ export default function ColorGradePage() {
               </Tabs>
 
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={resetOptions} className="gap-1.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetOptions}
+                  className="gap-1.5"
+                >
                   <RefreshCw className="h-3.5 w-3.5" />
                   重置
                 </Button>
@@ -540,16 +613,22 @@ export default function ColorGradePage() {
             {/* 右侧：预览 */}
             <div className="space-y-4">
               <div className="bg-card rounded-lg border p-4">
-                <div className="text-muted-foreground mb-3 text-xs font-medium">实时预览</div>
+                <div className="text-muted-foreground mb-3 text-xs font-medium">
+                  实时预览
+                </div>
                 {items.length > 0 && items[0].canvas ? (
                   <PreviewCanvas canvas={items[0].canvas} opts={opts} />
                 ) : (
-                  <p className="text-muted-foreground py-6 text-center text-xs">等待图片解码…</p>
+                  <p className="text-muted-foreground py-6 text-center text-xs">
+                    等待图片解码…
+                  </p>
                 )}
               </div>
 
               <div className="bg-card space-y-3 rounded-lg border p-4">
-                <div className="text-muted-foreground text-xs font-medium">导出</div>
+                <div className="text-muted-foreground text-xs font-medium">
+                  导出
+                </div>
                 <div className="space-y-2">
                   <button
                     onClick={process.start}
@@ -561,7 +640,11 @@ export default function ColorGradePage() {
                   </button>
                   {entries.length > 0 && (
                     <>
-                      <ZipExportButton entries={entries} zipName="color-graded-images.zip" className="w-full" />
+                      <ZipExportButton
+                        entries={entries}
+                        zipName="color-graded-images.zip"
+                        className="w-full"
+                      />
                       <DownloadAllButton entries={entries} className="w-full" />
                     </>
                   )}
@@ -597,7 +680,13 @@ export default function ColorGradePage() {
   );
 }
 
-function PreviewCanvas({ canvas, opts }: { canvas: HTMLCanvasElement; opts: ColorGradeOptions }) {
+function PreviewCanvas({
+  canvas,
+  opts,
+}: {
+  canvas: HTMLCanvasElement;
+  opts: ColorGradeOptions;
+}) {
   const [previewUrl, setPreviewUrl] = React.useState<string>("");
   const [mounted, setMounted] = React.useState(false);
 
@@ -607,7 +696,10 @@ function PreviewCanvas({ canvas, opts }: { canvas: HTMLCanvasElement; opts: Colo
 
   React.useEffect(() => {
     if (!mounted) return;
-    const scale = Math.min(1, PREVIEW_MAX / Math.max(canvas.width, canvas.height));
+    const scale = Math.min(
+      1,
+      PREVIEW_MAX / Math.max(canvas.width, canvas.height)
+    );
     const w = Math.max(1, Math.round(canvas.width * scale));
     const h = Math.max(1, Math.round(canvas.height * scale));
 

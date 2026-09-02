@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { RotateCw, Play, Square, Settings2, FlipHorizontal, FlipVertical } from "lucide-react";
+import {
+  RotateCw,
+  Play,
+  Square,
+  Settings2,
+  FlipHorizontal,
+  FlipVertical,
+} from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -9,7 +16,11 @@ import { BatchTable } from "@/components/batch-table";
 import { ZipExportButton, DownloadAllButton, type ZipEntry } from "@/lib/zip";
 import { useBatchStore } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
-import { applyRotateFlip, DEFAULT_ROTATE_OPTIONS, type RotateFlipOptions } from "@/lib/rotate";
+import {
+  applyRotateFlip,
+  DEFAULT_ROTATE_OPTIONS,
+  type RotateFlipOptions,
+} from "@/lib/rotate";
 import { encodeCanvas } from "@/lib/image-utils";
 import { withExtension, formatBytes } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
@@ -22,7 +33,10 @@ const PREVIEW_MAX = 420;
 function PreviewCanvas({ canvas }: { canvas: HTMLCanvasElement }) {
   const [url, setUrl] = React.useState<string>("");
   React.useEffect(() => {
-    const scale = Math.min(1, PREVIEW_MAX / Math.max(canvas.width, canvas.height));
+    const scale = Math.min(
+      1,
+      PREVIEW_MAX / Math.max(canvas.width, canvas.height)
+    );
     const w = Math.max(1, Math.round(canvas.width * scale));
     const h = Math.max(1, Math.round(canvas.height * scale));
     const out = document.createElement("canvas");
@@ -33,7 +47,13 @@ function PreviewCanvas({ canvas }: { canvas: HTMLCanvasElement }) {
     setUrl(out.toDataURL("image/png"));
   }, [canvas]);
   if (!url) return null;
-  return <img src={url} alt="预览" className="max-h-72 w-full rounded border object-contain" />;
+  return (
+    <img
+      src={url}
+      alt="预览"
+      className="max-h-72 w-full rounded border object-contain"
+    />
+  );
 }
 
 export default function RotatePage() {
@@ -43,7 +63,9 @@ export default function RotatePage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [rotateDeg, setRotateDeg] = React.useState(DEFAULT_ROTATE_OPTIONS.rotateDeg);
+  const [rotateDeg, setRotateDeg] = React.useState(
+    DEFAULT_ROTATE_OPTIONS.rotateDeg
+  );
   const [flip, setFlip] = React.useState<RotateFlipOptions["flip"]>("none");
 
   const process = useBatchProcess({
@@ -117,7 +139,8 @@ export default function RotatePage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  旋转角度：<span className="text-primary font-medium">{rotateDeg}°</span>
+                  旋转角度：
+                  <span className="text-primary font-medium">{rotateDeg}°</span>
                 </Label>
                 <Slider
                   value={[rotateDeg]}
@@ -161,7 +184,7 @@ export default function RotatePage() {
                   <button
                     onClick={() => setFlip("horizontal")}
                     className={cn(
-                      "flex-1 inline-flex items-center justify-center gap-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
+                      "inline-flex flex-1 items-center justify-center gap-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
                       flip === "horizontal"
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-background text-muted-foreground hover:bg-accent"
@@ -173,7 +196,7 @@ export default function RotatePage() {
                   <button
                     onClick={() => setFlip("vertical")}
                     className={cn(
-                      "flex-1 inline-flex items-center justify-center gap-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
+                      "inline-flex flex-1 items-center justify-center gap-1 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
                       flip === "vertical"
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-background text-muted-foreground hover:bg-accent"
@@ -193,11 +216,19 @@ export default function RotatePage() {
             <div className="space-y-4">
               {items.length > 0 && (
                 <div className="bg-card rounded-lg border p-4">
-                  <div className="text-muted-foreground mb-3 text-xs font-medium">实时预览</div>
+                  <div className="text-muted-foreground mb-3 text-xs font-medium">
+                    实时预览
+                  </div>
                   {previewUrl ? (
-                    <img src={previewUrl} alt="旋转预览" className="max-h-72 w-full rounded border object-contain" />
+                    <img
+                      src={previewUrl}
+                      alt="旋转预览"
+                      className="max-h-72 w-full rounded border object-contain"
+                    />
                   ) : (
-                    <p className="text-muted-foreground py-6 text-center text-xs">等待图片解码…</p>
+                    <p className="text-muted-foreground py-6 text-center text-xs">
+                      等待图片解码…
+                    </p>
                   )}
                 </div>
               )}
@@ -250,7 +281,10 @@ export default function RotatePage() {
                     </button>
                     {entries.length > 0 && (
                       <>
-                        <ZipExportButton entries={entries} zipName="rotated-images.zip" />
+                        <ZipExportButton
+                          entries={entries}
+                          zipName="rotated-images.zip"
+                        />
                         <DownloadAllButton entries={entries} />
                         <span className="text-muted-foreground text-xs">
                           已完成 {entries.length} 个

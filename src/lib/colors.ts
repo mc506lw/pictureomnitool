@@ -40,7 +40,10 @@ export function extractColors(
   const imageData = ctx.getImageData(0, 0, source.width, source.height);
   const data = imageData.data;
 
-  const colorMap = new Map<string, { count: number; r: number; g: number; b: number }>();
+  const colorMap = new Map<
+    string,
+    { count: number; r: number; g: number; b: number }
+  >();
 
   const step = 16;
   for (let i = 0; i < data.length; i += 4) {
@@ -67,7 +70,10 @@ export function extractColors(
     }
   }
 
-  const totalPixels = Array.from(colorMap.values()).reduce((s, c) => s + c.count, 0);
+  const totalPixels = Array.from(colorMap.values()).reduce(
+    (s, c) => s + c.count,
+    0
+  );
 
   const colors = Array.from(colorMap.values())
     .sort((a, b) => b.count - a.count)

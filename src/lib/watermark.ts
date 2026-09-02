@@ -132,10 +132,7 @@ export async function applyWatermark(
     const img = await loadImageWatermark(watermarkFile);
     if (!img) return out;
 
-    const ratio = Math.min(
-      0.4,
-      Math.min(200 / img.width, 200 / img.height)
-    );
+    const ratio = Math.min(0.4, Math.min(200 / img.width, 200 / img.height));
     const w = Math.max(1, Math.round(img.width * ratio));
     const h = Math.max(1, Math.round(img.height * ratio));
     const { x, y } = getAnchor(

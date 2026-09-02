@@ -35,7 +35,8 @@ const tools = [
   {
     icon: Repeat,
     title: "格式转换",
-    description: "PNG / JPG / WebP / AVIF / BMP / GIF / ICO 任意互转，支持批量与质量调节",
+    description:
+      "PNG / JPG / WebP / AVIF / BMP / GIF / ICO 任意互转，支持批量与质量调节",
     url: "/convert",
     tag: "批量",
     color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
@@ -43,7 +44,8 @@ const tools = [
   {
     icon: Scaling,
     title: "图片缩放",
-    description: "按百分比或固定尺寸缩放，支持最近邻 / 双线性 / 双三次 / Lanczos 插值",
+    description:
+      "按百分比或固定尺寸缩放，支持最近邻 / 双线性 / 双三次 / Lanczos 插值",
     url: "/resize",
     tag: "4 种算法",
     color: "bg-green-500/10 text-green-600 dark:text-green-400",
@@ -75,7 +77,8 @@ const tools = [
   {
     icon: Ruler,
     title: "尺寸预设",
-    description: "社交平台、电商、壁纸、打印、应用图标等 8 大场景预设包一键套用",
+    description:
+      "社交平台、电商、壁纸、打印、应用图标等 8 大场景预设包一键套用",
     url: "/presets",
     tag: "8 大场景",
     color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
@@ -159,7 +162,7 @@ export default function Home() {
       <div className="h-full overflow-auto">
         <div className="mx-auto w-full max-w-6xl space-y-12 p-6 sm:p-10">
           {/* Hero Section */}
-          <section className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/5 via-background to-background p-8 sm:p-12">
+          <section className="from-primary/5 via-background to-background relative overflow-hidden rounded-2xl border bg-gradient-to-br p-8 sm:p-12">
             <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
@@ -189,7 +192,7 @@ export default function Home() {
                   ].map(({ icon: Icon, text }) => (
                     <span
                       key={text}
-                      className="bg-background/80 text-muted-foreground border inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs backdrop-blur-sm"
+                      className="bg-background/80 text-muted-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs backdrop-blur-sm"
                     >
                       <Icon className="h-3.5 w-3.5" />
                       {text}
@@ -202,12 +205,14 @@ export default function Home() {
                 {stats.map(({ icon: Icon, label, value, desc }) => (
                   <div
                     key={label}
-                    className="bg-background/80 border rounded-xl p-4 backdrop-blur-sm"
+                    className="bg-background/80 rounded-xl border p-4 backdrop-blur-sm"
                   >
                     <Icon className="text-primary mb-2 h-5 w-5" />
                     <div className="text-muted-foreground text-xs">{label}</div>
                     <div className="text-lg font-bold">{value}</div>
-                    <div className="text-muted-foreground text-[11px]">{desc}</div>
+                    <div className="text-muted-foreground text-[11px]">
+                      {desc}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -238,7 +243,9 @@ export default function Home() {
                     className="group bg-card hover:bg-accent/50 relative overflow-hidden rounded-xl border p-5 transition-all hover:shadow-md"
                   >
                     <div className="flex items-start justify-between">
-                      <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${tool.color}`}>
+                      <div
+                        className={`flex h-10 w-10 items-center justify-center rounded-lg ${tool.color}`}
+                      >
                         <Icon className="h-5 w-5" />
                       </div>
                       <Badge variant="secondary" className="text-[10px]">
@@ -246,14 +253,14 @@ export default function Home() {
                       </Badge>
                     </div>
                     <div className="mt-3 space-y-1.5">
-                      <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
+                      <h3 className="group-hover:text-primary text-sm font-medium transition-colors">
                         {tool.title}
                       </h3>
                       <p className="text-muted-foreground line-clamp-2 text-xs leading-relaxed">
                         {tool.description}
                       </p>
                     </div>
-                    <div className="mt-4 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                    <div className="text-primary mt-4 flex items-center gap-1 text-xs font-medium opacity-0 transition-opacity group-hover:opacity-100">
                       开始使用 <ArrowRight className="h-3.5 w-3.5" />
                     </div>
                   </Link>
@@ -279,7 +286,8 @@ export default function Home() {
               </div>
               <h3 className="mb-1.5 text-sm font-medium">极速处理</h3>
               <p className="text-muted-foreground text-xs leading-relaxed">
-                基于 Canvas API 和 WebAssembly 优化，处理速度快，支持批量处理大量图片。
+                基于 Canvas API 和 WebAssembly
+                优化，处理速度快，支持批量处理大量图片。
               </p>
             </div>
             <div className="bg-card rounded-xl border p-6">

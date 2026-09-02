@@ -6,10 +6,19 @@ import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
 import { BatchTable } from "@/components/batch-table";
-import { ZipExportButton, DownloadAllButton, downloadZip, type ZipEntry } from "@/lib/zip";
+import {
+  ZipExportButton,
+  DownloadAllButton,
+  downloadZip,
+  type ZipEntry,
+} from "@/lib/zip";
 import { useBatchStore } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
-import { extractColors, DEFAULT_COLOR_OPTIONS, type ExtractedColor } from "@/lib/colors";
+import {
+  extractColors,
+  DEFAULT_COLOR_OPTIONS,
+  type ExtractedColor,
+} from "@/lib/colors";
 import { encodeCanvas } from "@/lib/image-utils";
 import { withExtension, formatBytes, downloadBlob } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
@@ -26,10 +35,18 @@ export default function ColorExtractPage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [maxColors, setMaxColors] = React.useState(DEFAULT_COLOR_OPTIONS.maxColors);
-  const [minBrightness, setMinBrightness] = React.useState(DEFAULT_COLOR_OPTIONS.minBrightness);
-  const [maxBrightness, setMaxBrightness] = React.useState(DEFAULT_COLOR_OPTIONS.maxBrightness);
-  const [colorResults, setColorResults] = React.useState<Record<string, ExtractedColor[]>>({});
+  const [maxColors, setMaxColors] = React.useState(
+    DEFAULT_COLOR_OPTIONS.maxColors
+  );
+  const [minBrightness, setMinBrightness] = React.useState(
+    DEFAULT_COLOR_OPTIONS.minBrightness
+  );
+  const [maxBrightness, setMaxBrightness] = React.useState(
+    DEFAULT_COLOR_OPTIONS.maxBrightness
+  );
+  const [colorResults, setColorResults] = React.useState<
+    Record<string, ExtractedColor[]>
+  >({});
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
 
   const process = useBatchProcess({
@@ -39,7 +56,11 @@ export default function ColorExtractPage() {
       updateItem(i.id, { status: "processing", error: undefined }),
     task: async (item) => {
       if (!item.canvas) throw new Error("图片尚未解码完成");
-      const colors = extractColors(item.canvas, { maxColors, minBrightness, maxBrightness });
+      const colors = extractColors(item.canvas, {
+        maxColors,
+        minBrightness,
+        maxBrightness,
+      });
       setColorResults((prev) => ({ ...prev, [item.id]: colors }));
       const blob = await encodeCanvas(item.canvas, "png");
       const name = withExtension(item.name, "png");
@@ -115,7 +136,8 @@ export default function ColorExtractPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="space-y-2">
                 <Label>
-                  颜色数量：<span className="text-primary font-medium">{maxColors}</span>
+                  颜色数量：
+                  <span className="text-primary font-medium">{maxColors}</span>
                 </Label>
                 <Slider
                   value={[maxColors]}
@@ -128,7 +150,10 @@ export default function ColorExtractPage() {
 
               <div className="space-y-2">
                 <Label>
-                  最低亮度：<span className="text-primary font-medium">{minBrightness}</span>
+                  最低亮度：
+                  <span className="text-primary font-medium">
+                    {minBrightness}
+                  </span>
                 </Label>
                 <Slider
                   value={[minBrightness]}
@@ -141,7 +166,10 @@ export default function ColorExtractPage() {
 
               <div className="space-y-2">
                 <Label>
-                  最高亮度：<span className="text-primary font-medium">{maxBrightness}</span>
+                  最高亮度：
+                  <span className="text-primary font-medium">
+                    {maxBrightness}
+                  </span>
                 </Label>
                 <Slider
                   value={[maxBrightness]}
@@ -189,7 +217,9 @@ export default function ColorExtractPage() {
               {Object.keys(colorResults).length > 0 && (
                 <div className="bg-card rounded-lg border p-4">
                   <div className="mb-3 flex items-center justify-between">
-                    <div className="text-muted-foreground text-xs font-medium">提取结果</div>
+                    <div className="text-muted-foreground text-xs font-medium">
+                      提取结果
+                    </div>
                     <Button
                       variant="outline"
                       size="sm"
@@ -206,7 +236,9 @@ export default function ColorExtractPage() {
                         const colors = colorResults[item.id]!;
                         return (
                           <div key={item.id} className="space-y-2">
-                            <div className="text-xs font-medium">{item.name}</div>
+                            <div className="text-xs font-medium">
+                              {item.name}
+                            </div>
                             <div className="flex flex-wrap gap-2">
                               {colors.map((c, idx) => {
                                 const colorId = `${item.id}-${idx}`;
@@ -220,13 +252,18 @@ export default function ColorExtractPage() {
                                       style={{ backgroundColor: c.color }}
                                     />
                                     <div className="space-y-0.5">
-                                      <div className="text-xs font-mono font-medium">{c.color}</div>
+                                      <div className="font-mono text-xs font-medium">
+                                        {c.color}
+                                      </div>
                                       <div className="text-muted-foreground text-[11px]">
-                                        {Math.round(c.ratio * 100)}% · {formatBytes(c.count * 4)}
+                                        {Math.round(c.ratio * 100)}% ·{" "}
+                                        {formatBytes(c.count * 4)}
                                       </div>
                                     </div>
                                     <button
-                                      onClick={() => handleCopyColor(c.color, colorId)}
+                                      onClick={() =>
+                                        handleCopyColor(c.color, colorId)
+                                      }
                                       className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
                                       title="复制颜色代码"
                                     >
@@ -277,7 +314,10 @@ export default function ColorExtractPage() {
                     </button>
                     {entries.length > 0 && (
                       <>
-                        <ZipExportButton entries={entries} zipName="color-extracted-images.zip" />
+                        <ZipExportButton
+                          entries={entries}
+                          zipName="color-extracted-images.zip"
+                        />
                         <DownloadAllButton entries={entries} />
                         <span className="text-muted-foreground text-xs">
                           已完成 {entries.length} 个

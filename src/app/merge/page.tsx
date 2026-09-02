@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Columns, Rows, Play, Square, Settings2, GripVertical } from "lucide-react";
+import {
+  Columns,
+  Rows,
+  Play,
+  Square,
+  Settings2,
+  GripVertical,
+} from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -31,9 +38,12 @@ export default function MergePage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [direction, setDirection] = React.useState<MergeOptions["direction"]>("horizontal");
+  const [direction, setDirection] =
+    React.useState<MergeOptions["direction"]>("horizontal");
   const [spacing, setSpacing] = React.useState(DEFAULT_MERGE_OPTIONS.spacing);
-  const [background, setBackground] = React.useState(DEFAULT_MERGE_OPTIONS.background);
+  const [background, setBackground] = React.useState(
+    DEFAULT_MERGE_OPTIONS.background
+  );
   const [align, setAlign] = React.useState<MergeOptions["align"]>("center");
 
   const readyItems = items.filter((i) => i.canvas);
@@ -48,7 +58,12 @@ export default function MergePage() {
         setPreviewUrl("");
         return;
       }
-      const out = mergeImages(sources, { direction, spacing, background, align });
+      const out = mergeImages(sources, {
+        direction,
+        spacing,
+        background,
+        align,
+      });
       const scale = Math.min(1, PREVIEW_MAX / Math.max(out.width, out.height));
       const w = Math.max(1, Math.round(out.width * scale));
       const h = Math.max(1, Math.round(out.height * scale));
@@ -118,7 +133,7 @@ export default function MergePage() {
                   <button
                     onClick={() => setDirection("horizontal")}
                     className={cn(
-                      "flex-1 inline-flex items-center justify-center gap-1.5 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
+                      "inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
                       direction === "horizontal"
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-background text-muted-foreground hover:bg-accent"
@@ -130,7 +145,7 @@ export default function MergePage() {
                   <button
                     onClick={() => setDirection("vertical")}
                     className={cn(
-                      "flex-1 inline-flex items-center justify-center gap-1.5 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
+                      "inline-flex flex-1 items-center justify-center gap-1.5 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
                       direction === "vertical"
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-background text-muted-foreground hover:bg-accent"
@@ -144,7 +159,8 @@ export default function MergePage() {
 
               <div className="space-y-2">
                 <Label>
-                  间距：<span className="text-primary font-medium">{spacing}px</span>
+                  间距：
+                  <span className="text-primary font-medium">{spacing}px</span>
                 </Label>
                 <Slider
                   value={[spacing]}
@@ -164,7 +180,9 @@ export default function MergePage() {
                     onChange={(e) => setBackground(e.target.value)}
                     className="h-9 w-16 cursor-pointer rounded border"
                   />
-                  <span className="text-muted-foreground text-xs font-mono">{background}</span>
+                  <span className="text-muted-foreground font-mono text-xs">
+                    {background}
+                  </span>
                 </div>
               </div>
 
@@ -182,7 +200,11 @@ export default function MergePage() {
                           : "bg-background text-muted-foreground hover:bg-accent"
                       )}
                     >
-                      {a === "start" ? "顶/左" : a === "center" ? "居中" : "底/右"}
+                      {a === "start"
+                        ? "顶/左"
+                        : a === "center"
+                          ? "居中"
+                          : "底/右"}
                     </button>
                   ))}
                 </div>
@@ -207,11 +229,19 @@ export default function MergePage() {
 
               {readyItems.length >= 2 && (
                 <div className="bg-card rounded-lg border p-4">
-                  <div className="text-muted-foreground mb-3 text-xs font-medium">实时预览</div>
+                  <div className="text-muted-foreground mb-3 text-xs font-medium">
+                    实时预览
+                  </div>
                   {previewUrl ? (
-                    <img src={previewUrl} alt="合并预览" className="max-h-72 w-full rounded border object-contain" />
+                    <img
+                      src={previewUrl}
+                      alt="合并预览"
+                      className="max-h-72 w-full rounded border object-contain"
+                    />
                   ) : (
-                    <p className="text-muted-foreground py-6 text-center text-xs">正在生成预览…</p>
+                    <p className="text-muted-foreground py-6 text-center text-xs">
+                      正在生成预览…
+                    </p>
                   )}
                 </div>
               )}
@@ -246,7 +276,10 @@ export default function MergePage() {
                     </button>
                     {entries.length > 0 && (
                       <>
-                        <ZipExportButton entries={entries} zipName="merged-images.zip" />
+                        <ZipExportButton
+                          entries={entries}
+                          zipName="merged-images.zip"
+                        />
                         <DownloadAllButton entries={entries} />
                         <span className="text-muted-foreground text-xs">
                           已完成 {entries.length} 个

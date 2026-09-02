@@ -41,19 +41,22 @@ export function useHistory() {
     }
   }, []);
 
-  const addEntry = React.useCallback((entry: Omit<HistoryEntry, "id" | "timestamp">) => {
-    if (!mounted) return;
-    const newEntry: HistoryEntry = {
-      ...entry,
-      id: `hist-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      timestamp: Date.now(),
-    };
-    setHistory((prev) => {
-      const next = [newEntry, ...prev].slice(0, MAX_HISTORY);
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, [mounted]);
+  const addEntry = React.useCallback(
+    (entry: Omit<HistoryEntry, "id" | "timestamp">) => {
+      if (!mounted) return;
+      const newEntry: HistoryEntry = {
+        ...entry,
+        id: `hist-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+        timestamp: Date.now(),
+      };
+      setHistory((prev) => {
+        const next = [newEntry, ...prev].slice(0, MAX_HISTORY);
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+        return next;
+      });
+    },
+    [mounted]
+  );
 
   const clearHistory = React.useCallback(() => {
     if (!mounted) return;
@@ -61,14 +64,17 @@ export function useHistory() {
     localStorage.removeItem(HISTORY_KEY);
   }, [mounted]);
 
-  const removeEntry = React.useCallback((id: string) => {
-    if (!mounted) return;
-    setHistory((prev) => {
-      const next = prev.filter((e) => e.id !== id);
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, [mounted]);
+  const removeEntry = React.useCallback(
+    (id: string) => {
+      if (!mounted) return;
+      setHistory((prev) => {
+        const next = prev.filter((e) => e.id !== id);
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+        return next;
+      });
+    },
+    [mounted]
+  );
 
   return { history, mounted, addEntry, clearHistory, removeEntry };
 }
@@ -83,9 +89,17 @@ export default function HistoryPage() {
 
   const getStatusBadge = (status: HistoryEntry["status"]) => {
     if (status === "done") {
-      return <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full px-2 py-0.5 text-[11px] font-medium">成功</span>;
+      return (
+        <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+          成功
+        </span>
+      );
     }
-    return <span className="bg-destructive/10 text-destructive rounded-full px-2 py-0.5 text-[11px] font-medium">失败</span>;
+    return (
+      <span className="bg-destructive/10 text-destructive rounded-full px-2 py-0.5 text-[11px] font-medium">
+        失败
+      </span>
+    );
   };
 
   if (!mounted) {
@@ -98,7 +112,9 @@ export default function HistoryPage() {
               title="历史记录"
               description="查看最近处理的图片记录"
             />
-            <div className="text-muted-foreground py-10 text-center text-sm">加载中…</div>
+            <div className="text-muted-foreground py-10 text-center text-sm">
+              加载中…
+            </div>
           </div>
         </div>
       </SidebarInset>
@@ -149,7 +165,9 @@ export default function HistoryPage() {
                         <th className="px-2 py-2 font-medium">时间</th>
                         <th className="px-2 py-2 font-medium">大小</th>
                         <th className="px-2 py-2 font-medium">状态</th>
-                        <th className="px-2 py-2 text-right font-medium">操作</th>
+                        <th className="px-2 py-2 text-right font-medium">
+                          操作
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y">

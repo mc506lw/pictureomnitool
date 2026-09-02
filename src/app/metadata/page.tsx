@@ -1,7 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { Info, RefreshCcw, Trash2, Camera, MapPin, Cpu, Clock, Palette, Shield } from "lucide-react";
+import {
+  Info,
+  RefreshCcw,
+  Trash2,
+  Camera,
+  MapPin,
+  Cpu,
+  Clock,
+  Palette,
+  Shield,
+} from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -52,21 +62,35 @@ interface ExifData {
   subjectDistanceRange?: string;
 }
 
-function Section({ icon: Icon, title, children, className }: { icon: React.ComponentType<{ className?: string }>; title: string; children: React.ReactNode; className?: string }) {
+function Section({
+  icon: Icon,
+  title,
+  children,
+  className,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <div className={cn("bg-card rounded-lg border p-4", className)}>
       <div className="mb-3 flex items-center gap-2">
         <Icon className="text-primary h-4 w-4" />
         <h3 className="text-sm font-medium">{title}</h3>
       </div>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {children}
-      </div>
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">{children}</div>
     </div>
   );
 }
 
-function MetaRow({ label, value }: { label: string; value?: string | number | null }) {
+function MetaRow({
+  label,
+  value,
+}: {
+  label: string;
+  value?: string | number | null;
+}) {
   if (!value && value !== 0) return null;
   return (
     <div className="flex items-center justify-between gap-2">
@@ -81,8 +105,12 @@ export default function MetadataPage() {
   const addFiles = useBatchStore((s) => s.addFiles);
   const removeItem = useBatchStore((s) => s.removeItem);
   const clearAll = useBatchStore((s) => s.clearAll);
-  const [metas, setMetas] = React.useState<Record<string, Awaited<ReturnType<typeof readImageMeta>>>>({});
-  const [exifDataMap, setExifDataMap] = React.useState<Record<string, ExifData | null>>({});
+  const [metas, setMetas] = React.useState<
+    Record<string, Awaited<ReturnType<typeof readImageMeta>>>
+  >({});
+  const [exifDataMap, setExifDataMap] = React.useState<
+    Record<string, ExifData | null>
+  >({});
   const [loadingExif, setLoadingExif] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [mounted, setMounted] = React.useState(false);
@@ -104,7 +132,10 @@ export default function MetadataPage() {
   React.useEffect(() => {
     let cancelled = false;
     (async () => {
-      const next: Record<string, Awaited<ReturnType<typeof readImageMeta>>> = {};
+      const next: Record<
+        string,
+        Awaited<ReturnType<typeof readImageMeta>>
+      > = {};
       for (const item of items) {
         if (!item.file) continue;
         try {
@@ -188,7 +219,12 @@ export default function MetadataPage() {
             iso: exif.ISO as number | undefined,
             focalLength: exif.FocalLength ? `${exif.FocalLength}mm` : undefined,
             lensModel: exif.LensModel as string | undefined,
-            whiteBalance: exif.WhiteBalance === 0 ? "自动" : exif.WhiteBalance === 1 ? "手动" : undefined,
+            whiteBalance:
+              exif.WhiteBalance === 0
+                ? "自动"
+                : exif.WhiteBalance === 1
+                  ? "手动"
+                  : undefined,
             flash: exif.Flash as string | undefined,
             gpsLatitude: exif.GPSLatitude as number | undefined,
             gpsLongitude: exif.GPSLongitude as number | undefined,
@@ -211,7 +247,8 @@ export default function MetadataPage() {
             contrast: exif.Contrast as string | undefined,
             saturation: exif.Saturation as string | undefined,
             sharpness: exif.Sharpness as string | undefined,
-            subjectDistanceRange: exif.SubjectDistanceRange as string | undefined,
+            subjectDistanceRange: exif.SubjectDistanceRange as
+              string | undefined,
           };
         } catch {
           next[item.id] = null;
@@ -243,7 +280,9 @@ export default function MetadataPage() {
     toast.success("已重新解析图片");
   };
 
-  async function decodeImageFileSync(file: File): Promise<{ canvas: HTMLCanvasElement; width: number; height: number }> {
+  async function decodeImageFileSync(
+    file: File
+  ): Promise<{ canvas: HTMLCanvasElement; width: number; height: number }> {
     const { decodeImageFile } = await import("@/lib/image-utils");
     return decodeImageFile(file);
   }
@@ -298,7 +337,9 @@ export default function MetadataPage() {
 
               {mounted && items.length > 0 && (
                 <div className="bg-card rounded-lg border p-4">
-                  <div className="text-muted-foreground mb-3 text-xs font-medium">预览</div>
+                  <div className="text-muted-foreground mb-3 text-xs font-medium">
+                    预览
+                  </div>
                   {selected?.canvas ? (
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                       <img
@@ -310,11 +351,26 @@ export default function MetadataPage() {
                         {selectedMeta && (
                           <Section icon={Cpu} title="基础信息">
                             <MetaRow label="文件名" value={selectedMeta.name} />
-                            <MetaRow label="宽度" value={`${selectedMeta.width} px`} />
-                            <MetaRow label="高度" value={`${selectedMeta.height} px`} />
-                            <MetaRow label="文件大小" value={formatBytes(selectedMeta.fileSize)} />
-                            <MetaRow label="MIME 类型" value={selectedMeta.mimeType} />
-                            <MetaRow label="修改时间" value={formatMetaDate(selectedMeta.lastModified)} />
+                            <MetaRow
+                              label="宽度"
+                              value={`${selectedMeta.width} px`}
+                            />
+                            <MetaRow
+                              label="高度"
+                              value={`${selectedMeta.height} px`}
+                            />
+                            <MetaRow
+                              label="文件大小"
+                              value={formatBytes(selectedMeta.fileSize)}
+                            />
+                            <MetaRow
+                              label="MIME 类型"
+                              value={selectedMeta.mimeType}
+                            />
+                            <MetaRow
+                              label="修改时间"
+                              value={formatMetaDate(selectedMeta.lastModified)}
+                            />
                           </Section>
                         )}
 
@@ -334,83 +390,239 @@ export default function MetadataPage() {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-muted-foreground py-6 text-center text-xs">等待图片解析…</p>
+                    <p className="text-muted-foreground py-6 text-center text-xs">
+                      等待图片解析…
+                    </p>
                   )}
                 </div>
               )}
 
               {mounted && selectedExif && (
                 <div className="space-y-4">
-                  {(selectedExif.make || selectedExif.model || selectedExif.software) && (
+                  {(selectedExif.make ||
+                    selectedExif.model ||
+                    selectedExif.software) && (
                     <Section icon={Camera} title="相机设备">
-                      {selectedExif.make && <MetaRow label="厂商" value={selectedExif.make} />}
-                      {selectedExif.model && <MetaRow label="型号" value={selectedExif.model} />}
-                      {selectedExif.software && <MetaRow label="软件" value={selectedExif.software} />}
-                      {selectedExif.lensModel && <MetaRow label="镜头" value={selectedExif.lensModel} />}
+                      {selectedExif.make && (
+                        <MetaRow label="厂商" value={selectedExif.make} />
+                      )}
+                      {selectedExif.model && (
+                        <MetaRow label="型号" value={selectedExif.model} />
+                      )}
+                      {selectedExif.software && (
+                        <MetaRow label="软件" value={selectedExif.software} />
+                      )}
+                      {selectedExif.lensModel && (
+                        <MetaRow label="镜头" value={selectedExif.lensModel} />
+                      )}
                     </Section>
                   )}
 
-                  {(selectedExif.dateTime || selectedExif.exposureTime || selectedExif.fNumber || selectedExif.iso || selectedExif.focalLength) && (
+                  {(selectedExif.dateTime ||
+                    selectedExif.exposureTime ||
+                    selectedExif.fNumber ||
+                    selectedExif.iso ||
+                    selectedExif.focalLength) && (
                     <Section icon={Clock} title="拍摄参数">
-                      {selectedExif.dateTime && <MetaRow label="拍摄时间" value={selectedExif.dateTime} />}
-                      {selectedExif.exposureTime && <MetaRow label="快门速度" value={selectedExif.exposureTime} />}
-                      {selectedExif.fNumber && <MetaRow label="光圈" value={selectedExif.fNumber} />}
-                      {selectedExif.iso && <MetaRow label="ISO" value={selectedExif.iso} />}
-                      {selectedExif.focalLength && <MetaRow label="焦距" value={selectedExif.focalLength} />}
+                      {selectedExif.dateTime && (
+                        <MetaRow
+                          label="拍摄时间"
+                          value={selectedExif.dateTime}
+                        />
+                      )}
+                      {selectedExif.exposureTime && (
+                        <MetaRow
+                          label="快门速度"
+                          value={selectedExif.exposureTime}
+                        />
+                      )}
+                      {selectedExif.fNumber && (
+                        <MetaRow label="光圈" value={selectedExif.fNumber} />
+                      )}
+                      {selectedExif.iso && (
+                        <MetaRow label="ISO" value={selectedExif.iso} />
+                      )}
+                      {selectedExif.focalLength && (
+                        <MetaRow
+                          label="焦距"
+                          value={selectedExif.focalLength}
+                        />
+                      )}
                     </Section>
                   )}
 
-                  {(selectedExif.gpsLatitude && selectedExif.gpsLongitude) && (
+                  {selectedExif.gpsLatitude && selectedExif.gpsLongitude && (
                     <Section icon={MapPin} title="GPS 定位">
-                      <MetaRow label="纬度" value={selectedExif.gpsLatitude.toFixed(6)} />
-                      <MetaRow label="经度" value={selectedExif.gpsLongitude.toFixed(6)} />
-                      {selectedExif.gpsAltitude && <MetaRow label="海拔" value={`${selectedExif.gpsAltitude.toFixed(1)} m`} />}
+                      <MetaRow
+                        label="纬度"
+                        value={selectedExif.gpsLatitude.toFixed(6)}
+                      />
+                      <MetaRow
+                        label="经度"
+                        value={selectedExif.gpsLongitude.toFixed(6)}
+                      />
+                      {selectedExif.gpsAltitude && (
+                        <MetaRow
+                          label="海拔"
+                          value={`${selectedExif.gpsAltitude.toFixed(1)} m`}
+                        />
+                      )}
                     </Section>
                   )}
 
-                  {(selectedExif.xResolution || selectedExif.yResolution || selectedExif.colorSpace || selectedExif.resolutionUnit) && (
+                  {(selectedExif.xResolution ||
+                    selectedExif.yResolution ||
+                    selectedExif.colorSpace ||
+                    selectedExif.resolutionUnit) && (
                     <Section icon={Palette} title="图像参数">
-                      {selectedExif.xResolution && <MetaRow label="X 分辨率" value={`${selectedExif.xResolution} dpi`} />}
-                      {selectedExif.yResolution && <MetaRow label="Y 分辨率" value={`${selectedExif.yResolution} dpi`} />}
-                      {selectedExif.resolutionUnit && <MetaRow label="分辨率单位" value={selectedExif.resolutionUnit} />}
-                      {selectedExif.colorSpace && <MetaRow label="色彩空间" value={selectedExif.colorSpace} />}
+                      {selectedExif.xResolution && (
+                        <MetaRow
+                          label="X 分辨率"
+                          value={`${selectedExif.xResolution} dpi`}
+                        />
+                      )}
+                      {selectedExif.yResolution && (
+                        <MetaRow
+                          label="Y 分辨率"
+                          value={`${selectedExif.yResolution} dpi`}
+                        />
+                      )}
+                      {selectedExif.resolutionUnit && (
+                        <MetaRow
+                          label="分辨率单位"
+                          value={selectedExif.resolutionUnit}
+                        />
+                      )}
+                      {selectedExif.colorSpace && (
+                        <MetaRow
+                          label="色彩空间"
+                          value={selectedExif.colorSpace}
+                        />
+                      )}
                     </Section>
                   )}
 
-                  {(selectedExif.exposureProgram || selectedExif.meteringMode || selectedExif.lightSource || selectedExif.sensingMethod || selectedExif.customRendered || selectedExif.exposureMode || selectedExif.digitalZoomRatio || selectedExif.sceneCaptureType || selectedExif.contrast || selectedExif.saturation || selectedExif.sharpness || selectedExif.subjectDistanceRange || selectedExif.flash || selectedExif.whiteBalance) && (
+                  {(selectedExif.exposureProgram ||
+                    selectedExif.meteringMode ||
+                    selectedExif.lightSource ||
+                    selectedExif.sensingMethod ||
+                    selectedExif.customRendered ||
+                    selectedExif.exposureMode ||
+                    selectedExif.digitalZoomRatio ||
+                    selectedExif.sceneCaptureType ||
+                    selectedExif.contrast ||
+                    selectedExif.saturation ||
+                    selectedExif.sharpness ||
+                    selectedExif.subjectDistanceRange ||
+                    selectedExif.flash ||
+                    selectedExif.whiteBalance) && (
                     <Section icon={Shield} title="其他信息">
-                      {selectedExif.exposureProgram && <MetaRow label="曝光程序" value={selectedExif.exposureProgram} />}
-                      {selectedExif.meteringMode && <MetaRow label="测光模式" value={selectedExif.meteringMode} />}
-                      {selectedExif.lightSource && <MetaRow label="光源" value={selectedExif.lightSource} />}
-                      {selectedExif.sensingMethod && <MetaRow label="感应方式" value={selectedExif.sensingMethod} />}
-                      {selectedExif.customRendered && <MetaRow label="自定义渲染" value={selectedExif.customRendered} />}
-                      {selectedExif.exposureMode && <MetaRow label="曝光模式" value={selectedExif.exposureMode} />}
-                      {selectedExif.digitalZoomRatio && <MetaRow label="数码变焦" value={selectedExif.digitalZoomRatio} />}
-                      {selectedExif.sceneCaptureType && <MetaRow label="场景类型" value={selectedExif.sceneCaptureType} />}
-                      {selectedExif.contrast && <MetaRow label="对比度" value={selectedExif.contrast} />}
-                      {selectedExif.saturation && <MetaRow label="饱和度" value={selectedExif.saturation} />}
-                      {selectedExif.sharpness && <MetaRow label="锐化" value={selectedExif.sharpness} />}
-                      {selectedExif.subjectDistanceRange && <MetaRow label="对焦距离" value={selectedExif.subjectDistanceRange} />}
-                      {selectedExif.flash && <MetaRow label="闪光灯" value={selectedExif.flash} />}
-                      {selectedExif.whiteBalance && <MetaRow label="白平衡" value={selectedExif.whiteBalance} />}
+                      {selectedExif.exposureProgram && (
+                        <MetaRow
+                          label="曝光程序"
+                          value={selectedExif.exposureProgram}
+                        />
+                      )}
+                      {selectedExif.meteringMode && (
+                        <MetaRow
+                          label="测光模式"
+                          value={selectedExif.meteringMode}
+                        />
+                      )}
+                      {selectedExif.lightSource && (
+                        <MetaRow
+                          label="光源"
+                          value={selectedExif.lightSource}
+                        />
+                      )}
+                      {selectedExif.sensingMethod && (
+                        <MetaRow
+                          label="感应方式"
+                          value={selectedExif.sensingMethod}
+                        />
+                      )}
+                      {selectedExif.customRendered && (
+                        <MetaRow
+                          label="自定义渲染"
+                          value={selectedExif.customRendered}
+                        />
+                      )}
+                      {selectedExif.exposureMode && (
+                        <MetaRow
+                          label="曝光模式"
+                          value={selectedExif.exposureMode}
+                        />
+                      )}
+                      {selectedExif.digitalZoomRatio && (
+                        <MetaRow
+                          label="数码变焦"
+                          value={selectedExif.digitalZoomRatio}
+                        />
+                      )}
+                      {selectedExif.sceneCaptureType && (
+                        <MetaRow
+                          label="场景类型"
+                          value={selectedExif.sceneCaptureType}
+                        />
+                      )}
+                      {selectedExif.contrast && (
+                        <MetaRow label="对比度" value={selectedExif.contrast} />
+                      )}
+                      {selectedExif.saturation && (
+                        <MetaRow
+                          label="饱和度"
+                          value={selectedExif.saturation}
+                        />
+                      )}
+                      {selectedExif.sharpness && (
+                        <MetaRow label="锐化" value={selectedExif.sharpness} />
+                      )}
+                      {selectedExif.subjectDistanceRange && (
+                        <MetaRow
+                          label="对焦距离"
+                          value={selectedExif.subjectDistanceRange}
+                        />
+                      )}
+                      {selectedExif.flash && (
+                        <MetaRow label="闪光灯" value={selectedExif.flash} />
+                      )}
+                      {selectedExif.whiteBalance && (
+                        <MetaRow
+                          label="白平衡"
+                          value={selectedExif.whiteBalance}
+                        />
+                      )}
                     </Section>
                   )}
 
-                  {(selectedExif.copyright || selectedExif.artist || selectedExif.imageDescription) && (
+                  {(selectedExif.copyright ||
+                    selectedExif.artist ||
+                    selectedExif.imageDescription) && (
                     <Section icon={Info} title="版权与描述">
-                      {selectedExif.imageDescription && <MetaRow label="描述" value={selectedExif.imageDescription} />}
-                      {selectedExif.artist && <MetaRow label="作者" value={selectedExif.artist} />}
-                      {selectedExif.copyright && <MetaRow label="版权" value={selectedExif.copyright} />}
+                      {selectedExif.imageDescription && (
+                        <MetaRow
+                          label="描述"
+                          value={selectedExif.imageDescription}
+                        />
+                      )}
+                      {selectedExif.artist && (
+                        <MetaRow label="作者" value={selectedExif.artist} />
+                      )}
+                      {selectedExif.copyright && (
+                        <MetaRow label="版权" value={selectedExif.copyright} />
+                      )}
                     </Section>
                   )}
                 </div>
               )}
 
-              {mounted && !loadingExif && Object.keys(exifDataMap).length === 0 && (
-                <div className="text-muted-foreground rounded-lg border border-dashed p-6 text-center text-xs">
-                  点击上方「读取 EXIF」按钮查看相机参数、GPS 定位等详细元数据
-                </div>
-              )}
+              {mounted &&
+                !loadingExif &&
+                Object.keys(exifDataMap).length === 0 && (
+                  <div className="text-muted-foreground rounded-lg border border-dashed p-6 text-center text-xs">
+                    点击上方「读取 EXIF」按钮查看相机参数、GPS 定位等详细元数据
+                  </div>
+                )}
 
               {mounted && (
                 <BatchTable
@@ -423,13 +635,21 @@ export default function MetadataPage() {
                     if (!meta) return null;
                     return (
                       <div className="text-muted-foreground space-y-0.5 text-[11px]">
-                        <div>尺寸：{meta.width} × {meta.height}</div>
+                        <div>
+                          尺寸：{meta.width} × {meta.height}
+                        </div>
                         <div>大小：{formatBytes(meta.fileSize)}</div>
                         <div>修改时间：{formatMetaDate(meta.lastModified)}</div>
                         <div>类型：{meta.mimeType || "-"}</div>
                         {exifDataMap[item.id] && (
                           <div className="text-primary">
-                            EXIF 已加载 · {Object.values(exifDataMap[item.id]!).filter(Boolean).length} 项数据
+                            EXIF 已加载 ·{" "}
+                            {
+                              Object.values(exifDataMap[item.id]!).filter(
+                                Boolean
+                              ).length
+                            }{" "}
+                            项数据
                           </div>
                         )}
                       </div>
@@ -443,7 +663,10 @@ export default function MetadataPage() {
                       onClick={async () => {
                         if (!item.canvas) return;
                         const blob = await encodeCanvas(item.canvas, "png");
-                        downloadBlob(blob, item.name.replace(/\.[^.]+$/, "") + ".png");
+                        downloadBlob(
+                          blob,
+                          item.name.replace(/\.[^.]+$/, "") + ".png"
+                        );
                         toast.success("已导出清理后的 PNG");
                       }}
                       className="gap-1.5"

@@ -51,14 +51,20 @@ export default function WatermarkPage() {
 
   const [mode, setMode] = React.useState<"text" | "image">("text");
   const [text, setText] = React.useState(DEFAULT_WATERMARK_OPTIONS.text);
-  const [fontSize, setFontSize] = React.useState(DEFAULT_WATERMARK_OPTIONS.fontSize);
+  const [fontSize, setFontSize] = React.useState(
+    DEFAULT_WATERMARK_OPTIONS.fontSize
+  );
   const [color, setColor] = React.useState(DEFAULT_WATERMARK_OPTIONS.color);
-  const [opacity, setOpacity] = React.useState(DEFAULT_WATERMARK_OPTIONS.opacity);
+  const [opacity, setOpacity] = React.useState(
+    DEFAULT_WATERMARK_OPTIONS.opacity
+  );
   const [position, setPosition] = React.useState<WatermarkOptions["position"]>(
     DEFAULT_WATERMARK_OPTIONS.position
   );
   const [rotate, setRotate] = React.useState(DEFAULT_WATERMARK_OPTIONS.rotate);
-  const [padding, setPadding] = React.useState(DEFAULT_WATERMARK_OPTIONS.padding);
+  const [padding, setPadding] = React.useState(
+    DEFAULT_WATERMARK_OPTIONS.padding
+  );
   const [watermarkFile, setWatermarkFile] = React.useState<File | null>(null);
 
   const opts: WatermarkOptions = {
@@ -79,7 +85,11 @@ export default function WatermarkPage() {
       updateItem(i.id, { status: "processing", error: undefined }),
     task: async (item) => {
       if (!item.canvas) throw new Error("图片尚未解码完成");
-      const out = await applyWatermark(item.canvas, opts, watermarkFile ?? undefined);
+      const out = await applyWatermark(
+        item.canvas,
+        opts,
+        watermarkFile ?? undefined
+      );
       const blob = await encodeCanvas(out, "png");
       const suffix = mode === "text" ? "watermarked" : "watermarked-img";
       const base = item.name.replace(/\.[^.]+$/, "");
@@ -104,8 +114,15 @@ export default function WatermarkPage() {
         setPreviewUrl("");
         return;
       }
-      const out = await applyWatermark(source.canvas, opts, watermarkFile ?? undefined);
-      const scale = Math.min(1, PREVIEW_MAX / Math.max(source.canvas.width, source.canvas.height));
+      const out = await applyWatermark(
+        source.canvas,
+        opts,
+        watermarkFile ?? undefined
+      );
+      const scale = Math.min(
+        1,
+        PREVIEW_MAX / Math.max(source.canvas.width, source.canvas.height)
+      );
       const w = Math.max(1, Math.round(source.canvas.width * scale));
       const h = Math.max(1, Math.round(source.canvas.height * scale));
       const preview = document.createElement("canvas");
@@ -206,7 +223,10 @@ export default function WatermarkPage() {
               {mode === "text" && (
                 <div className="space-y-2">
                   <Label>
-                    字号：<span className="text-primary font-medium">{fontSize}px</span>
+                    字号：
+                    <span className="text-primary font-medium">
+                      {fontSize}px
+                    </span>
                   </Label>
                   <Slider
                     value={[fontSize]}
@@ -220,7 +240,10 @@ export default function WatermarkPage() {
 
               <div className="space-y-2">
                 <Label>
-                  透明度：<span className="text-primary font-medium">{Math.round(opacity * 100)}%</span>
+                  透明度：
+                  <span className="text-primary font-medium">
+                    {Math.round(opacity * 100)}%
+                  </span>
                 </Label>
                 <Slider
                   value={[opacity * 100]}
@@ -233,7 +256,12 @@ export default function WatermarkPage() {
 
               <div className="space-y-2">
                 <Label>位置</Label>
-                <Select value={position} onValueChange={(v) => setPosition(v as WatermarkOptions["position"])}>
+                <Select
+                  value={position}
+                  onValueChange={(v) =>
+                    setPosition(v as WatermarkOptions["position"])
+                  }
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -249,7 +277,8 @@ export default function WatermarkPage() {
 
               <div className="space-y-2">
                 <Label>
-                  旋转：<span className="text-primary font-medium">{rotate}°</span>
+                  旋转：
+                  <span className="text-primary font-medium">{rotate}°</span>
                 </Label>
                 <Slider
                   value={[rotate]}
@@ -262,7 +291,8 @@ export default function WatermarkPage() {
 
               <div className="space-y-2">
                 <Label>
-                  边距：<span className="text-primary font-medium">{padding}px</span>
+                  边距：
+                  <span className="text-primary font-medium">{padding}px</span>
                 </Label>
                 <Slider
                   value={[padding]}
@@ -282,7 +312,9 @@ export default function WatermarkPage() {
                     onChange={(e) => setColor(e.target.value)}
                     className="h-9 w-16 cursor-pointer rounded border"
                   />
-                  <span className="text-muted-foreground text-xs font-mono">{color}</span>
+                  <span className="text-muted-foreground font-mono text-xs">
+                    {color}
+                  </span>
                 </div>
               </div>
             </div>
@@ -294,11 +326,19 @@ export default function WatermarkPage() {
             <div className="space-y-4">
               {items.length > 0 && (
                 <div className="bg-card rounded-lg border p-4">
-                  <div className="text-muted-foreground mb-3 text-xs font-medium">实时预览</div>
+                  <div className="text-muted-foreground mb-3 text-xs font-medium">
+                    实时预览
+                  </div>
                   {previewUrl ? (
-                    <img src={previewUrl} alt="水印预览" className="max-h-72 w-full rounded border object-contain" />
+                    <img
+                      src={previewUrl}
+                      alt="水印预览"
+                      className="max-h-72 w-full rounded border object-contain"
+                    />
                   ) : (
-                    <p className="text-muted-foreground py-6 text-center text-xs">等待图片解码…</p>
+                    <p className="text-muted-foreground py-6 text-center text-xs">
+                      等待图片解码…
+                    </p>
                   )}
                 </div>
               )}
@@ -351,7 +391,10 @@ export default function WatermarkPage() {
                     </button>
                     {entries.length > 0 && (
                       <>
-                        <ZipExportButton entries={entries} zipName="watermarked-images.zip" />
+                        <ZipExportButton
+                          entries={entries}
+                          zipName="watermarked-images.zip"
+                        />
                         <DownloadAllButton entries={entries} />
                         <span className="text-muted-foreground text-xs">
                           已完成 {entries.length} 个
