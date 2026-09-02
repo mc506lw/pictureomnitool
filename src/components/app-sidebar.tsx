@@ -14,6 +14,11 @@ import {
   Stamp,
   ShieldCheck,
   ImageIcon,
+  Palette,
+  RotateCw,
+  Info,
+  Columns,
+  History,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -90,6 +95,53 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "ICO · Favicon · App 图标",
         icon: Stamp,
         url: "/icon",
+      },
+    ],
+  },
+  {
+    label: "高级工具",
+    items: [
+      {
+        title: "水印添加",
+        description: "文字 / 图片水印，支持位置、透明度、旋转、平铺",
+        icon: Stamp,
+        url: "/watermark",
+      },
+      {
+        title: "旋转与翻转",
+        description: "任意角度旋转、水平/垂直翻转",
+        icon: RotateCw,
+        url: "/rotate",
+      },
+      {
+        title: "图片调色",
+        description: "亮度、对比度、饱和度、色相、模糊、灰度、反色",
+        icon: Palette,
+        url: "/adjust",
+      },
+      {
+        title: "拼图合并",
+        description: "横向/纵向拼接多张图片，支持间距与对齐",
+        icon: Columns,
+        url: "/merge",
+      },
+      {
+        title: "图片元数据",
+        description: "查看尺寸、大小、修改时间，导出时自动清理",
+        icon: Info,
+        url: "/metadata",
+      },
+      {
+        title: "颜色提取",
+        description: "提取主色调和调色板",
+        icon: Palette,
+        url: "/colors",
+      },
+      {
+        title: "历史记录",
+        description: "查看最近处理的图片",
+        icon: History,
+        url: "/history",
       },
     ],
   },

@@ -125,6 +125,14 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300 ease-in-out;
+  }
+  /* 仅对背景/边框等大面积颜色加过渡，避免文字闪烁 */
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, outline-color, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
   }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { Sun, Moon, Monitor } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -11,12 +12,20 @@ interface ThemeSwitcherProps {
 
 export function ThemeSwitcher({ className, compact }: ThemeSwitcherProps) {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const buttons = [
     { value: "light", icon: Sun, title: "亮色模式" },
     { value: "dark", icon: Moon, title: "暗色模式" },
     { value: "system", icon: Monitor, title: "跟随系统" },
   ];
+
+  // 服务端渲染时统一使用 system 主题的样式，避免 hydration 不匹配
+  const activeTheme = mounted ? theme : "system";
 
   return (
     <div className={cn(className)}>
@@ -27,7 +36,7 @@ export function ThemeSwitcher({ className, compact }: ThemeSwitcherProps) {
             onClick={() => setTheme(value)}
             className={cn(
               "ring-offset-background focus-visible:ring-ring inline-flex flex-1 items-center justify-center rounded-md px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
-              theme === value
+              activeTheme === value
                 ? "bg-background text-foreground shadow-sm"
                 : "hover:bg-muted-foreground/10",
               compact && "px-1.5"
