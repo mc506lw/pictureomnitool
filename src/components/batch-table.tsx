@@ -65,6 +65,10 @@ interface BatchTableProps {
   showDimensions?: boolean;
   /** 渲染结果列（自定义） */
   renderResult?: (item: BatchItem) => React.ReactNode;
+  /** 渲染附加信息列 */
+  renderExtra?: (item: BatchItem) => React.ReactNode;
+  /** 渲染操作列（自定义，会覆盖默认删除按钮） */
+  renderActions?: (item: BatchItem) => React.ReactNode;
   /** 全选状态（未实现多选时可不传） */
   selectable?: boolean;
 }
@@ -78,6 +82,8 @@ export function BatchTable({
   allowAdd = false,
   showDimensions = true,
   renderResult,
+  renderExtra,
+  renderActions,
 }: BatchTableProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -143,6 +149,9 @@ export function BatchTable({
                 <th className="px-2 py-2 font-medium">状态</th>
                 {renderResult && (
                   <th className="px-2 py-2 font-medium">结果</th>
+                )}
+                {renderExtra && (
+                  <th className="px-2 py-2 font-medium">信息</th>
                 )}
                 <th className="px-2 py-2 text-right font-medium">操作</th>
               </tr>
@@ -211,14 +220,23 @@ export function BatchTable({
                       {renderResult(item)}
                     </td>
                   )}
+                  {renderExtra && (
+                    <td className="px-2 py-2 text-xs">
+                      {renderExtra(item)}
+                    </td>
+                  )}
                   <td className="px-2 py-2 text-right">
-                    <button
-                      onClick={() => onRemove(item.id)}
-                      className="text-muted-foreground hover:text-destructive rounded p-1 transition-colors"
-                      title="移除"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
+                    {renderActions ? (
+                      renderActions(item)
+                    ) : (
+                      <button
+                        onClick={() => onRemove(item.id)}
+                        className="text-muted-foreground hover:text-destructive rounded p-1 transition-colors"
+                        title="移除"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

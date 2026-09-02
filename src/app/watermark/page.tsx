@@ -84,7 +84,7 @@ export default function WatermarkPage() {
       const suffix = mode === "text" ? "watermarked" : "watermarked-img";
       const base = item.name.replace(/\.[^.]+$/, "");
       const name = `${base}_${suffix}.png`;
-      updateItem(i.id, { result: { blob, name, size: blob.size } });
+      updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
     onItemError: (i, err) =>

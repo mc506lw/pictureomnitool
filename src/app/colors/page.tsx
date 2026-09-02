@@ -6,7 +6,7 @@ import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
 import { BatchTable } from "@/components/batch-table";
-import { ZipExportButton, DownloadAllButton, type ZipEntry } from "@/lib/zip";
+import { ZipExportButton, DownloadAllButton, downloadZip, type ZipEntry } from "@/lib/zip";
 import { useBatchStore } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
 import { extractColors, DEFAULT_COLOR_OPTIONS, type ExtractedColor } from "@/lib/colors";

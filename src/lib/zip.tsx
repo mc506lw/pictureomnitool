@@ -108,11 +108,13 @@ export async function downloadAll(entries: ZipEntry[]): Promise<void> {
 interface DownloadAllButtonProps {
   entries: ZipEntry[];
   disabled?: boolean;
+  className?: string;
 }
 
 export function DownloadAllButton({
   entries,
   disabled,
+  className,
 }: DownloadAllButtonProps) {
   const [busy, setBusy] = React.useState(false);
   return (
@@ -126,7 +128,10 @@ export function DownloadAllButton({
         }
       }}
       disabled={disabled || busy || entries.length === 0}
-      className="border-input bg-background hover:bg-accent inline-flex h-9 items-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-40"
+      className={cn(
+        "border-input bg-background hover:bg-accent inline-flex h-9 items-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-40",
+        className
+      )}
     >
       {busy ? (
         <Loader2 className="h-4 w-4 animate-spin" />

@@ -41,6 +41,8 @@ export interface ImageMeta {
   subjectDistanceRange?: string;
 }
 
+import exifr from "exifr";
+
 export async function readImageMeta(file: File): Promise<ImageMeta> {
   let orientation = 1;
   let width = 0;

@@ -56,7 +56,7 @@ export default function RotatePage() {
       const out = applyRotateFlip(item.canvas, { rotateDeg, flip });
       const blob = await encodeCanvas(out, "png");
       const name = withExtension(item.name, "png");
-      updateItem(i.id, { result: { blob, name, size: blob.size } });
+      updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
     onItemError: (i, err) =>
