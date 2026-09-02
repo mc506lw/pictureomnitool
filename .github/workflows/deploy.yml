@@ -1,51 +1,95 @@
-name: Deploy to GitHub Pages
+# CI/CD 工作流
+# 代码检查、构建、部署到 GitHub Pages
+
+name: CI/CD
 
 on:
   push:
-    branches: ["master", "main"]
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
+# 设置权限
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# 同时只允许一个部署
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "11.5.3"
+
 jobs:
+  # 构建应用
   build:
+    name: 构建应用
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: 检出代码
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "pnpm"
-
-      - name: Setup pnpm
+      - name: 设置 pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: ${{ env.PNPM_VERSION }}
 
-      - name: Install dependencies
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: 安装依赖
         run: pnpm install --frozen-lockfile
 
-      - name: Build
-        run: pnpm build
+      - name: 代码检查
+        run: pnpm run lint
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: 代码格式检查
+        run: pnpm run format:check
+
+      - name: 类型检查
+        run: pnpm run type-check
+
+      - name: 构建应用
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: 验证构建输出
+        run: |
+          echo "检查构建输出目录..."
+          ls -la out/
+          echo "检查 .nojekyll 文件..."
+          ls -la out/.nojekyll || echo ".nojekyll 不存在"
+          echo "检查 index.html..."
+          ls -la out/index.html || echo "index.html 不存在"
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
+  # 部署到 GitHub Pages
   deploy:
-    runs-on: ubuntu-latest
+    name: 部署到 GitHub Pages
     needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 部署
+        id: deployment
         uses: actions/deploy-pages@v4
