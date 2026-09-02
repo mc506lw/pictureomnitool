@@ -57,7 +57,7 @@ export function mergeImages(
   for (const s of sources) {
     const main = isH ? s.width : s.height;
     const cross = isH ? s.height : s.width;
-    let offsetMain = cursor;
+    const offsetMain = cursor;
     let offsetCross = 0;
 
     if (align === "center") offsetCross = (finalCross - cross) / 2;

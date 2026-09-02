@@ -194,11 +194,11 @@ function applyTemperatureTint(
 ): { r: number; g: number; b: number } {
   // 色温：正值为暖色（增红减蓝），负值为冷色（减红增蓝）
   const tempFactor = temp / 100;
-  let nr = r + tempFactor * 30;
-  let nb = b - tempFactor * 30;
+  const nr = r + tempFactor * 30;
+  const nb = b - tempFactor * 30;
   // 色调：正值为绿，负值为品红
   const tintFactor = tint / 100;
-  let ng = g + tintFactor * 20;
+  const ng = g + tintFactor * 20;
   return {
     r: Math.max(0, Math.min(255, Math.round(nr))),
     g: Math.max(0, Math.min(255, Math.round(ng))),

@@ -44,7 +44,7 @@ export interface ImageMeta {
 import exifr from "exifr";
 
 export async function readImageMeta(file: File): Promise<ImageMeta> {
-  let orientation = 1;
+  const orientation = 1;
   let width = 0;
   let height = 0;
 
@@ -74,7 +74,7 @@ export async function readImageMeta(file: File): Promise<ImageMeta> {
   const base: ImageMeta = {
     width,
     height,
-    orientation,
+    orientation: 1,
     fileSize: file.size,
     mimeType: file.type || "application/octet-stream",
     lastModified: file.lastModified,

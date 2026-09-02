@@ -52,7 +52,7 @@ interface ExifData {
   subjectDistanceRange?: string;
 }
 
-function Section({ icon: Icon, title, children, className }: { icon: any; title: string; children: React.ReactNode; className?: string }) {
+function Section({ icon: Icon, title, children, className }: { icon: React.ComponentType<{ className?: string }>; title: string; children: React.ReactNode; className?: string }) {
   return (
     <div className={cn("bg-card rounded-lg border p-4", className)}>
       <div className="mb-3 flex items-center gap-2">
@@ -225,21 +225,28 @@ export default function MetadataPage() {
   };
 
   const handleReprocess = async () => {
-    for (const item of items) {
-      if (item.canvas) continue;
+    const next = items.map((item) => {
+      if (item.canvas) return item;
       try {
-        const { decodeImageFile } = await import("@/lib/image-utils");
-        const decoded = await decodeImageFile(item.file);
-        item.canvas = decoded.canvas;
-        item.width = decoded.width;
-        item.height = decoded.height;
+        const decoded = decodeImageFileSync(item.file);
+        return {
+          ...item,
+          canvas: decoded.canvas,
+          width: decoded.width,
+          height: decoded.height,
+        };
       } catch {
-        // ignore
+        return item;
       }
-    }
-    useBatchStore.setState({ items: [...items] });
+    });
+    useBatchStore.setState({ items: next });
     toast.success("已重新解析图片");
   };
+
+  async function decodeImageFileSync(file: File): Promise<{ canvas: HTMLCanvasElement; width: number; height: number }> {
+    const { decodeImageFile } = await import("@/lib/image-utils");
+    return decodeImageFile(file);
+  }
 
   const selectedMeta = mounted ? metas[selected?.id ?? ""] : undefined;
   const selectedExif = mounted ? exifDataMap[selected?.id ?? ""] : undefined;
