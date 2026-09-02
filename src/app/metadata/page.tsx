@@ -262,25 +262,27 @@ export default function MetadataPage() {
   };
 
   const handleReprocess = async () => {
-    const next = items.map((item) => {
-      if (item.canvas) return item;
-      try {
-        const decoded = decodeImageFileSync(item.file);
-        return {
-          ...item,
-          canvas: decoded.canvas,
-          width: decoded.width,
-          height: decoded.height,
-        };
-      } catch {
-        return item;
-      }
-    });
-    useBatchStore.setState({ items: next });
+    const updates = await Promise.all(
+      items.map(async (item) => {
+        if (item.canvas) return item;
+        try {
+          const decoded = await decodeImageFileAsync(item.file);
+          return {
+            ...item,
+            canvas: decoded.canvas,
+            width: decoded.width,
+            height: decoded.height,
+          };
+        } catch {
+          return item;
+        }
+      })
+    );
+    useBatchStore.setState({ items: updates });
     toast.success("已重新解析图片");
   };
 
-  async function decodeImageFileSync(
+  async function decodeImageFileAsync(
     file: File
   ): Promise<{ canvas: HTMLCanvasElement; width: number; height: number }> {
     const { decodeImageFile } = await import("@/lib/image-utils");
