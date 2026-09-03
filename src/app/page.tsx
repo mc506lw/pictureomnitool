@@ -273,6 +273,14 @@ const tools = [
     tag: "新功能",
     color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
   },
+  {
+    icon: Pipette,
+    title: "噪点效果",
+    description: "为图片添加随机噪点，营造胶片或复古纹理效果",
+    url: "/noise",
+    tag: "新功能",
+    color: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
+  },
 ];
 
 const stats = [

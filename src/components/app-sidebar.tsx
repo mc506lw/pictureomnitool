@@ -236,6 +236,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Camera,
         url: "/exif-viewer",
       },
+      {
+        title: "噪点效果",
+        description: "为图片添加随机噪点，营造胶片或复古纹理效果",
+        icon: Pipette,
+        url: "/noise",
+      },
     ],
   },
 ];
