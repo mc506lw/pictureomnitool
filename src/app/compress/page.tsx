@@ -9,6 +9,7 @@ import { BatchTable } from "@/components/batch-table";
 import { ZipExportButton, DownloadAllButton, type ZipEntry } from "@/lib/zip";
 import { useBatchStore } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
+import { BeforeAfterSlider } from "@/components/before-after-slider";
 import { encodeCanvas, type EncodeFormat } from "@/lib/image-utils";
 import { withExtension, formatBytes } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
