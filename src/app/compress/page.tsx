@@ -19,6 +19,8 @@ import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
+const PREVIEW_MAX = 420;
+
 export default function CompressPage() {
   const items = useBatchStore((s) => s.items);
   const addFiles = useBatchStore((s) => s.addFiles);
