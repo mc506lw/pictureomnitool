@@ -45,7 +45,6 @@ import {
   Scissors,
   Activity,
   Box,
-  Layers,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
