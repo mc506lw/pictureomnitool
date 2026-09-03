@@ -341,6 +341,7 @@ export default function CropPage() {
   const addFiles = useBatchStore((s) => s.addFiles);
   const removeItem = useBatchStore((s) => s.removeItem);
   const clearAll = useBatchStore((s) => s.clearAll);
+  const resetAll = useBatchStore((s) => s.resetAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [aspect, setAspect] = React.useState<CropAspect>("1:1");
@@ -601,7 +602,10 @@ export default function CropPage() {
             <BatchTable
               items={items}
               onRemove={removeItem}
-              onClearAll={clearAll}
+              onClearAll={() => {
+                clearAll();
+                process.reset();
+              }}
               showDimensions
               renderResult={(item) =>
                 item.result ? (
