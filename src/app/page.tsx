@@ -33,6 +33,7 @@ import {
   Circle,
   ArrowLeftRight,
   Grid3X3,
+  Eye,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -209,6 +210,14 @@ const tools = [
     url: "/split",
     tag: "新功能",
     color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+  },
+  {
+    icon: Eye,
+    title: "水印预览",
+    description: "实时预览文字水印效果，调整透明度、角度和重复模式",
+    url: "/watermark-preview",
+    tag: "新功能",
+    color: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
   },
 ];
 

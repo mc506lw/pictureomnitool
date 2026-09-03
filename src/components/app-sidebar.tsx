@@ -28,6 +28,7 @@ import {
   Circle,
   ArrowLeftRight,
   Grid3X3,
+  Eye,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -193,6 +194,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "将图片切割为等分网格切片",
         icon: Grid3X3,
         url: "/split",
+      },
+      {
+        title: "水印预览",
+        description: "实时预览水印效果",
+        icon: Eye,
+        url: "/watermark-preview",
       },
     ],
   },
