@@ -32,6 +32,7 @@ import {
   Eye,
   FlipHorizontal2,
   Smartphone,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -221,6 +222,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "查看并导出图片清单",
         icon: TableProperties,
         url: "/manifest",
+      },
+      {
+        title: "图片标签",
+        description: "批量为图片添加关键词标签",
+        icon: Tag,
+        url: "/image-tags",
       },
     ],
   },
