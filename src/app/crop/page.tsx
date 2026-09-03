@@ -341,6 +341,7 @@ export default function CropPage() {
   const addFiles = useBatchStore((s) => s.addFiles);
   const removeItem = useBatchStore((s) => s.removeItem);
   const clearAll = useBatchStore((s) => s.clearAll);
+  const clearCompleted = useBatchStore((s) => s.clearCompleted);
   const resetAll = useBatchStore((s) => s.resetAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
@@ -604,6 +605,10 @@ export default function CropPage() {
               onRemove={removeItem}
               onClearAll={() => {
                 clearAll();
+                process.reset();
+              }}
+              onClearCompleted={() => {
+                clearCompleted();
                 process.reset();
               }}
               showDimensions
