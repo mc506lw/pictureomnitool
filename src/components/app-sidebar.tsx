@@ -29,6 +29,7 @@ import {
   ArrowLeftRight,
   Grid3X3,
   Eye,
+  FlipHorizontal2,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -200,6 +201,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "实时预览水印效果",
         icon: Eye,
         url: "/watermark-preview",
+      },
+      {
+        title: "图片镜像",
+        description: "水平或垂直翻转图片",
+        icon: FlipHorizontal2,
+        url: "/mirror",
       },
     ],
   },

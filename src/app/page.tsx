@@ -34,6 +34,7 @@ import {
   ArrowLeftRight,
   Grid3X3,
   Eye,
+  FlipHorizontal2,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -218,6 +219,14 @@ const tools = [
     url: "/watermark-preview",
     tag: "新功能",
     color: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
+  },
+  {
+    icon: FlipHorizontal2,
+    title: "图片镜像",
+    description: "水平或垂直翻转图片，适合制作镜像效果",
+    url: "/mirror",
+    tag: "新功能",
+    color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
   },
 ];
 
