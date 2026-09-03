@@ -40,6 +40,7 @@ import {
   Smartphone,
   TableProperties,
   Tag,
+  Pencil,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -288,6 +289,14 @@ const tools = [
     url: "/vignette",
     tag: "新功能",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
+  {
+    icon: Pencil,
+    title: "素描效果",
+    description: "基于边缘检测将图片转为铅笔素描风格",
+    url: "/sketch",
+    tag: "新功能",
+    color: "bg-stone-500/10 text-stone-600 dark:text-stone-400",
   },
 ];
 

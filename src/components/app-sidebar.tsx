@@ -34,6 +34,7 @@ import {
   Smartphone,
   Camera,
   Tag,
+  Pencil,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -247,6 +248,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "为图片添加径向暗角，突出主体并增强画面层次",
         icon: CircleOff,
         url: "/vignette",
+      },
+      {
+        title: "素描效果",
+        description: "基于边缘检测将图片转为铅笔素描风格",
+        icon: Pencil,
+        url: "/sketch",
       },
     ],
   },
