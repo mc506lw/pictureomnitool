@@ -610,6 +610,15 @@ export default function CropPage() {
                   </span>
                 ) : null
               }
+              onApplyToAll={() => {
+                if (!selected?.canvas) return;
+                const rect =
+                  rects[selected.id] ?? centerCrop(selected.canvas, aspect);
+                const next: Record<string, Rect> = {};
+                for (const item of readyItems) next[item.id] = rect;
+                setRects(next);
+              }}
+              applyToAllLabel="应用到全部"
             />
           )}
         </div>
