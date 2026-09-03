@@ -35,6 +35,7 @@ import {
   Camera,
   Tag,
   Pencil,
+  Scissors,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -254,6 +255,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "基于边缘检测将图片转为铅笔素描风格",
         icon: Pencil,
         url: "/sketch",
+      },
+      {
+        title: "抠图移除",
+        description: "基于颜色容差移除相近背景色，保留主体",
+        icon: Scissors,
+        url: "/cutout",
       },
     ],
   },

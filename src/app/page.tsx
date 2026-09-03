@@ -41,6 +41,7 @@ import {
   TableProperties,
   Tag,
   Pencil,
+  Scissors,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -297,6 +298,14 @@ const tools = [
     url: "/sketch",
     tag: "新功能",
     color: "bg-stone-500/10 text-stone-600 dark:text-stone-400",
+  },
+  {
+    icon: Scissors,
+    title: "抠图移除",
+    description: "基于颜色容差移除相近背景色，保留主体",
+    url: "/cutout",
+    tag: "新功能",
+    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
   },
 ];
 
