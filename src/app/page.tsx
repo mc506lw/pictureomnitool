@@ -31,6 +31,7 @@ import {
   ImageOff,
   Square,
   Circle,
+  ArrowLeftRight,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -191,6 +192,14 @@ const tools = [
     url: "/round-corners",
     tag: "新功能",
     color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
+  {
+    icon: ArrowLeftRight,
+    title: "图片对比",
+    description: "上传两张图片并直观对比差异，支持滑动查看重叠效果",
+    url: "/compare",
+    tag: "新功能",
+    color: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
   },
 ];
 

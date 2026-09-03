@@ -26,6 +26,7 @@ import {
   ImageOff,
   Square,
   Circle,
+  ArrowLeftRight,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -179,6 +180,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "为图片添加圆角效果",
         icon: Circle,
         url: "/round-corners",
+      },
+      {
+        title: "图片对比",
+        description: "对比两张图片的差异",
+        icon: ArrowLeftRight,
+        url: "/compare",
       },
     ],
   },
