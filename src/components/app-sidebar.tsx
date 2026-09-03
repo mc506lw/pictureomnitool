@@ -31,7 +31,6 @@ import {
   Eye,
   FlipHorizontal2,
   Smartphone,
-  Palette,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -215,12 +214,6 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "将图片放入手机或笔记本外框中",
         icon: Smartphone,
         url: "/screenshot-frame",
-      },
-      {
-        title: "配色提取",
-        description: "从图片中提取主要颜色",
-        icon: Palette,
-        url: "/color-palette",
       },
     ],
   },
