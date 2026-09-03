@@ -225,6 +225,8 @@ export default function MergePage() {
                 allowAdd
                 onAdd={addFiles}
                 showDimensions
+                onApplyToAll={process.start}
+                applyToAllLabel="应用到全部"
               />
 
               {readyItems.length >= 2 && (

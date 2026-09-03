@@ -212,6 +212,8 @@ export default function ColorExtractPage() {
                     </div>
                   );
                 }}
+                onApplyToAll={process.start}
+                applyToAllLabel="应用到全部"
               />
 
               {Object.keys(colorResults).length > 0 && (

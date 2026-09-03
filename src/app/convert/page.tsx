@@ -209,6 +209,8 @@ export default function ConvertPage() {
                     </span>
                   ) : null
                 }
+                onApplyToAll={handleProcess}
+                applyToAllLabel="应用到全部"
               />
 
               <div className="bg-card flex items-center gap-3 rounded-lg border p-4">
