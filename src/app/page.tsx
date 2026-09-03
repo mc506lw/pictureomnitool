@@ -316,6 +316,14 @@ const tools = [
     tag: "新功能",
     color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   },
+  {
+    icon: ImageIcon,
+    title: "渐变叠加",
+    description: "为图片叠加线性渐变色彩，快速调整氛围",
+    url: "/gradient-overlay",
+    tag: "新功能",
+    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  },
 ];
 
 const stats = [

@@ -269,6 +269,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Type,
         url: "/ascii-art",
       },
+      {
+        title: "渐变叠加",
+        description: "为图片叠加线性渐变色彩，快速调整氛围",
+        icon: ImageIcon,
+        url: "/gradient-overlay",
+      },
     ],
   },
 ];
