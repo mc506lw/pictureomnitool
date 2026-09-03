@@ -19,6 +19,8 @@ import {
   Info,
   Columns,
   History,
+  Text,
+  Pipette,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -104,7 +106,7 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
       {
         title: "水印添加",
         description: "文字 / 图片水印，支持位置、透明度、旋转、平铺",
-        icon: Stamp,
+        icon: Text,
         url: "/watermark",
       },
       {
@@ -134,7 +136,7 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
       {
         title: "颜色提取",
         description: "提取主色调和调色板",
-        icon: Palette,
+        icon: Pipette,
         url: "/colors",
       },
       {
@@ -256,7 +258,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <Separator className="group-data-[collapsible=icon]:hidden" />
         <div className="px-2 pb-2 group-data-[collapsible=icon]:hidden">
           <p className="text-muted-foreground px-2 text-[11px]">
-            {open ? "v0.1.0 · 本地处理" : ""}
+            {open ? "v0.2.0 · 本地处理" : ""}
           </p>
         </div>
       </SidebarFooterUI>
