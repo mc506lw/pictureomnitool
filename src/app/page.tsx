@@ -36,6 +36,7 @@ import {
   Eye,
   FlipHorizontal2,
   Smartphone,
+  TableProperties,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
