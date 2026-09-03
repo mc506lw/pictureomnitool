@@ -275,6 +275,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: ImageIcon,
         url: "/gradient-overlay",
       },
+      {
+        title: "图片水印",
+        description: "上传水印图片并批量叠加到主图上",
+        icon: ImageIcon,
+        url: "/watermark-image",
+      },
     ],
   },
 ];

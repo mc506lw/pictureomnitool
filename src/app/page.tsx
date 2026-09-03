@@ -324,6 +324,14 @@ const tools = [
     tag: "新功能",
     color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
   },
+  {
+    icon: ImageIcon,
+    title: "图片水印",
+    description: "上传水印图片并批量叠加到主图上",
+    url: "/watermark-image",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
 ];
 
 const stats = [
