@@ -16,6 +16,8 @@ import {
   ImageIcon,
   ChevronRight,
   Palette,
+  Camera,
+  LayoutGrid,
   RotateCw,
   Info,
   Columns,
@@ -38,7 +40,6 @@ import {
   Smartphone,
   TableProperties,
   Tag,
-  Camera,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -263,6 +264,14 @@ const tools = [
     url: "/exif-viewer",
     tag: "新功能",
     color: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
+  },
+  {
+    icon: LayoutGrid,
+    title: "拼图组合",
+    description: "将多张图片组合为网格拼图，支持间距、圆角和背景色",
+    url: "/collage",
+    tag: "新功能",
+    color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
   },
 ];
 
