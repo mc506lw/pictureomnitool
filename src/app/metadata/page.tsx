@@ -677,6 +677,22 @@ export default function MetadataPage() {
                       导出清理版
                     </Button>
                   )}
+                  onApplyToAll={() => {
+                    const next: Record<
+                      string,
+                      Awaited<ReturnType<typeof readImageMeta>>
+                    > = {};
+                    for (const item of items) {
+                      if (!item.file) continue;
+                      try {
+                        next[item.id] = await readImageMeta(item.file);
+                      } catch {
+                        // ignore
+                      }
+                    }
+                    setMetas(next);
+                  }}
+                  applyToAllLabel="读取元数据"
                 />
               )}
             </div>
