@@ -25,6 +25,7 @@ import {
   CircleCheckBig,
   ImageOff,
   Square,
+  Circle,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -172,6 +173,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "添加自定义内边距和背景色",
         icon: Square,
         url: "/padding",
+      },
+      {
+        title: "圆角图片",
+        description: "为图片添加圆角效果",
+        icon: Circle,
+        url: "/round-corners",
       },
     ],
   },

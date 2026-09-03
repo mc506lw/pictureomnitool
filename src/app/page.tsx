@@ -30,6 +30,7 @@ import {
   CircleCheckBig,
   ImageOff,
   Square,
+  Circle,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -182,6 +183,14 @@ const tools = [
     url: "/padding",
     tag: "新功能",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+  },
+  {
+    icon: Circle,
+    title: "圆角图片",
+    description: "为图片添加圆角效果，适合头像、卡片和社交媒体素材",
+    url: "/round-corners",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
   },
 ];
 
