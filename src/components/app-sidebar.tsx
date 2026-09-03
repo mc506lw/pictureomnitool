@@ -242,6 +242,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Pipette,
         url: "/noise",
       },
+      {
+        title: "暗角效果",
+        description: "为图片添加径向暗角，突出主体并增强画面层次",
+        icon: CircleOff,
+        url: "/vignette",
+      },
     ],
   },
 ];

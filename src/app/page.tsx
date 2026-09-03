@@ -281,6 +281,14 @@ const tools = [
     tag: "新功能",
     color: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
   },
+  {
+    icon: CircleOff,
+    title: "暗角效果",
+    description: "为图片添加径向暗角，突出主体并增强画面层次",
+    url: "/vignette",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
 ];
 
 const stats = [
