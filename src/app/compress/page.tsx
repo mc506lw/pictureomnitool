@@ -257,6 +257,8 @@ export default function CompressPage() {
                     </span>
                   ) : null
                 }
+                onApplyToAll={process.start}
+                applyToAllLabel="应用到全部"
               />
 
               <div className="bg-card flex items-center gap-3 rounded-lg border p-4">
