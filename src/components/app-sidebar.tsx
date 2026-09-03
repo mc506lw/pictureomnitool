@@ -27,6 +27,7 @@ import {
   Square,
   Circle,
   ArrowLeftRight,
+  Grid3X3,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -186,6 +187,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "对比两张图片的差异",
         icon: ArrowLeftRight,
         url: "/compare",
+      },
+      {
+        title: "图片切片",
+        description: "将图片切割为等分网格切片",
+        icon: Grid3X3,
+        url: "/split",
       },
     ],
   },

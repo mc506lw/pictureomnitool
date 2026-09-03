@@ -32,6 +32,7 @@ import {
   Square,
   Circle,
   ArrowLeftRight,
+  Grid3X3,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -200,6 +201,14 @@ const tools = [
     url: "/compare",
     tag: "新功能",
     color: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
+  },
+  {
+    icon: Grid3X3,
+    title: "图片切片",
+    description: "将图片切割为等分网格切片，适合拼图或分块处理",
+    url: "/split",
+    tag: "新功能",
+    color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
   },
 ];
 
