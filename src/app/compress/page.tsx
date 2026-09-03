@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
 import { BatchTable } from "@/components/batch-table";
 import { ZipExportButton, DownloadAllButton, type ZipEntry } from "@/lib/zip";
-import { useBatchStore } from "@/store/batch-store";
+import { useBatchStore, type BatchItem } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
 import { BeforeAfterSlider } from "@/components/before-after-slider";
 import { encodeCanvas, type EncodeFormat } from "@/lib/image-utils";
@@ -74,13 +74,32 @@ export default function CompressPage() {
       }),
   });
 
-  const entries: ZipEntry[] = items
-    .filter((i) => i.status === "done" && i.result)
-    .map((i) => ({ name: i.result!.name, blob: i.result!.blob }));
+  const [previewItem, setPreviewItem] = React.useState<BatchItem | null>(null);
+
+  // 当有结果时，默认预览第一个完成项
+  React.useEffect(() => {
+    const done = items.find((i) => i.status === "done" && i.result);
+    setPreviewItem(done ?? null);
+  }, [items]);
+
+  const beforeUrl = React.useMemo(() => {
+    const source = previewItem ?? items[0];
+    if (!source?.thumbnail) return "";
+    return source.thumbnail;
+  }, [previewItem, items]);
+
+  const afterUrl = React.useMemo(() => {
+    if (!previewItem?.result?.url) return "";
+    return previewItem.result.url;
+  }, [previewItem]);
 
   const totalSaved = items
     .filter((i) => i.status === "done" && i.result)
     .reduce((sum, i) => sum + Math.max(0, i.size - i.result!.size), 0);
+
+  const entries: ZipEntry[] = items
+    .filter((i) => i.status === "done" && i.result)
+    .map((i) => ({ name: i.result!.name, blob: i.result!.blob }));
 
   return (
     <SidebarInset>
@@ -283,6 +302,18 @@ export default function CompressPage() {
                   </>
                 )}
               </div>
+            </div>
+          )}
+          {beforeUrl && afterUrl && (
+            <div className="space-y-2">
+              <div className="text-muted-foreground text-xs font-medium">
+                压缩前后对比
+              </div>
+              <BeforeAfterSlider
+                beforeUrl={beforeUrl}
+                afterUrl={afterUrl}
+                className="h-64 w-full"
+              />
             </div>
           )}
         </div>
