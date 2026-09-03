@@ -26,6 +26,7 @@ export default function CompressPage() {
   const addFiles = useBatchStore((s) => s.addFiles);
   const removeItem = useBatchStore((s) => s.removeItem);
   const clearAll = useBatchStore((s) => s.clearAll);
+  const clearCompleted = useBatchStore((s) => s.clearCompleted);
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [format, setFormat] = React.useState<EncodeFormat>("webp");
@@ -233,6 +234,7 @@ export default function CompressPage() {
                 items={items}
                 onRemove={removeItem}
                 onClearAll={clearAll}
+                onClearCompleted={clearCompleted}
                 allowAdd
                 onAdd={addFiles}
                 renderResult={(item) =>
