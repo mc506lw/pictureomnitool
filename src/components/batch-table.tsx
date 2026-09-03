@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import type { BatchItem, BatchStatus } from "@/store/batch-store";
 import { formatBytes, getBaseName } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import { useBatchStore } from "@/store/batch-store";
 
 const STATUS_META: Record<
   BatchStatus,
@@ -93,6 +94,31 @@ export function BatchTable({
   applyToAllLabel = "应用到全部",
 }: BatchTableProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [dragFrom, setDragFrom] = React.useState<number | null>(null);
+  const [dragOver, setDragOver] = React.useState<number | null>(null);
+  const reorderItems = useBatchStore((s) => s.reorderItems);
+
+  const handleDragStart = (index: number) => (e: React.DragEvent) => {
+    setDragFrom(index);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (index: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(index);
+  };
+
+  const handleDrop = (toIndex: number) => () => {
+    if (dragFrom === null || dragFrom === toIndex) return;
+    reorderItems(dragFrom, toIndex);
+    setDragFrom(null);
+    setDragOver(null);
+  };
+
+  const handleDragEnd = () => {
+    setDragFrom(null);
+    setDragOver(null);
+  };
 
   if (items.length === 0) {
     return (
@@ -173,13 +199,25 @@ export function BatchTable({
               </tr>
             </thead>
             <tbody className="divide-y">
-              {items.map((item) => (
+              {items.map((item, index) => (
                 <tr
                   key={item.id}
-                  className="hover:bg-accent/40 transition-colors"
+                  draggable
+                  onDragStart={handleDragStart(index)}
+                  onDragOver={handleDragOver(index)}
+                  onDrop={handleDrop(index)}
+                  onDragEnd={handleDragEnd}
+                  className={cn(
+                    "transition-colors",
+                    dragFrom === index && "opacity-40",
+                    dragOver === index && "bg-accent/60"
+                  )}
                 >
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2.5">
+                      <div className="text-muted-foreground cursor-grab active:cursor-grabbing">
+                        ⋮⋮
+                      </div>
                       <div className="bg-muted h-9 w-9 shrink-0 overflow-hidden rounded border">
                         {item.thumbnail ? (
                           // eslint-disable-next-line @next/next/no-img-element

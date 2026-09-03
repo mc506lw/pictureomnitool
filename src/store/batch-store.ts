@@ -56,6 +56,8 @@ interface BatchState {
   resetAll: () => void;
   /** 生成唯一输出文件名（自动去重） */
   makeOutputName: (base: string, ext: string) => string;
+  /** 重排队列 */
+  reorderItems: (fromIndex: number, toIndex: number) => void;
 }
 
 function decodeFile(file: File): Promise<DecodedImage | null> {
@@ -153,5 +155,13 @@ export const useBatchStore = create<BatchState>((set, get) => ({
       candidate = `${name}-${n++}.${ext}`;
     }
     return candidate;
+  },
+  reorderItems: (fromIndex: number, toIndex: number) => {
+    set((state) => {
+      const items = [...state.items];
+      const [moved] = items.splice(fromIndex, 1);
+      items.splice(toIndex, 0, moved);
+      return { items };
+    });
   },
 }));
