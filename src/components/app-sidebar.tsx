@@ -37,6 +37,7 @@ import {
   Tag,
   Pencil,
   Scissors,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -280,6 +281,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "上传水印图片并批量叠加到主图上",
         icon: ImageIcon,
         url: "/watermark-image",
+      },
+      {
+        title: "故障艺术",
+        description: "随机错位切片与 RGB 通道偏移，制造赛博故障风格",
+        icon: Activity,
+        url: "/glitch",
       },
     ],
   },

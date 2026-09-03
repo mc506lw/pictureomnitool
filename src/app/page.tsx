@@ -43,6 +43,7 @@ import {
   Tag,
   Pencil,
   Scissors,
+  Activity,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -331,6 +332,14 @@ const tools = [
     url: "/watermark-image",
     tag: "新功能",
     color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
+  {
+    icon: Activity,
+    title: "故障艺术",
+    description: "随机错位切片与 RGB 通道偏移，制造赛博故障风格",
+    url: "/glitch",
+    tag: "新功能",
+    color: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
   },
 ];
 
