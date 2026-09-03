@@ -32,6 +32,12 @@ export default function CompressPage() {
 
   const lossy = format === "jpeg" || format === "webp" || format === "avif";
 
+  const presets = [
+    { label: "社交网络", format: "jpeg" as EncodeFormat, quality: 85, targetKb: 0 },
+    { label: "邮件附件", format: "png" as EncodeFormat, quality: 80, targetKb: 0 },
+    { label: "网页优化", format: "webp" as EncodeFormat, quality: 80, targetKb: 0 },
+    { label: "最小体积", format: "webp" as EncodeFormat, quality: 60, targetKb: 0 },
+  ];
   const formats: { value: EncodeFormat; label: string; hint: string }[] = [
     { value: "webp", label: "WebP", hint: "压缩率最高，无损/有损" },
     { value: "jpeg", label: "JPEG", hint: "兼容性最好，有损" },
@@ -90,6 +96,30 @@ export default function CompressPage() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div className="space-y-2">
+                <Label>快速预设</Label>
+                <div className="flex flex-wrap gap-2">
+                  {presets.map((p) => (
+                    <button
+                      key={p.label}
+                      onClick={() => {
+                        setFormat(p.format);
+                        setQuality(p.quality);
+                        setUseTarget(false);
+                      }}
+                      className={cn(
+                        "rounded-md border px-3 py-2 text-xs font-medium transition-colors",
+                        format === p.format && quality === p.quality && !useTarget
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-background text-muted-foreground hover:bg-accent"
+                      )}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="space-y-2">
                 <Label>输出格式</Label>
                 <div className="flex flex-wrap gap-2">
