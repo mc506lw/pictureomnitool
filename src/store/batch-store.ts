@@ -50,6 +50,8 @@ interface BatchState {
   removeItem: (id: string) => void;
   /** 清空所有文件与结果 */
   clearAll: () => void;
+  /** 清除已完成条目 */
+  clearCompleted: () => void;
   /** 更新单个条目 */
   updateItem: (id: string, patch: Partial<BatchItem>) => void;
   /** 重置所有条目为待处理 */
@@ -120,6 +122,16 @@ export const useBatchStore = create<BatchState>((set, get) => ({
       if (item.result?.url) URL.revokeObjectURL(item.result.url);
     }
     set({ items: [] });
+  },
+  clearCompleted: () => {
+    const { items } = get();
+    const remaining = items.filter((item) => item.status !== "done");
+    for (const item of items) {
+      if (item.status === "done" && item.result?.url) {
+        URL.revokeObjectURL(item.result.url);
+      }
+    }
+    set({ items: remaining });
   },
 
   updateItem: (id, patch) => {

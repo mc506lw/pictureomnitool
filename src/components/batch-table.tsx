@@ -63,6 +63,8 @@ interface BatchTableProps {
   items: BatchItem[];
   onRemove: (id: string) => void;
   onClearAll: () => void;
+  /** 清除已完成条目 */
+  onClearCompleted?: () => void;
   onAdd?: (files: File[]) => void;
   /** 是否允许添加新文件 */
   allowAdd?: boolean;
@@ -89,6 +91,7 @@ export function BatchTable({
   items,
   onRemove,
   onClearAll,
+  onClearCompleted,
   onAdd,
   allowAdd = false,
   showDimensions = true,
@@ -210,6 +213,15 @@ export function BatchTable({
             <Trash2 className="h-3.5 w-3.5" />
             全部清空
           </button>
+          {onClearCompleted && (
+            <button
+              onClick={onClearCompleted}
+              className="text-muted-foreground hover:text-destructive inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs font-medium transition-colors"
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              清除已完成
+            </button>
+          )}
         </div>
       </div>
 
