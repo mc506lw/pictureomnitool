@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   title: "全能图片工具 - 一站式图片处理",
   description:
     "全能图片处理网站：格式转换、裁剪、压缩、缩放、批量重命名、尺寸预设、图标制作，全部在浏览器本地完成",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

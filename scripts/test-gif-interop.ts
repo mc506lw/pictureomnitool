@@ -71,68 +71,72 @@ try {
 }
 
 // ---- 2. sharp 解码我的编码器输出 ----
-try {
-  const { data: raw, info } = await sharp(myGif).raw().toBuffer({ resolveWithObject: true });
-  assert(info.width === w && info.height === h, "sharp 能解码我的 GIF（尺寸正确）");
-  let diffCount = 0;
-  for (let i = 0; i < w * h; i++) {
-    const idx = indices[i];
-    let er, eg, eb, ea;
-    if (idx === 0) {
-      er = eg = eb = ea = 0;
-    } else {
-      const c = palette[idx - 1] || [0, 0, 0];
-      er = c[0];
-      eg = c[1];
-      eb = c[2];
-      ea = 255;
+async function main() {
+  try {
+    const { data: raw, info } = await sharp(myGif).raw().toBuffer({ resolveWithObject: true });
+    assert(info.width === w && info.height === h, "sharp 能解码我的 GIF（尺寸正确）");
+    let diffCount = 0;
+    for (let i = 0; i < w * h; i++) {
+      const idx = indices[i];
+      let er, eg, eb, ea;
+      if (idx === 0) {
+        er = eg = eb = ea = 0;
+      } else {
+        const c = palette[idx - 1] || [0, 0, 0];
+        er = c[0];
+        eg = c[1];
+        eb = c[2];
+        ea = 255;
+      }
+      const o = i * 4;
+      if (
+        Math.abs(raw[o] - er) > 3 ||
+        Math.abs(raw[o + 1] - eg) > 3 ||
+        Math.abs(raw[o + 2] - eb) > 3 ||
+        Math.abs(raw[o + 3] - ea) > 3
+      ) {
+        diffCount++;
+        if (diffCount > 8) break;
+      }
     }
-    const o = i * 4;
-    if (
-      Math.abs(raw[o] - er) > 3 ||
-      Math.abs(raw[o + 1] - eg) > 3 ||
-      Math.abs(raw[o + 2] - eb) > 3 ||
-      Math.abs(raw[o + 3] - ea) > 3
-    ) {
-      diffCount++;
-      if (diffCount > 8) break;
-    }
+    assert(diffCount === 0, "sharp 解码像素与预期一致");
+  } catch (e) {
+    console.error("sharp 解码失败:", e.message);
+    failures++;
   }
-  assert(diffCount === 0, "sharp 解码像素与预期一致");
-} catch (e) {
-  console.error("sharp 解码失败:", e.message);
-  failures++;
+
+  // ---- 3. 我的解码器解码 omggif 编码器输出 ----
+  try {
+    // 用 omggif GifWriter 编码同一张图（透明保留）
+    const padded = [...palette];
+    while (padded.length < 256) padded.push([0, 0, 0]);
+    const buf = new Uint8Array(w * h * 4 + 4096);
+    const gifw = new omggif.GifWriter(buf, w, h, {
+      palette: padded.map(([r, g, b]) => (r << 16) | (g << 8) | b),
+    });
+    gifw.addFrame(0, 0, w, h, indices, { transparent: 0 });
+    gifw.end();
+    const omggifBytes = buf.slice(0, gifw.getOutputBufferPosition());
+    const frame = decodeGif(omggifBytes);
+    assert(
+      frame.width === w && frame.height === h,
+      "我的解码器能解码 omggif 的 GIF（尺寸正确）"
+    );
+    let idxMatch = frame.indices.length === indices.length;
+    for (let i = 0; i < indices.length; i++) {
+      if (frame.indices[i] !== indices[i]) {
+        idxMatch = false;
+        break;
+      }
+    }
+    assert(idxMatch, "我的解码器索引与 omggif 编码一致");
+  } catch (e) {
+    console.error("omggif 编码/我的解码失败:", e.message);
+    failures++;
+  }
+
+  console.log(failures === 0 ? "\n=== 全部通过 ===" : `\n=== ${failures} 项失败 ===`);
+  process.exit(failures === 0 ? 0 : 1);
 }
 
-// ---- 3. 我的解码器解码 omggif 编码器输出 ----
-try {
-  // 用 omggif GifWriter 编码同一张图（透明保留）
-  const padded = [...palette];
-  while (padded.length < 256) padded.push([0, 0, 0]);
-  const buf = new Uint8Array(w * h * 4 + 4096);
-  const gifw = new omggif.GifWriter(buf, w, h, {
-    palette: padded.map(([r, g, b]) => (r << 16) | (g << 8) | b),
-  });
-  gifw.addFrame(0, 0, w, h, indices, { transparent: 0 });
-  gifw.end();
-  const omggifBytes = buf.slice(0, gifw.getOutputBufferPosition());
-  const frame = decodeGif(omggifBytes);
-  assert(
-    frame.width === w && frame.height === h,
-    "我的解码器能解码 omggif 的 GIF（尺寸正确）"
-  );
-  let idxMatch = frame.indices.length === indices.length;
-  for (let i = 0; i < indices.length; i++) {
-    if (frame.indices[i] !== indices[i]) {
-      idxMatch = false;
-      break;
-    }
-  }
-  assert(idxMatch, "我的解码器索引与 omggif 编码一致");
-} catch (e) {
-  console.error("omggif 编码/我的解码失败:", e.message);
-  failures++;
-}
-
-console.log(failures === 0 ? "\n=== 全部通过 ===" : `\n=== ${failures} 项失败 ===`);
-process.exit(failures === 0 ? 0 : 1);
+main();

@@ -77,43 +77,47 @@ const magic = String.fromCharCode(gif[0], gif[1], gif[2], gif[3], gif[4], gif[5]
 assert(magic === "GIF89a", `GIF 文件头正确 (${magic})`);
 
 // ---- sharp 真实解码器交叉验证 ----
-try {
-  const { data: raw, info } = await sharp(gif, { animated: false })
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  assert(info.width === w && info.height === h, "sharp 解码尺寸正确");
-  assert(info.channels === 4, "sharp 解码为 RGBA");
+async function main() {
+  try {
+    const { data: raw, info } = await sharp(gif, { animated: false })
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    assert(info.width === w && info.height === h, "sharp 解码尺寸正确");
+    assert(info.channels === 4, "sharp 解码为 RGBA");
 
-  let diffCount = 0;
-  for (let i = 0; i < w * h; i++) {
-    const srcIdx = indices[i];
-    let er, eg, eb, ea;
-    if (srcIdx === 0 && frame.transparentIndex === 0) {
-      er = eg = eb = ea = 0;
-    } else {
-      const palIdx = frame.transparentIndex === 0 ? srcIdx - 1 : srcIdx;
-      const c = palette[palIdx] || [0, 0, 0];
-      er = c[0];
-      eg = c[1];
-      eb = c[2];
-      ea = 255;
+    let diffCount = 0;
+    for (let i = 0; i < w * h; i++) {
+      const srcIdx = indices[i];
+      let er, eg, eb, ea;
+      if (srcIdx === 0 && frame.transparentIndex === 0) {
+        er = eg = eb = ea = 0;
+      } else {
+        const palIdx = frame.transparentIndex === 0 ? srcIdx - 1 : srcIdx;
+        const c = palette[palIdx] || [0, 0, 0];
+        er = c[0];
+        eg = c[1];
+        eb = c[2];
+        ea = 255;
+      }
+      const o = i * 4;
+      if (
+        Math.abs(raw[o] - er) > 3 ||
+        Math.abs(raw[o + 1] - eg) > 3 ||
+        Math.abs(raw[o + 2] - eb) > 3 ||
+        Math.abs(raw[o + 3] - ea) > 3
+      ) {
+        diffCount++;
+        if (diffCount > 8) break;
+      }
     }
-    const o = i * 4;
-    if (
-      Math.abs(raw[o] - er) > 3 ||
-      Math.abs(raw[o + 1] - eg) > 3 ||
-      Math.abs(raw[o + 2] - eb) > 3 ||
-      Math.abs(raw[o + 3] - ea) > 3
-    ) {
-      diffCount++;
-      if (diffCount > 8) break;
-    }
+    assert(diffCount === 0, `sharp 解码像素与预期一致（误差≤3）`);
+  } catch (e) {
+    console.error("sharp 验证失败:", e.message);
+    failures++;
   }
-  assert(diffCount === 0, `sharp 解码像素与预期一致（误差≤3）`);
-} catch (e) {
-  console.error("sharp 验证失败:", e.message);
-  failures++;
+
+  console.log(failures === 0 ? "\n=== 全部通过 ===" : `\n=== ${failures} 项失败 ===`);
+  process.exit(failures === 0 ? 0 : 1);
 }
 
-console.log(failures === 0 ? "\n=== 全部通过 ===" : `\n=== ${failures} 项失败 ===`);
-process.exit(failures === 0 ? 0 : 1);
+main();

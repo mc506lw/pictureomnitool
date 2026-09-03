@@ -286,7 +286,7 @@ export default function Home() {
               </div>
               <h3 className="mb-1.5 text-sm font-medium">极速处理</h3>
               <p className="text-muted-foreground text-xs leading-relaxed">
-                基于 Canvas API 和 WebAssembly
+                基于 Canvas API 和自研图像引擎
                 优化，处理速度快，支持批量处理大量图片。
               </p>
             </div>
