@@ -23,8 +23,11 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { useHistoryStack } from "@/hooks/use-history-stack";
 
 const PREVIEW_MAX = 420;
+
+type Action = "undo" | "redo" | "reset";
 
 function CurveEditor({
   points,
@@ -185,9 +188,32 @@ export default function ColorGradePage() {
     DEFAULT_GRADE_OPTIONS
   );
   const [activeTab, setActiveTab] = React.useState("basic");
+  const history = useHistoryStack<ColorGradeOptions>(DEFAULT_GRADE_OPTIONS);
 
   const patch = (partial: Partial<ColorGradeOptions>) =>
     setOpts((prev) => ({ ...prev, ...partial }));
+
+  const commitHistory = React.useCallback(
+    (next: ColorGradeOptions) => {
+      history.replace(next);
+      setOpts(next);
+    },
+    [history]
+  );
+
+  const undo = React.useCallback(() => {
+    const next = history.state.past[history.state.past.length - 1];
+    if (!next) return;
+    history.undo();
+    setOpts(next);
+  }, [history]);
+
+  const redo = React.useCallback(() => {
+    const next = history.state.future[0];
+    if (!next) return;
+    history.redo();
+    setOpts(next);
+  }, [history]);
 
   const process = useBatchProcess({
     items,
@@ -213,17 +239,43 @@ export default function ColorGradePage() {
     .filter((i) => i.status === "done" && i.result)
     .map((i) => ({ name: i.result!.name, blob: i.result!.blob }));
 
-  const resetOptions = () => setOpts(DEFAULT_GRADE_OPTIONS);
+  const resetOptions = () => {
+    history.push(DEFAULT_GRADE_OPTIONS);
+    setOpts(DEFAULT_GRADE_OPTIONS);
+  };
 
   return (
     <SidebarInset>
       <div className="h-full overflow-auto">
         <div className="mx-auto max-w-6xl space-y-6 p-8">
-          <PageHeader
-            icon={Palette}
-            title="专业调色"
-            description="DaVinci Resolve 风格的分区调色：曲线、色轮、色温、晕影、锐化"
-          />
+          <div className="flex items-center justify-between">
+            <PageHeader
+              icon={Palette}
+              title="专业调色"
+              description="DaVinci Resolve 风格的分区调色：曲线、色轮、色温、晕影、锐化"
+            />
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={undo}
+                disabled={history.state.past.length === 0}
+              >
+                撤销
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={redo}
+                disabled={history.state.future.length === 0}
+              >
+                重做
+              </Button>
+              <Button variant="outline" size="sm" onClick={resetOptions}>
+                重置
+              </Button>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
             {/* 左侧：控制面板 */}
