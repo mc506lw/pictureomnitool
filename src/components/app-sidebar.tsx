@@ -30,6 +30,7 @@ import {
   Grid3X3,
   Eye,
   FlipHorizontal2,
+  Smartphone,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -207,6 +208,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "水平或垂直翻转图片",
         icon: FlipHorizontal2,
         url: "/mirror",
+      },
+      {
+        title: "截图边框",
+        description: "将图片放入手机或笔记本外框中",
+        icon: Smartphone,
+        url: "/screenshot-frame",
       },
     ],
   },

@@ -35,6 +35,7 @@ import {
   Grid3X3,
   Eye,
   FlipHorizontal2,
+  Smartphone,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -227,6 +228,14 @@ const tools = [
     url: "/mirror",
     tag: "新功能",
     color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+  },
+  {
+    icon: Smartphone,
+    title: "截图边框",
+    description: "将图片放入手机或笔记本外框中，适合制作宣传展示图",
+    url: "/screenshot-frame",
+    tag: "新功能",
+    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
 ];
 
