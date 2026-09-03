@@ -182,6 +182,7 @@ export default function ColorGradePage() {
   const addFiles = useBatchStore((s) => s.addFiles);
   const removeItem = useBatchStore((s) => s.removeItem);
   const clearAll = useBatchStore((s) => s.clearAll);
+  const clearCompleted = useBatchStore((s) => s.clearCompleted);
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [opts, setOpts] = React.useState<ColorGradeOptions>(
@@ -726,6 +727,10 @@ export default function ColorGradePage() {
               onRemove={removeItem}
               onClearAll={() => {
                 clearAll();
+                process.reset();
+              }}
+              onClearCompleted={() => {
+                clearCompleted();
                 process.reset();
               }}
               allowAdd
