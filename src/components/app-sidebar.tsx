@@ -32,6 +32,7 @@ import {
   Eye,
   FlipHorizontal2,
   Smartphone,
+  Camera,
   Tag,
   type LucideIcon,
 } from "lucide-react";
@@ -228,6 +229,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "批量为图片添加关键词标签",
         icon: Tag,
         url: "/image-tags",
+      },
+      {
+        title: "EXIF 查看器",
+        description: "读取相机参数和拍摄信息",
+        icon: Camera,
+        url: "/exif-viewer",
       },
     ],
   },

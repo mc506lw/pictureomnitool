@@ -37,6 +37,8 @@ import {
   FlipHorizontal2,
   Smartphone,
   TableProperties,
+  Tag,
+  Camera,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -237,6 +239,30 @@ const tools = [
     url: "/screenshot-frame",
     tag: "新功能",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+  },
+  {
+    icon: TableProperties,
+    title: "图片信息",
+    description: "查看并导出图片清单，含尺寸、格式、体积和缩略图",
+    url: "/manifest",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
+  {
+    icon: Tag,
+    title: "图片标签",
+    description: "批量为图片添加关键词标签，便于分类、检索和导出",
+    url: "/image-tags",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
+  {
+    icon: Camera,
+    title: "EXIF 查看器",
+    description: "读取相机参数、拍摄时间、ISO、光圈和 GPS 位置信息",
+    url: "/exif-viewer",
+    tag: "新功能",
+    color: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
   },
 ];
 
