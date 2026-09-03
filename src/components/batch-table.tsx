@@ -7,7 +7,9 @@ import {
   XCircle,
   Trash2,
   AlertTriangle,
+  Settings2,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import type { BatchItem, BatchStatus } from "@/store/batch-store";
 import { formatBytes, getBaseName } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -71,6 +73,9 @@ interface BatchTableProps {
   renderActions?: (item: BatchItem) => React.ReactNode;
   /** 全选状态（未实现多选时可不传） */
   selectable?: boolean;
+  /** 应用到全部按钮 */
+  onApplyToAll?: () => void;
+  applyToAllLabel?: string;
 }
 
 /** 批量文件表格 */
@@ -84,6 +89,8 @@ export function BatchTable({
   renderResult,
   renderExtra,
   renderActions,
+  onApplyToAll,
+  applyToAllLabel = "应用到全部",
 }: BatchTableProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -125,6 +132,17 @@ export function BatchTable({
                 添加文件
               </button>
             </>
+          )}
+          {onApplyToAll && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onApplyToAll}
+              className="inline-flex items-center gap-1"
+            >
+              <Settings2 className="h-3.5 w-3.5" />
+              {applyToAllLabel}
+            </Button>
           )}
           <button
             onClick={onClearAll}

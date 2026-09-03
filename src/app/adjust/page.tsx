@@ -737,6 +737,8 @@ export default function ColorGradePage() {
                   </span>
                 ) : null
               }
+              onApplyToAll={resetOptions}
+              applyToAllLabel="应用到全部"
             />
           )}
         </div>
