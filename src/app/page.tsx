@@ -45,6 +45,7 @@ import {
   Scissors,
   Activity,
   Box,
+  Layers,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -357,6 +358,14 @@ const tools = [
     url: "/effect-3d",
     tag: "新功能",
     color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  },
+  {
+    icon: Layers,
+    title: "图片叠加",
+    description: "上传第二张图片并与主图混合，支持多种混合模式",
+    url: "/blend",
+    tag: "新功能",
+    color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
   },
 ];
 

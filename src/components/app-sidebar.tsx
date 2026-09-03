@@ -39,6 +39,7 @@ import {
   Scissors,
   Activity,
   Box,
+  Layers,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -300,6 +301,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "对图片应用透视倾斜与厚度阴影，生成简易立体效果",
         icon: Box,
         url: "/effect-3d",
+      },
+      {
+        title: "图片叠加",
+        description: "上传第二张图片并与主图混合，支持多种混合模式",
+        icon: Layers,
+        url: "/blend",
       },
     ],
   },
