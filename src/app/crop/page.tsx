@@ -346,7 +346,7 @@ export default function CropPage() {
   const [aspect, setAspect] = React.useState<CropAspect>("1:1");
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [rects, setRects] = React.useState<Record<string, Rect>>({});
-  const [outputFormat, setOutputFormat] = React.useState<"png" | "jpeg">("png");
+  const [outputFormat, setOutputFormat] = React.useState<"png" | "jpeg" | "webp">("png");
   const [preview, setPreview] = React.useState<string | null>(null);
 
   const readyItems = items.filter((i) => i.canvas);
@@ -619,6 +619,8 @@ export default function CropPage() {
                 setRects(next);
               }}
               applyToAllLabel="应用到全部"
+              outputFormat={outputFormat}
+              onOutputFormatChange={setOutputFormat}
             />
           )}
         </div>

@@ -77,6 +77,9 @@ interface BatchTableProps {
   /** 应用到全部按钮 */
   onApplyToAll?: () => void;
   applyToAllLabel?: string;
+  /** 输出格式选择器 */
+  outputFormat?: "png" | "jpeg" | "webp";
+  onOutputFormatChange?: (format: "png" | "jpeg" | "webp") => void;
 }
 
 /** 批量文件表格 */
@@ -92,6 +95,8 @@ export function BatchTable({
   renderActions,
   onApplyToAll,
   applyToAllLabel = "应用到全部",
+  outputFormat,
+  onOutputFormatChange,
 }: BatchTableProps) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [dragFrom, setDragFrom] = React.useState<number | null>(null);
@@ -169,6 +174,19 @@ export function BatchTable({
               <Settings2 className="h-3.5 w-3.5" />
               {applyToAllLabel}
             </Button>
+          )}
+          {onOutputFormatChange && (
+            <select
+              value={outputFormat ?? "png"}
+              onChange={(e) =>
+                onOutputFormatChange(e.target.value as "png" | "jpeg" | "webp")
+              }
+              className="border-input bg-background text-foreground h-7 rounded-md border px-2 text-xs"
+            >
+              <option value="png">PNG</option>
+              <option value="jpeg">JPEG</option>
+              <option value="webp">WEBP</option>
+            </select>
           )}
           <button
             onClick={onClearAll}
