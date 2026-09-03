@@ -341,6 +341,14 @@ const tools = [
     tag: "新功能",
     color: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
   },
+  {
+    icon: Grid3X3,
+    title: "图案生成",
+    description: "将图片生成为可平铺的纹理图案预览",
+    url: "/pattern",
+    tag: "新功能",
+    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+  },
 ];
 
 const stats = [

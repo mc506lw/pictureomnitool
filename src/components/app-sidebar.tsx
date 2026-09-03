@@ -288,6 +288,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Activity,
         url: "/glitch",
       },
+      {
+        title: "图案生成",
+        description: "将图片生成为可平铺的纹理图案预览",
+        icon: Grid3X3,
+        url: "/pattern",
+      },
     ],
   },
 ];
