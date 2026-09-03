@@ -24,6 +24,7 @@ import {
   CircleOff,
   CircleCheckBig,
   ImageOff,
+  Square,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -165,6 +166,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "检测并清理重复图片，释放存储空间",
         icon: ImageOff,
         url: "/duplicates",
+      },
+      {
+        title: "图片加边框",
+        description: "添加自定义内边距和背景色",
+        icon: Square,
+        url: "/padding",
       },
     ],
   },

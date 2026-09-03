@@ -29,6 +29,7 @@ import {
   CircleOff,
   CircleCheckBig,
   ImageOff,
+  Square,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -173,6 +174,14 @@ const tools = [
     url: "/duplicates",
     tag: "清理",
     color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  },
+  {
+    icon: Square,
+    title: "图片加边框",
+    description: "添加自定义内边距和背景色，适配社交平台或打印需求",
+    url: "/padding",
+    tag: "新功能",
+    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
 ];
 
