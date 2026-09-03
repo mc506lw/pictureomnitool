@@ -237,6 +237,14 @@ const tools = [
     tag: "新功能",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
+  {
+    icon: Palette,
+    title: "配色提取",
+    description: "从图片中提取主要颜色，快速获取配色方案",
+    url: "/color-palette",
+    tag: "新功能",
+    color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
+  },
 ];
 
 const stats = [
