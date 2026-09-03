@@ -38,6 +38,7 @@ import {
   Pencil,
   Scissors,
   Activity,
+  Box,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -293,6 +294,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "将图片生成为可平铺的纹理图案预览",
         icon: Grid3X3,
         url: "/pattern",
+      },
+      {
+        title: "图片转 3D",
+        description: "对图片应用透视倾斜与厚度阴影，生成简易立体效果",
+        icon: Box,
+        url: "/effect-3d",
       },
     ],
   },

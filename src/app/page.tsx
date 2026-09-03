@@ -44,6 +44,7 @@ import {
   Pencil,
   Scissors,
   Activity,
+  Box,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -348,6 +349,14 @@ const tools = [
     url: "/pattern",
     tag: "新功能",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+  },
+  {
+    icon: Box,
+    title: "图片转 3D",
+    description: "对图片应用透视倾斜与厚度阴影，生成简易立体效果",
+    url: "/effect-3d",
+    tag: "新功能",
+    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
   },
 ];
 
