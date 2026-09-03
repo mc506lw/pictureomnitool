@@ -189,9 +189,7 @@ export default function ColorGradePage() {
   );
   const [activeTab, setActiveTab] = React.useState("basic");
   const history = useHistoryStack<ColorGradeOptions>(DEFAULT_GRADE_OPTIONS);
-
-  const patch = (partial: Partial<ColorGradeOptions>) =>
-    setOpts((prev) => ({ ...prev, ...partial }));
+  const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const commitHistory = React.useCallback(
     (next: ColorGradeOptions) => {
@@ -200,6 +198,21 @@ export default function ColorGradePage() {
     },
     [history]
   );
+
+  const pushHistory = React.useCallback(
+    (next: ColorGradeOptions) => {
+      history.push(next);
+      setOpts(next);
+    },
+    [history]
+  );
+
+  const patch = (partial: Partial<ColorGradeOptions>) => {
+    const next = { ...opts, ...partial };
+    commitHistory(next);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => pushHistory(next), 300);
+  };
 
   const undo = React.useCallback(() => {
     const next = history.state.past[history.state.past.length - 1];
