@@ -28,6 +28,7 @@ import {
   Download,
   CircleOff,
   CircleCheckBig,
+  ImageOff,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -164,6 +165,14 @@ const tools = [
     url: "/history",
     tag: "新功能",
     color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    icon: ImageOff,
+    title: "重复图片查找",
+    description: "自动识别重复或相似图片，支持选择保留后一键清理",
+    url: "/duplicates",
+    tag: "清理",
+    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
   },
 ];
 

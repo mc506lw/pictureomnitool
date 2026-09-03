@@ -23,6 +23,7 @@ import {
   Pipette,
   CircleOff,
   CircleCheckBig,
+  ImageOff,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -158,6 +159,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "查看最近处理的图片",
         icon: History,
         url: "/history",
+      },
+      {
+        title: "重复图片查找",
+        description: "检测并清理重复图片，释放存储空间",
+        icon: ImageOff,
+        url: "/duplicates",
       },
     ],
   },
