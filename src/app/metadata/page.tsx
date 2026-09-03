@@ -677,7 +677,7 @@ export default function MetadataPage() {
                       导出清理版
                     </Button>
                   )}
-                  onApplyToAll={() => {
+                  onApplyToAll={async () => {
                     const next: Record<
                       string,
                       Awaited<ReturnType<typeof readImageMeta>>

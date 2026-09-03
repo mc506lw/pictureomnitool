@@ -8,6 +8,8 @@ import {
   Trash2,
   AlertTriangle,
   Settings2,
+  Copy,
+  Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { BatchItem, BatchStatus } from "@/store/batch-store";
@@ -101,6 +103,7 @@ export function BatchTable({
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [dragFrom, setDragFrom] = React.useState<number | null>(null);
   const [dragOver, setDragOver] = React.useState<number | null>(null);
+  const [copiedId, setCopiedId] = React.useState<string | null>(null);
   const reorderItems = useBatchStore((s) => s.reorderItems);
 
   const handleDragStart = (index: number) => (e: React.DragEvent) => {
@@ -123,6 +126,18 @@ export function BatchTable({
   const handleDragEnd = () => {
     setDragFrom(null);
     setDragOver(null);
+  };
+
+  const handleCopy = async (item: BatchItem) => {
+    try {
+      await navigator.clipboard.writeText(item.name);
+      setCopiedId(item.id);
+      setTimeout(() => {
+        setCopiedId((current) => (current === item.id ? null : current));
+      }, 1200);
+    } catch {
+      // clipboard access failed; ignore for static export fallback
+    }
   };
 
   if (items.length === 0) {
@@ -299,13 +314,26 @@ export function BatchTable({
                     {renderActions ? (
                       renderActions(item)
                     ) : (
-                      <button
-                        onClick={() => onRemove(item.id)}
-                        className="text-muted-foreground hover:text-destructive rounded p-1 transition-colors"
-                        title="移除"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
+                      <div className="flex items-center justify-end gap-1">
+                        <button
+                          onClick={() => handleCopy(item)}
+                          className="text-muted-foreground hover:text-foreground rounded p-1 transition-colors"
+                          title="复制文件名"
+                        >
+                          {copiedId === item.name ? (
+                            <Check className="h-3.5 w-3.5 text-emerald-500" />
+                          ) : (
+                            <Copy className="h-3.5 w-3.5" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => onRemove(item.id)}
+                          className="text-muted-foreground hover:text-destructive rounded p-1 transition-colors"
+                          title="移除"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     )}
                   </td>
                 </tr>
