@@ -22,6 +22,7 @@ import {
   Info,
   Columns,
   History,
+  Type,
   Pipette,
   Sparkles,
   ArrowRight,
@@ -306,6 +307,14 @@ const tools = [
     url: "/cutout",
     tag: "新功能",
     color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  },
+  {
+    icon: Type,
+    title: "ASCII 艺术",
+    description: "将图片转换为字符画，导出为文本文件",
+    url: "/ascii-art",
+    tag: "新功能",
+    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   },
 ];
 
