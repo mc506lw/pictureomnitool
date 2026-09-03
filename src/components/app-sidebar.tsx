@@ -21,6 +21,8 @@ import {
   History,
   Text,
   Pipette,
+  CircleOff,
+  CircleCheckBig,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -74,6 +76,18 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "质量压缩 · 目标大小",
         icon: FileArchive,
         url: "/compress",
+      },
+      {
+        title: "图片模糊",
+        description: "添加高斯模糊效果",
+        icon: CircleOff,
+        url: "/blur",
+      },
+      {
+        title: "黑白效果",
+        description: "将图片转为黑白灰度",
+        icon: CircleCheckBig,
+        url: "/grayscale",
       },
     ],
   },

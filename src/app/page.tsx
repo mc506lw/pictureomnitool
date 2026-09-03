@@ -26,6 +26,8 @@ import {
   Star,
   Clock,
   Download,
+  CircleOff,
+  CircleCheckBig,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -65,6 +67,22 @@ const tools = [
     url: "/compress",
     tag: "目标大小",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
+  {
+    icon: CircleOff,
+    title: "图片模糊",
+    description: "添加高斯模糊效果，可调节模糊程度",
+    url: "/blur",
+    tag: "模糊",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
+  {
+    icon: CircleCheckBig,
+    title: "黑白效果",
+    description: "将彩色图片转换为黑白灰度效果",
+    url: "/grayscale",
+    tag: "灰度",
+    color: "bg-zinc-500/10 text-zinc-600 dark:text-zinc-400",
   },
   {
     icon: FilePenLine,
