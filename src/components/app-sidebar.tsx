@@ -328,6 +328,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Waves,
         url: "/ripple",
       },
+      {
+        title: "浮雕效果",
+        description: "用方向卷积核模拟高低差的浮雕风格",
+        icon: Square,
+        url: "/emboss",
+      },
     ],
   },
 ];

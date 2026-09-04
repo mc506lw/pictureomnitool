@@ -392,6 +392,14 @@ const tools = [
     tag: "新功能",
     color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
   },
+  {
+    icon: Square,
+    title: "浮雕效果",
+    description: "用方向卷积核模拟高低差的浮雕风格",
+    url: "/emboss",
+    tag: "新功能",
+    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  },
 ];
 
 const stats = [
