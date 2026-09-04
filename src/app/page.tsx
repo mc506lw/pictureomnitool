@@ -48,6 +48,7 @@ import {
   Grid,
   Waves,
   ArrowDownFromLine,
+  Flame,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";

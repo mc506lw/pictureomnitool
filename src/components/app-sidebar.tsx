@@ -44,6 +44,7 @@ import {
   Waves,
   ArrowDownFromLine,
   Zap,
+  Flame,
   type LucideIcon,
 } from "lucide-react";
 import {
