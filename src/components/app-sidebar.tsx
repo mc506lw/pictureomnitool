@@ -413,6 +413,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Square,
         url: "/cartoon",
       },
+      {
+        title: "图片取色器",
+        description: "提取图片主色并生成色板预览图",
+        icon: Pipette,
+        url: "/color-picker",
+      },
     ],
   },
 ];

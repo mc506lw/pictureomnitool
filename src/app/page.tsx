@@ -505,6 +505,14 @@ const tools = [
     tag: "新功能",
     color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
   },
+  {
+    icon: Pipette,
+    title: "图片取色器",
+    description: "提取图片主色并生成色板预览图",
+    url: "/color-picker",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
 ];
 
 const stats = [
