@@ -444,6 +444,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Camera,
         url: "/polaroid",
       },
+      {
+        title: "颜色命名",
+        description: "将图片颜色映射为最近的主色名称或 HEX",
+        icon: Palette,
+        url: "/color-name",
+      },
     ],
   },
 ];

@@ -545,6 +545,14 @@ const tools = [
     tag: "新功能",
     color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   },
+  {
+    icon: Palette,
+    title: "颜色命名",
+    description: "将图片颜色映射为最近的主色名称或 HEX",
+    url: "/color-name",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
 ];
 
 const stats = [
