@@ -489,6 +489,14 @@ const tools = [
     tag: "新功能",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
+  {
+    icon: Palette,
+    title: "油画效果",
+    description: "基于色彩直方图简化笔触风格",
+    url: "/oil-painting",
+    tag: "新功能",
+    color: "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
+  },
 ];
 
 const stats = [

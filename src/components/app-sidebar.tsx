@@ -401,6 +401,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Palette,
         url: "/duotone",
       },
+      {
+        title: "油画效果",
+        description: "基于色彩直方图简化笔触风格",
+        icon: Palette,
+        url: "/oil-painting",
+      },
     ],
   },
 ];
