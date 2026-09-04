@@ -47,6 +47,7 @@ import {
   Box,
   Grid,
   Triangle,
+  Thermometer,
   Waves,
   ArrowDownFromLine,
   Flame,
@@ -594,6 +595,14 @@ const tools = [
     url: "/low-poly",
     tag: "新功能",
     color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+  },
+  {
+    icon: Thermometer,
+    title: "热成像",
+    description: "模拟红外热成像仪，按亮度映射到热力配色",
+    url: "/thermal-camera",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
 ];
 
