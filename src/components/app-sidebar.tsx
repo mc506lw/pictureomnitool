@@ -457,6 +457,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Flame,
         url: "/heatmap",
       },
+      {
+        title: "水墨画效果",
+        description: "平滑明暗层次并强化边缘对比，模拟水墨晕染",
+        icon: Waves,
+        url: "/ink-wash",
+      },
     ],
   },
 ];

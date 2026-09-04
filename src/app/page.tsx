@@ -562,6 +562,14 @@ const tools = [
     tag: "新功能",
     color: "bg-red-500/10 text-red-600 dark:text-red-400",
   },
+  {
+    icon: Waves,
+    title: "水墨画效果",
+    description: "平滑明暗层次并强化边缘对比，模拟水墨晕染",
+    url: "/ink-wash",
+    tag: "新功能",
+    color: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
+  },
 ];
 
 const stats = [
