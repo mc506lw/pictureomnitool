@@ -457,6 +457,14 @@ const tools = [
     tag: "新功能",
     color: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
   },
+  {
+    icon: ArrowLeftRight,
+    title: "像素排序",
+    description: "按亮度阈值重排像素，生成故障艺术条纹",
+    url: "/pixel-sort",
+    tag: "新功能",
+    color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+  },
 ];
 
 const stats = [

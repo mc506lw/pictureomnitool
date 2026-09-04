@@ -377,6 +377,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Palette,
         url: "/rainbow-gradient",
       },
+      {
+        title: "像素排序",
+        description: "按亮度阈值重排像素，生成故障艺术条纹",
+        icon: ArrowLeftRight,
+        url: "/pixel-sort",
+      },
     ],
   },
 ];
