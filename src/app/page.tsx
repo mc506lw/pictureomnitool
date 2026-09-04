@@ -48,6 +48,7 @@ import {
   Triangle,
   Thermometer,
   Palette,
+  Brush,
   Waves,
   CircleDot,
   ArrowDownFromLine,
@@ -628,6 +629,14 @@ const tools = [
     url: "/pop-art",
     tag: "新功能",
     color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
+  },
+  {
+    icon: Brush,
+    title: "水彩效果",
+    description: "多层透明扩散叠加，模拟水彩画笔触与纸张纹理",
+    url: "/watercolor",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
   },
 ];
 
