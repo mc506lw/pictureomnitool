@@ -40,6 +40,7 @@ import {
   Activity,
   Box,
   Layers,
+  Grid,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -307,6 +308,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "上传第二张图片并与主图混合，支持多种混合模式",
         icon: Layers,
         url: "/blend",
+      },
+      {
+        title: "网格线叠加",
+        description: "在图片上叠加可调节间距、粗细与颜色的网格线",
+        icon: Grid,
+        url: "/grid-lines",
       },
     ],
   },

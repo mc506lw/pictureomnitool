@@ -45,6 +45,7 @@ import {
   Scissors,
   Activity,
   Box,
+  Grid,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -365,6 +366,14 @@ const tools = [
     url: "/blend",
     tag: "新功能",
     color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+  },
+  {
+    icon: Grid,
+    title: "网格线叠加",
+    description: "在图片上叠加可调节间距、粗细与颜色的网格线",
+    url: "/grid-lines",
+    tag: "新功能",
+    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400",
   },
 ];
 
