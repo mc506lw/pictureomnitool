@@ -347,6 +347,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Type,
         url: "/text-overlay",
       },
+      {
+        title: "撕纸效果",
+        description: "用随机锯齿边缘模拟撕纸/剪纸边框",
+        icon: Scissors,
+        url: "/torn-paper",
+      },
     ],
   },
 ];

@@ -417,6 +417,14 @@ const tools = [
     tag: "新功能",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
+  {
+    icon: Scissors,
+    title: "撕纸效果",
+    description: "用随机锯齿边缘模拟撕纸/剪纸边框",
+    url: "/torn-paper",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
 ];
 
 const stats = [
