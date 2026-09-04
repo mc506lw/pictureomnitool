@@ -433,6 +433,14 @@ const tools = [
     tag: "新功能",
     color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
   },
+  {
+    icon: Circle,
+    title: "径向模糊",
+    description: "从中心向外辐射的运动模糊效果",
+    url: "/radial-blur",
+    tag: "新功能",
+    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  },
 ];
 
 const stats = [

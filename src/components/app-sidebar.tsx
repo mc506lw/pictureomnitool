@@ -359,6 +359,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: CircleOff,
         url: "/negative",
       },
+      {
+        title: "径向模糊",
+        description: "从中心向外辐射的运动模糊效果",
+        icon: Circle,
+        url: "/radial-blur",
+      },
     ],
   },
 ];
