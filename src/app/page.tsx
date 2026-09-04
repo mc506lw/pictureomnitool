@@ -46,6 +46,7 @@ import {
   Activity,
   Box,
   Grid,
+  Triangle,
   Waves,
   ArrowDownFromLine,
   Flame,
@@ -577,6 +578,22 @@ const tools = [
     url: "/crosshatch",
     tag: "新功能",
     color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
+  {
+    icon: Square,
+    title: "像素画",
+    description: "将图片像素化并支持灰度/复古色板",
+    url: "/pixel-art",
+    tag: "新功能",
+    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    icon: Triangle,
+    title: "低多边形",
+    description: "将图片近似为三角网格面片",
+    url: "/low-poly",
+    tag: "新功能",
+    color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
   },
 ];
 
