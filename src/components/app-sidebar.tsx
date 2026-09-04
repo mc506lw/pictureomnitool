@@ -341,6 +341,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: ArrowDownFromLine,
         url: "/reflection",
       },
+      {
+        title: "文字叠加",
+        description: "在图片中心叠加自定义文字水印",
+        icon: Type,
+        url: "/text-overlay",
+      },
     ],
   },
 ];

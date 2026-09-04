@@ -409,6 +409,14 @@ const tools = [
     tag: "新功能",
     color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
   },
+  {
+    icon: Type,
+    title: "文字叠加",
+    description: "在图片中心叠加自定义文字水印",
+    url: "/text-overlay",
+    tag: "新功能",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  },
 ];
 
 const stats = [
