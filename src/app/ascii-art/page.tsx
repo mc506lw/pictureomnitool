@@ -24,8 +24,8 @@ export default function AsciiArtPage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [cols, setCols] = React.useState(80);
-  const [invert, setInvert] = React.useState(false);
+  const [width, setWidth] = React.useState(80);
+  const [contrast, setContrast] = React.useState(1.2);
   const [format, setFormat] = React.useState<"png" | "jpeg" | "webp">("png");
 
   const process = useBatchProcess({
@@ -41,37 +41,33 @@ export default function AsciiArtPage() {
         src = decoded.canvas;
       }
       const aspect = src.height / src.width;
-      const width = Math.max(10, Math.min(200, cols));
-      const height = Math.max(4, Math.round(width * aspect * 0.55));
+      const cols = width;
+      const rows = Math.max(4, Math.round(cols * aspect * 0.5));
       const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
+      canvas.width = cols;
+      canvas.height = rows;
       const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(src, 0, 0, width, height);
-      const imageData = ctx.getImageData(0, 0, width, height);
+      ctx.drawImage(src, 0, 0, cols, rows);
+      const imageData = ctx.getImageData(0, 0, cols, rows);
       const data = imageData.data;
-      const lines: string[] = [];
-      for (let y = 0; y < height; y++) {
-        let row = "";
-        for (let x = 0; x < width; x++) {
-          const i = (y * width + x) * 4;
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          const brightness = (r + g + b) / 3;
-          const idx = Math.min(
-            CHARS.length - 1,
-            Math.floor((brightness / 255) * (CHARS.length - 1))
-          );
-          const char = invert ? CHARS[CHARS.length - 1 - idx] : CHARS[idx];
-          row += char;
+      let text = "";
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const idx = (y * cols + x) * 4;
+          const r = data[idx];
+          const g = data[idx + 1];
+          const b = data[idx + 2];
+          const lum = Math.min(255, Math.max(0, (r + g + b) / 3)) / 255;
+          const adjusted = Math.min(1, Math.max(0, Math.pow(lum, 1 / contrast)));
+          const chIdx = Math.min(CHARS.length - 1, Math.max(0, Math.round(adjusted * (CHARS.length - 1))));
+          text += CHARS[chIdx];
         }
-        lines.push(row);
+        text += "\n";
       }
-      const text = lines.join("\n");
-      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+
+      const textBlob = new Blob([text], { type: "text/plain;charset=utf-8" });
       const name = withExtension(`${getBaseName(item.name)}-ascii`, "txt");
-      updateItem(item.id, { result: { blob, name, size: blob.size } });
+      updateItem(item.id, { result: { blob: textBlob, name, size: textBlob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
     onItemError: (i, err) =>
@@ -97,7 +93,7 @@ export default function AsciiArtPage() {
           <PageHeader
             icon={Type}
             title="ASCII 艺术"
-            description="将图片转换为字符画，导出为文本文件"
+            description="把图片转为字符画风格文本"
           />
 
           <div className="bg-card space-y-4 rounded-lg border p-5">
@@ -108,30 +104,45 @@ export default function AsciiArtPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  宽度：<span className="text-primary font-medium">{cols} 列</span>
+                  字符宽度：<span className="text-primary font-medium">{width}</span>
                 </Label>
                 <Slider
-                  value={[cols]}
-                  min={20}
-                  max={160}
-                  step={5}
-                  onValueChange={(v) => setCols(v[0])}
+                  value={[width]}
+                  min={30}
+                  max={140}
+                  step={2}
+                  onValueChange={(v) => setWidth(v[0])}
                 />
               </div>
               <div className="space-y-2">
-                <Label>反色</Label>
+                <Label>
+                  对比度：<span className="text-primary font-medium">{contrast.toFixed(2)}</span>
+                </Label>
+                <Slider
+                  value={[contrast]}
+                  min={0.5}
+                  max={2.5}
+                  step={0.05}
+                  onValueChange={(v) => setContrast(v[0])}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>输出格式</Label>
                 <div className="flex items-center gap-2 pt-1">
-                  <button
-                    onClick={() => setInvert((v) => !v)}
-                    className={cn(
-                      "h-8 rounded-md border px-3 text-xs font-medium transition-colors",
-                      invert
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "hover:bg-accent"
-                    )}
-                  >
-                    {invert ? "已开启" : "已关闭"}
-                  </button>
+                  {(["png", "jpeg", "webp"] as const).map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setFormat(f)}
+                      className={cn(
+                        "h-8 rounded-md border px-3 text-xs font-medium transition-colors",
+                        format === f
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "hover:bg-accent"
+                      )}
+                    >
+                      {f.toUpperCase()}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>

@@ -383,6 +383,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: ArrowLeftRight,
         url: "/pixel-sort",
       },
+      {
+        title: "ASCII 艺术",
+        description: "把图片转为字符画风格文本",
+        icon: Type,
+        url: "/ascii-art",
+      },
     ],
   },
 ];
