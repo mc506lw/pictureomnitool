@@ -441,6 +441,14 @@ const tools = [
     tag: "新功能",
     color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
   },
+  {
+    icon: Square,
+    title: "图片边框",
+    description: "在图片外围添加可调节粗细、圆角与颜色的边框",
+    url: "/frame-border",
+    tag: "新功能",
+    color: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
+  },
 ];
 
 const stats = [

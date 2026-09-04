@@ -365,6 +365,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Circle,
         url: "/radial-blur",
       },
+      {
+        title: "图片边框",
+        description: "在图片外围添加可调节粗细、圆角与颜色的边框",
+        icon: Square,
+        url: "/frame-border",
+      },
     ],
   },
 ];
