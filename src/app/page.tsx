@@ -48,6 +48,7 @@ import {
   Grid,
   Triangle,
   Thermometer,
+  CircleDot,
   Waves,
   ArrowDownFromLine,
   Flame,
@@ -611,6 +612,14 @@ const tools = [
     url: "/woodcut",
     tag: "新功能",
     color: "bg-stone-500/10 text-stone-600 dark:text-stone-400",
+  },
+  {
+    icon: CircleDot,
+    title: "自定义半调网点",
+    description: "可调整形状、间距、对比度的印刷半调网点效果",
+    url: "/halftone-custom",
+    tag: "新功能",
+    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
   },
 ];
 
