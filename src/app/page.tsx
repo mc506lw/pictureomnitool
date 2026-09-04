@@ -15,7 +15,6 @@ import {
   Layers,
   ImageIcon,
   ChevronRight,
-  Palette,
   Camera,
   LayoutGrid,
   RotateCw,
@@ -48,8 +47,9 @@ import {
   Grid,
   Triangle,
   Thermometer,
-  CircleDot,
+  Palette,
   Waves,
+  CircleDot,
   ArrowDownFromLine,
   Flame,
 } from "lucide-react";
@@ -620,6 +620,14 @@ const tools = [
     url: "/halftone-custom",
     tag: "新功能",
     color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+  },
+  {
+    icon: Palette,
+    title: "波普艺术",
+    description: "高饱和色块与分层配色，模拟波普艺术海报",
+    url: "/pop-art",
+    tag: "新功能",
+    color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
   },
 ];
 
