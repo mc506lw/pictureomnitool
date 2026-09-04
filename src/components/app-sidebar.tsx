@@ -463,6 +463,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Waves,
         url: "/ink-wash",
       },
+      {
+        title: "交叉排线",
+        description: "按亮度与角度生成排线/素描钢笔墨水风格",
+        icon: Grid,
+        url: "/crosshatch",
+      },
     ],
   },
 ];

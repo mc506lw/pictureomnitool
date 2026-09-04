@@ -570,6 +570,14 @@ const tools = [
     tag: "新功能",
     color: "bg-gray-500/10 text-gray-600 dark:text-gray-400",
   },
+  {
+    icon: Grid,
+    title: "交叉排线",
+    description: "按亮度与角度生成排线/素描钢笔墨水风格",
+    url: "/crosshatch",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
 ];
 
 const stats = [
