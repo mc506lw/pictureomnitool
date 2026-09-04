@@ -47,6 +47,7 @@ import {
   Box,
   Grid,
   Waves,
+  ArrowDownFromLine,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -399,6 +400,14 @@ const tools = [
     url: "/emboss",
     tag: "新功能",
     color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    icon: ArrowDownFromLine,
+    title: "倒影效果",
+    description: "在原图下方生成渐变淡出的倒影",
+    url: "/reflection",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
   },
 ];
 

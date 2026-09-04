@@ -42,6 +42,7 @@ import {
   Layers,
   Grid,
   Waves,
+  ArrowDownFromLine,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -333,6 +334,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "用方向卷积核模拟高低差的浮雕风格",
         icon: Square,
         url: "/emboss",
+      },
+      {
+        title: "倒影效果",
+        description: "在原图下方生成渐变淡出的倒影",
+        icon: ArrowDownFromLine,
+        url: "/reflection",
       },
     ],
   },
