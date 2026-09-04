@@ -450,6 +450,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Palette,
         url: "/color-name",
       },
+      {
+        title: "热力图",
+        description: "按亮度映射蓝-青-绿-黄-红的伪彩热力配色",
+        icon: Flame,
+        url: "/heatmap",
+      },
     ],
   },
 ];

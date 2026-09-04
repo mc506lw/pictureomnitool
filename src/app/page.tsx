@@ -553,6 +553,14 @@ const tools = [
     tag: "新功能",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
+  {
+    icon: Flame,
+    title: "热力图",
+    description: "按亮度映射蓝-青-绿-黄-红的伪彩热力配色",
+    url: "/heatmap",
+    tag: "新功能",
+    color: "bg-red-500/10 text-red-600 dark:text-red-400",
+  },
 ];
 
 const stats = [
