@@ -41,6 +41,7 @@ import {
   Box,
   Layers,
   Grid,
+  Waves,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -320,6 +321,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "用彩色圆点模拟印刷网点效果",
         icon: Circle,
         url: "/halftone",
+      },
+      {
+        title: "水波扭曲",
+        description: "从中心向外扩散的同心波纹扭曲效果",
+        icon: Waves,
+        url: "/ripple",
       },
     ],
   },

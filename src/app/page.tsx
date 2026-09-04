@@ -46,6 +46,7 @@ import {
   Activity,
   Box,
   Grid,
+  Waves,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
@@ -382,6 +383,14 @@ const tools = [
     url: "/halftone",
     tag: "新功能",
     color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  },
+  {
+    icon: Waves,
+    title: "水波扭曲",
+    description: "从中心向外扩散的同心波纹扭曲效果",
+    url: "/ripple",
+    tag: "新功能",
+    color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
   },
 ];
 
