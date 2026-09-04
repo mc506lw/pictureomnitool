@@ -395,6 +395,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Camera,
         url: "/vintage-photo",
       },
+      {
+        title: "双色调",
+        description: "用两种颜色根据亮度映射替换原图色彩",
+        icon: Palette,
+        url: "/duotone",
+      },
     ],
   },
 ];

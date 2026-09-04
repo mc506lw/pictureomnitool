@@ -481,6 +481,14 @@ const tools = [
     tag: "新功能",
     color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
   },
+  {
+    icon: Palette,
+    title: "双色调",
+    description: "用两种颜色根据亮度映射替换原图色彩",
+    url: "/duotone",
+    tag: "新功能",
+    color: "bg-teal-500/10 text-teal-600 dark:text-teal-400",
+  },
 ];
 
 const stats = [
