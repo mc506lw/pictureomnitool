@@ -438,6 +438,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Box,
         url: "/stained-glass",
       },
+      {
+        title: "拍立得效果",
+        description: "为图片添加拍立得相纸边框与阴影",
+        icon: Camera,
+        url: "/polaroid",
+      },
     ],
   },
 ];

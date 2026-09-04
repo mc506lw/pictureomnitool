@@ -537,6 +537,14 @@ const tools = [
     tag: "新功能",
     color: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
   },
+  {
+    icon: Camera,
+    title: "拍立得效果",
+    description: "为图片添加拍立得相纸边框与阴影",
+    url: "/polaroid",
+    tag: "新功能",
+    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  },
 ];
 
 const stats = [
