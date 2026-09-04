@@ -604,6 +604,14 @@ const tools = [
     tag: "新功能",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
+  {
+    icon: Stamp,
+    title: "木刻/版画",
+    description: "黑白二值化并模拟木刻版画/印章效果",
+    url: "/woodcut",
+    tag: "新功能",
+    color: "bg-stone-500/10 text-stone-600 dark:text-stone-400",
+  },
 ];
 
 const stats = [

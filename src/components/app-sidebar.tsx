@@ -489,6 +489,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Thermometer,
         url: "/thermal-camera",
       },
+      {
+        title: "木刻/版画",
+        description: "黑白二值化并模拟木刻版画/印章效果",
+        icon: Stamp,
+        url: "/woodcut",
+      },
     ],
   },
 ];
