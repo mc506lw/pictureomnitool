@@ -497,6 +497,14 @@ const tools = [
     tag: "新功能",
     color: "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
   },
+  {
+    icon: Square,
+    title: "卡通效果",
+    description: "量化色阶并叠加边缘描边生成卡通画风",
+    url: "/cartoon",
+    tag: "新功能",
+    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  },
 ];
 
 const stats = [

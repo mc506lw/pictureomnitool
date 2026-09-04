@@ -407,6 +407,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Palette,
         url: "/oil-painting",
       },
+      {
+        title: "卡通效果",
+        description: "量化色阶并叠加边缘描边生成卡通画风",
+        icon: Square,
+        url: "/cartoon",
+      },
     ],
   },
 ];
