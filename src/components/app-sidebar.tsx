@@ -315,6 +315,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Grid,
         url: "/grid-lines",
       },
+      {
+        title: "半色调网点",
+        description: "用彩色圆点模拟印刷网点效果",
+        icon: Circle,
+        url: "/halftone",
+      },
     ],
   },
 ];

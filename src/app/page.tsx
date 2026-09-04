@@ -375,6 +375,14 @@ const tools = [
     tag: "新功能",
     color: "bg-slate-500/10 text-slate-600 dark:text-slate-400",
   },
+  {
+    icon: Circle,
+    title: "半色调网点",
+    description: "用彩色圆点模拟印刷网点效果",
+    url: "/halftone",
+    tag: "新功能",
+    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  },
 ];
 
 const stats = [
