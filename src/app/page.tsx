@@ -425,6 +425,14 @@ const tools = [
     tag: "新功能",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
+  {
+    icon: CircleOff,
+    title: "负片效果",
+    description: "反转颜色生成底片/负片风格",
+    url: "/negative",
+    tag: "新功能",
+    color: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400",
+  },
 ];
 
 const stats = [

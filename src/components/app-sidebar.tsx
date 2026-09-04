@@ -353,6 +353,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Scissors,
         url: "/torn-paper",
       },
+      {
+        title: "负片效果",
+        description: "反转颜色生成底片/负片风格",
+        icon: CircleOff,
+        url: "/negative",
+      },
     ],
   },
 ];
