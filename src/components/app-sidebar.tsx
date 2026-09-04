@@ -43,6 +43,7 @@ import {
   Grid,
   Waves,
   ArrowDownFromLine,
+  Zap,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -418,6 +419,18 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         description: "提取图片主色并生成色板预览图",
         icon: Pipette,
         url: "/color-picker",
+      },
+      {
+        title: "残影拖尾",
+        description: "多次偏移叠加生成运动拖尾残影",
+        icon: Zap,
+        url: "/ghost-trail",
+      },
+      {
+        title: "炭笔画",
+        description: "反转明暗并强化对比，模拟铅笔素描质感",
+        icon: Pencil,
+        url: "/charcoal",
       },
     ],
   },

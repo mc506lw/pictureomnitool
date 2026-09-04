@@ -513,6 +513,22 @@ const tools = [
     tag: "新功能",
     color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   },
+  {
+    icon: Zap,
+    title: "残影拖尾",
+    description: "多次偏移叠加生成运动拖尾残影",
+    url: "/ghost-trail",
+    tag: "新功能",
+    color: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+  },
+  {
+    icon: Pencil,
+    title: "炭笔画",
+    description: "反转明暗并强化对比，模拟铅笔素描质感",
+    url: "/charcoal",
+    tag: "新功能",
+    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400",
+  },
 ];
 
 const stats = [
