@@ -389,6 +389,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Type,
         url: "/ascii-art",
       },
+      {
+        title: "复古照片",
+        description: "添加复古棕褐色、颗粒与暗角效果",
+        icon: Camera,
+        url: "/vintage-photo",
+      },
     ],
   },
 ];

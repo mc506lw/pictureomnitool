@@ -473,6 +473,14 @@ const tools = [
     tag: "新功能",
     color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
   },
+  {
+    icon: Camera,
+    title: "复古照片",
+    description: "添加复古棕褐色、颗粒与暗角效果",
+    url: "/vintage-photo",
+    tag: "新功能",
+    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  },
 ];
 
 const stats = [
