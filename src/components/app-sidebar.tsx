@@ -371,6 +371,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Square,
         url: "/frame-border",
       },
+      {
+        title: "彩虹渐变",
+        description: "在图片上叠加彩色线性渐变",
+        icon: Palette,
+        url: "/rainbow-gradient",
+      },
     ],
   },
 ];

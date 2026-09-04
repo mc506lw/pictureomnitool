@@ -449,6 +449,14 @@ const tools = [
     tag: "新功能",
     color: "bg-lime-500/10 text-lime-600 dark:text-lime-400",
   },
+  {
+    icon: Palette,
+    title: "彩虹渐变",
+    description: "在图片上叠加彩色线性渐变",
+    url: "/rainbow-gradient",
+    tag: "新功能",
+    color: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
+  },
 ];
 
 const stats = [
