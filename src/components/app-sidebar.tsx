@@ -432,6 +432,12 @@ const toolGroups: { label: string; items: NavItem[] }[] = [
         icon: Pencil,
         url: "/charcoal",
       },
+      {
+        title: "彩色玻璃",
+        description: "将图片分割为色块并映射到彩色玻璃配色",
+        icon: Box,
+        url: "/stained-glass",
+      },
     ],
   },
 ];

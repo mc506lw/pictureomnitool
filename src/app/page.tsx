@@ -529,6 +529,14 @@ const tools = [
     tag: "新功能",
     color: "bg-slate-500/10 text-slate-600 dark:text-slate-400",
   },
+  {
+    icon: Box,
+    title: "彩色玻璃",
+    description: "将图片分割为色块并映射到彩色玻璃配色",
+    url: "/stained-glass",
+    tag: "新功能",
+    color: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+  },
 ];
 
 const stats = [
