@@ -34,8 +34,8 @@ export type EncodeFormat = (typeof ENCODABLE_FORMATS)[number];
 
 export const FORMAT_LABELS: Record<string, string> = {
   png: "PNG（无损）",
-  jpeg: "JPEG（有损）",
-  jpg: "JPEG",
+  jpeg: "JPG（有损）",
+  jpg: "JPG",
   webp: "WebP",
   avif: "AVIF",
   bmp: "BMP",

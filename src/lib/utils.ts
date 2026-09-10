@@ -29,7 +29,13 @@ export function getExtension(name: string): string {
 
 /** 拼接新的文件名 */
 export function withExtension(name: string, ext: string): string {
-  return `${getBaseName(name)}.${ext}`;
+  const finalExt = ext === "jpeg" ? "jpg" : ext;
+  return `${getBaseName(name)}.${finalExt}`;
+}
+
+/** 格式友好显示名 */
+export function formatLabel(format: string): string {
+  return format === "jpeg" ? "JPG" : format.toUpperCase();
 }
 
 /** 去除非法文件名字符 */

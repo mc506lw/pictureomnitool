@@ -14,7 +14,7 @@ import {
   getSupportedEncodeFormats,
   type EncodeFormat,
 } from "@/lib/image-utils";
-import { withExtension, formatBytes } from "@/lib/utils";
+import { formatLabel, withExtension, formatBytes } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -120,7 +120,7 @@ export default function ConvertPage() {
                   <SelectContent>
                     {formats.map((f) => (
                       <SelectItem key={f} value={f}>
-                        {f.toUpperCase()}
+                        {formatLabel(f)}
                       </SelectItem>
                     ))}
                   </SelectContent>
