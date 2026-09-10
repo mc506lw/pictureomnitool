@@ -57,13 +57,17 @@ export default function InkWashPage() {
               const nx = Math.min(w - 1, Math.max(0, x + dx));
               const ny = Math.min(h - 1, Math.max(0, y + dy));
               const idx = (ny * w + nx) * 4;
-              const lum = (data[idx] + data[idx + 1] + data[idx + 2]) / (255 * 3);
+              const lum =
+                (data[idx] + data[idx + 1] + data[idx + 2]) / (255 * 3);
               sum += lum;
             }
           }
           const area = (2 * radius + 1) ** 2;
           const avg = sum / area;
-          const val = Math.min(255, Math.max(0, Math.round((avg - 0.5) * contrast + 0.5) * 255));
+          const val = Math.min(
+            255,
+            Math.max(0, Math.round((avg - 0.5) * contrast + 0.5) * 255)
+          );
           const dstIdx = (y * w + x) * 4;
           output[dstIdx] = val;
           output[dstIdx + 1] = val;
@@ -116,7 +120,8 @@ export default function InkWashPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  晕染半径：<span className="text-primary font-medium">{radius}px</span>
+                  晕染半径：
+                  <span className="text-primary font-medium">{radius}px</span>
                 </Label>
                 <Slider
                   value={[radius]}
@@ -128,7 +133,8 @@ export default function InkWashPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  对比度：<span className="text-primary font-medium">{contrast}</span>
+                  对比度：
+                  <span className="text-primary font-medium">{contrast}</span>
                 </Label>
                 <Slider
                   value={[contrast]}

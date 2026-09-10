@@ -94,7 +94,9 @@ export default function InvertPage() {
                   {process.running ? (
                     <>
                       <Progress
-                        value={(process.done / Math.max(1, process.total)) * 100}
+                        value={
+                          (process.done / Math.max(1, process.total)) * 100
+                        }
                         className="flex-1"
                       />
                       <span className="text-muted-foreground text-xs whitespace-nowrap">

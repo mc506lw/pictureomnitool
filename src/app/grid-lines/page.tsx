@@ -62,10 +62,7 @@ export default function GridLinesPage() {
         quality: 0.92,
         backgroundColor: "#000000",
       });
-      const name = withExtension(
-        `${getBaseName(item.name)}-grid`,
-        format
-      );
+      const name = withExtension(`${getBaseName(item.name)}-grid`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -103,7 +100,8 @@ export default function GridLinesPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  间距：<span className="text-primary font-medium">{interval}px</span>
+                  间距：
+                  <span className="text-primary font-medium">{interval}px</span>
                 </Label>
                 <Slider
                   value={[interval]}
@@ -115,7 +113,10 @@ export default function GridLinesPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  粗细：<span className="text-primary font-medium">{thickness}px</span>
+                  粗细：
+                  <span className="text-primary font-medium">
+                    {thickness}px
+                  </span>
                 </Label>
                 <Slider
                   value={[thickness]}

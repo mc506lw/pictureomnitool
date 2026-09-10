@@ -37,10 +37,30 @@ export default function CompressPage() {
   const lossy = format === "jpeg" || format === "webp" || format === "avif";
 
   const presets = [
-    { label: "社交网络", format: "jpeg" as EncodeFormat, quality: 85, targetKb: 0 },
-    { label: "邮件附件", format: "png" as EncodeFormat, quality: 80, targetKb: 0 },
-    { label: "网页优化", format: "webp" as EncodeFormat, quality: 80, targetKb: 0 },
-    { label: "最小体积", format: "webp" as EncodeFormat, quality: 60, targetKb: 0 },
+    {
+      label: "社交网络",
+      format: "jpeg" as EncodeFormat,
+      quality: 85,
+      targetKb: 0,
+    },
+    {
+      label: "邮件附件",
+      format: "png" as EncodeFormat,
+      quality: 80,
+      targetKb: 0,
+    },
+    {
+      label: "网页优化",
+      format: "webp" as EncodeFormat,
+      quality: 80,
+      targetKb: 0,
+    },
+    {
+      label: "最小体积",
+      format: "webp" as EncodeFormat,
+      quality: 60,
+      targetKb: 0,
+    },
   ];
   const formats: { value: EncodeFormat; label: string; hint: string }[] = [
     { value: "webp", label: "WebP", hint: "压缩率最高，无损/有损" },
@@ -132,7 +152,9 @@ export default function CompressPage() {
                       }}
                       className={cn(
                         "rounded-md border px-3 py-2 text-xs font-medium transition-colors",
-                        format === p.format && quality === p.quality && !useTarget
+                        format === p.format &&
+                          quality === p.quality &&
+                          !useTarget
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-background text-muted-foreground hover:bg-accent"
                       )}

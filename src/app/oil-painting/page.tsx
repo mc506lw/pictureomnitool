@@ -52,10 +52,17 @@ export default function OilPaintingPage() {
 
       for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
-          const intensityBins: { r: number; g: number; b: number; count: number }[] = Array.from(
-            { length: intensityCount },
-            () => ({ r: 0, g: 0, b: 0, count: 0 })
-          );
+          const intensityBins: {
+            r: number;
+            g: number;
+            b: number;
+            count: number;
+          }[] = Array.from({ length: intensityCount }, () => ({
+            r: 0,
+            g: 0,
+            b: 0,
+            count: 0,
+          }));
           for (let dy = -radius; dy <= radius; dy++) {
             for (let dx = -radius; dx <= radius; dx++) {
               const nx = Math.min(w - 1, Math.max(0, x + dx));
@@ -133,7 +140,8 @@ export default function OilPaintingPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  笔触半径：<span className="text-primary font-medium">{radius}px</span>
+                  笔触半径：
+                  <span className="text-primary font-medium">{radius}px</span>
                 </Label>
                 <Slider
                   value={[radius]}
@@ -145,7 +153,8 @@ export default function OilPaintingPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  色彩级别：<span className="text-primary font-medium">{intensity}</span>
+                  色彩级别：
+                  <span className="text-primary font-medium">{intensity}</span>
                 </Label>
                 <Slider
                   value={[intensity]}

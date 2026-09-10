@@ -19,10 +19,7 @@ import { FileDropzone } from "@/components/file-dropzone";
 import { BatchTable } from "@/components/batch-table";
 import { useBatchStore } from "@/store/batch-store";
 import { useBatchProcess } from "@/hooks/use-batch-process";
-import {
-  decodeImageFile,
-  makeThumbnail,
-} from "@/lib/image-utils";
+import { decodeImageFile, makeThumbnail } from "@/lib/image-utils";
 import { getBaseName, formatBytes } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -72,13 +69,9 @@ async function computeImageHash(
       points.push(pixels[i], pixels[i + 1], pixels[i + 2]);
     }
   }
-  const reduced = points
-    .slice(0, 256)
-    .map((v) => Math.round(v / 16) * 16);
+  const reduced = points.slice(0, 256).map((v) => Math.round(v / 16) * 16);
   const sum = reduced.reduce((acc, v) => acc + v, 0);
-  const hash = reduced
-    .map((v) => v.toString(16).padStart(2, "0"))
-    .join("");
+  const hash = reduced.map((v) => v.toString(16).padStart(2, "0")).join("");
   return `${hash.slice(0, 16)}-${sum.toString(16)}`;
 }
 
@@ -109,9 +102,8 @@ export default function DuplicatesPage() {
   const [selectedForKeep, setSelectedForKeep] = React.useState<Set<string>>(
     new Set()
   );
-  const [statusText, setStatusText] = React.useState(
-    "请上传需要检测重复的图片"
-  );
+  const [statusText, setStatusText] =
+    React.useState("请上传需要检测重复的图片");
 
   const canvasMapRef = React.useRef<Map<string, HTMLCanvasElement>>(new Map());
   const metaMapRef = React.useRef<Map<string, DuplicateMeta>>(new Map());
@@ -334,7 +326,10 @@ export default function DuplicatesPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  敏感度：<span className="text-primary font-medium">{sensitivity}%</span>
+                  敏感度：
+                  <span className="text-primary font-medium">
+                    {sensitivity}%
+                  </span>
                 </Label>
                 <Slider
                   value={[sensitivity]}
@@ -382,7 +377,7 @@ export default function DuplicatesPage() {
                 onAdd={addFiles}
                 renderExtra={(item) =>
                   metaMapRef.current.has(item.id) ? (
-                    <span className="text-emerald-600 dark:text-emerald-400 text-xs">
+                    <span className="text-xs text-emerald-600 dark:text-emerald-400">
                       已哈希
                     </span>
                   ) : null
@@ -437,11 +432,11 @@ export default function DuplicatesPage() {
                       return (
                         <div
                           key={group.key}
-                          className="bg-card rounded-lg border overflow-hidden"
+                          className="bg-card overflow-hidden rounded-lg border"
                         >
                           <button
                             onClick={() => toggleGroup(group.key)}
-                            className="flex w-full items-center justify-between p-4 text-left hover:bg-accent/40 transition-colors"
+                            className="hover:bg-accent/40 flex w-full items-center justify-between p-4 text-left transition-colors"
                           >
                             <div className="flex items-center gap-3">
                               {isExpanded ? (
@@ -471,16 +466,17 @@ export default function DuplicatesPage() {
                           </button>
 
                           {isExpanded && (
-                            <div className="border-t px-4 pb-4 pt-3">
+                            <div className="border-t px-4 pt-3 pb-4">
                               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                                 {group.items.map((item) => {
-                                  const isSelected =
-                                    selectedForKeep.has(item.id);
+                                  const isSelected = selectedForKeep.has(
+                                    item.id
+                                  );
                                   return (
                                     <div
                                       key={item.id}
                                       className={cn(
-                                        "rounded-lg border p-2 transition-colors cursor-pointer",
+                                        "cursor-pointer rounded-lg border p-2 transition-colors",
                                         isSelected
                                           ? "border-primary bg-primary/5"
                                           : "hover:border-primary/50"
@@ -508,9 +504,7 @@ export default function DuplicatesPage() {
                                           <span>
                                             {item.width} × {item.height}
                                           </span>
-                                          <span>
-                                            {formatBytes(item.size)}
-                                          </span>
+                                          <span>{formatBytes(item.size)}</span>
                                         </div>
                                         <div className="flex items-center gap-1">
                                           {isSelected ? (

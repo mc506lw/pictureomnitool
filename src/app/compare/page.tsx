@@ -1,11 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  ArrowLeftRight,
-  ImageOff,
-  Settings2,
-} from "lucide-react";
+import { ArrowLeftRight, Settings2 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -54,7 +50,7 @@ export default function ComparePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items.length]);
 
-  const handlePredecode = async () => {
+  const handlePredecode = React.useCallback(async () => {
     const decodeTargets = items.filter((i) => !i.canvas && i.file);
     if (decodeTargets.length === 0) return;
     await Promise.all(
@@ -83,7 +79,7 @@ export default function ComparePage() {
         }
       })
     );
-  };
+  }, [items, updateItem]);
 
   const buildPreview = React.useCallback(
     async (left: string, right: string) => {
@@ -104,7 +100,7 @@ export default function ComparePage() {
         right: { url: rightUrl, width: rightWidth, height: rightHeight },
       });
     },
-    [items, updateItem]
+    [items, updateItem, handlePredecode]
   );
 
   React.useEffect(() => {
@@ -223,7 +219,10 @@ export default function ComparePage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Label className="text-xs">
-                    滑块位置：<span className="text-primary font-medium">{sliderPos}%</span>
+                    滑块位置：
+                    <span className="text-primary font-medium">
+                      {sliderPos}%
+                    </span>
                   </Label>
                 </div>
               </div>
@@ -258,10 +257,10 @@ export default function ComparePage() {
                     />
                   </div>
                   <div
-                    className="absolute inset-y-0 border-l-2 border-primary"
+                    className="border-primary absolute inset-y-0 border-l-2"
                     style={{ left: `${sliderPos}%` }}
                   >
-                    <div className="bg-primary text-primary-foreground absolute left-1/2 top-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full shadow-lg">
+                    <div className="bg-primary text-primary-foreground absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full shadow-lg">
                       <ArrowLeftRight className="h-4 w-4" />
                     </div>
                   </div>

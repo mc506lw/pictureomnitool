@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-type Direction = "backward" | "forward";
-
 export interface HistoryState<T> {
   past: T[];
   present: T;
@@ -21,10 +19,7 @@ export interface HistoryApi<T> {
   push: (value: T) => void;
 }
 
-export function useHistoryStack<T>(
-  initial: T,
-  limit = 50
-): HistoryApi<T> {
+export function useHistoryStack<T>(initial: T, limit = 50): HistoryApi<T> {
   const [state, setState] = useState<HistoryState<T>>({
     past: [],
     present: initial,
@@ -102,8 +97,11 @@ export function useHistoryMiddleware<T>(
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestRef = useRef<T>(initial);
   const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
   const initialRef = useRef<T>(initial);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   useEffect(() => {
     latestRef.current = history.state.present;
@@ -149,9 +147,12 @@ export function useHistoryMiddleware<T>(
     [delay, push]
   );
 
-  useEffect(() => () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    []
+  );
 
   const undo = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);

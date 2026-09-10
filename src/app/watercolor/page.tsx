@@ -85,7 +85,9 @@ export default function WatercolorPage() {
             const lr = data[idx];
             const lg = data[idx + 1];
             const lb = data[idx + 2];
-            const la = alpha * (layer.offset[0] === 0 && layer.offset[1] === 0 ? 1 : 0.6);
+            const la =
+              alpha *
+              (layer.offset[0] === 0 && layer.offset[1] === 0 ? 1 : 0.6);
             r += lr * la;
             g += lg * la;
             b += lb * la;
@@ -114,7 +116,10 @@ export default function WatercolorPage() {
         quality: 0.92,
         backgroundColor: "#ffffff",
       });
-      const name = withExtension(`${getBaseName(item.name)}-watercolor`, format);
+      const name = withExtension(
+        `${getBaseName(item.name)}-watercolor`,
+        format
+      );
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -152,7 +157,8 @@ export default function WatercolorPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  扩散半径：<span className="text-primary font-medium">{spread}px</span>
+                  扩散半径：
+                  <span className="text-primary font-medium">{spread}px</span>
                 </Label>
                 <Slider
                   value={[spread]}
@@ -164,7 +170,10 @@ export default function WatercolorPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  透明度：<span className="text-primary font-medium">{alpha.toFixed(2)}</span>
+                  透明度：
+                  <span className="text-primary font-medium">
+                    {alpha.toFixed(2)}
+                  </span>
                 </Label>
                 <Slider
                   value={[alpha]}

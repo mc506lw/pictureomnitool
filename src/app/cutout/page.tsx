@@ -1,12 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Scissors,
-  Play,
-  Square as StopSquare,
-  Settings2,
-} from "lucide-react";
+import { Scissors, Play, Square as StopSquare, Settings2 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -110,7 +105,8 @@ export default function CutoutPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  容差：<span className="text-primary font-medium">{tolerance}</span>
+                  容差：
+                  <span className="text-primary font-medium">{tolerance}</span>
                 </Label>
                 <Slider
                   value={[tolerance]}

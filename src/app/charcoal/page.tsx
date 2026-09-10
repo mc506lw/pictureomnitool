@@ -57,7 +57,8 @@ export default function CharcoalPage() {
               const nx = Math.min(w - 1, Math.max(0, x + dx));
               const ny = Math.min(h - 1, Math.max(0, y + dy));
               const idx = (ny * w + nx) * 4;
-              const lum = (data[idx] + data[idx + 1] + data[idx + 2]) / (255 * 3);
+              const lum =
+                (data[idx] + data[idx + 1] + data[idx + 2]) / (255 * 3);
               sum += lum;
             }
           }
@@ -65,7 +66,10 @@ export default function CharcoalPage() {
           const avg = sum / area;
           const inverted = 1 - avg;
           const dstIdx = (y * w + x) * 4;
-          const val = Math.min(255, Math.max(0, Math.round((inverted - 0.5) * contrast + 0.5) * 255));
+          const val = Math.min(
+            255,
+            Math.max(0, Math.round((inverted - 0.5) * contrast + 0.5) * 255)
+          );
           output[dstIdx] = val;
           output[dstIdx + 1] = val;
           output[dstIdx + 2] = val;
@@ -117,7 +121,8 @@ export default function CharcoalPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  模糊半径：<span className="text-primary font-medium">{blur}px</span>
+                  模糊半径：
+                  <span className="text-primary font-medium">{blur}px</span>
                 </Label>
                 <Slider
                   value={[blur]}
@@ -129,7 +134,8 @@ export default function CharcoalPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  对比度：<span className="text-primary font-medium">{contrast}</span>
+                  对比度：
+                  <span className="text-primary font-medium">{contrast}</span>
                 </Label>
                 <Slider
                   value={[contrast]}

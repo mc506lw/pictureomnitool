@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { ArrowDownFromLine, Play, Square as StopSquare, Settings2 } from "lucide-react";
+import {
+  ArrowDownFromLine,
+  Play,
+  Square as StopSquare,
+  Settings2,
+} from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -53,7 +58,12 @@ export default function ReflectionPage() {
       ctx.drawImage(src, 0, 0);
       ctx.restore();
 
-      const gradient = ctx.createLinearGradient(0, src.height, 0, canvas.height);
+      const gradient = ctx.createLinearGradient(
+        0,
+        src.height,
+        0,
+        canvas.height
+      );
       gradient.addColorStop(0, `rgba(0,0,0,0)`);
       gradient.addColorStop(1, `rgba(0,0,0,${fade / 100})`);
       ctx.fillStyle = gradient;
@@ -104,7 +114,8 @@ export default function ReflectionPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  倒影高度：<span className="text-primary font-medium">{ratio}%</span>
+                  倒影高度：
+                  <span className="text-primary font-medium">{ratio}%</span>
                 </Label>
                 <Slider
                   value={[ratio]}
@@ -116,7 +127,8 @@ export default function ReflectionPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  淡出强度：<span className="text-primary font-medium">{fade}%</span>
+                  淡出强度：
+                  <span className="text-primary font-medium">{fade}%</span>
                 </Label>
                 <Slider
                   value={[fade]}

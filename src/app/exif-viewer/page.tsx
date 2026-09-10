@@ -53,7 +53,9 @@ export default function ExifViewerPage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [exifMap, setExifMap] = React.useState<Map<string, ExifSummary>>(new Map());
+  const [exifMap, setExifMap] = React.useState<Map<string, ExifSummary>>(
+    new Map()
+  );
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
 
   const process = useBatchProcess({
@@ -202,14 +204,18 @@ export default function ExifViewerPage() {
                     const exif = exifMap.get(item.id);
                     if (!exif) return null;
                     return (
-                      <div key={item.id} className="bg-card rounded-lg border p-4">
+                      <div
+                        key={item.id}
+                        className="bg-card rounded-lg border p-4"
+                      >
                         <div className="mb-3 flex items-center justify-between">
                           <div>
                             <div className="text-sm font-medium">
                               {getBaseName(item.name)}
                             </div>
                             <div className="text-muted-foreground text-xs">
-                              {exif.width} × {exif.height} · {formatBytes(item.size)}
+                              {exif.width} × {exif.height} ·{" "}
+                              {formatBytes(item.size)}
                             </div>
                           </div>
                           <Button
@@ -231,7 +237,11 @@ export default function ExifViewerPage() {
                             <div className="col-span-2 flex items-center gap-2 text-xs">
                               <Camera className="text-muted-foreground h-4 w-4" />
                               <span className="font-medium">{exif.make}</span>
-                              {exif.model && <span className="text-muted-foreground">· {exif.model}</span>}
+                              {exif.model && (
+                                <span className="text-muted-foreground">
+                                  · {exif.model}
+                                </span>
+                              )}
                             </div>
                           )}
                           {exif.dateTime && (
@@ -268,12 +278,13 @@ export default function ExifViewerPage() {
                             <div className="col-span-2 flex items-center gap-2 text-xs">
                               <MapPin className="text-muted-foreground h-4 w-4" />
                               <span>
-                                {exif.gps.lat?.toFixed(4)}, {exif.gps.lon?.toFixed(4)}
+                                {exif.gps.lat?.toFixed(4)},{" "}
+                                {exif.gps.lon?.toFixed(4)}
                               </span>
                             </div>
                           )}
                           {exif.software && (
-                            <div className="col-span-2 text-xs text-muted-foreground">
+                            <div className="text-muted-foreground col-span-2 text-xs">
                               软件：{exif.software}
                             </div>
                           )}

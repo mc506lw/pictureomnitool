@@ -6,7 +6,6 @@ import {
   Play,
   Square as StopSquare,
   Settings2,
-  Type,
   ImageIcon,
   RotateCw,
 } from "lucide-react";
@@ -75,7 +74,8 @@ export default function WatermarkPreviewPage() {
   const clearAll = useBatchStore((s) => s.clearAll);
   const updateItem = useBatchStore((s) => s.updateItem);
 
-  const [watermarkType, setWatermarkType] = React.useState<WatermarkType>("text");
+  const [watermarkType, setWatermarkType] =
+    React.useState<WatermarkType>("text");
   const [text, setText] = React.useState("Watermark");
   const [textColor, setTextColor] = React.useState("#ffffff");
   const [fontSize, setFontSize] = React.useState(32);
@@ -129,7 +129,10 @@ export default function WatermarkPreviewPage() {
         quality: 0.92,
         backgroundColor: "#ffffff",
       });
-      const name = withExtension(`${getBaseName(item.name)}-watermarked`, format);
+      const name = withExtension(
+        `${getBaseName(item.name)}-watermarked`,
+        format
+      );
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -166,7 +169,16 @@ export default function WatermarkPreviewPage() {
       }
     });
     setPreviewMap(next);
-  }, [items, watermarkType, text, textColor, fontSize, opacity, rotation, tile]);
+  }, [
+    items,
+    watermarkType,
+    text,
+    textColor,
+    fontSize,
+    opacity,
+    rotation,
+    tile,
+  ]);
 
   const handleReset = () => {
     clearAll();
@@ -214,7 +226,8 @@ export default function WatermarkPreviewPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  字号：<span className="text-primary font-medium">{fontSize}px</span>
+                  字号：
+                  <span className="text-primary font-medium">{fontSize}px</span>
                 </Label>
                 <Slider
                   value={[fontSize]}
@@ -226,7 +239,10 @@ export default function WatermarkPreviewPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  透明度：<span className="text-primary font-medium">{Math.round(opacity * 100)}%</span>
+                  透明度：
+                  <span className="text-primary font-medium">
+                    {Math.round(opacity * 100)}%
+                  </span>
                 </Label>
                 <Slider
                   value={[opacity]}
@@ -238,7 +254,8 @@ export default function WatermarkPreviewPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  旋转：<span className="text-primary font-medium">{rotation}°</span>
+                  旋转：
+                  <span className="text-primary font-medium">{rotation}°</span>
                 </Label>
                 <Slider
                   value={[rotation]}

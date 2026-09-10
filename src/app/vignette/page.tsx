@@ -100,7 +100,8 @@ export default function VignettePage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  位置：<span className="text-primary font-medium">{radius}%</span>
+                  位置：
+                  <span className="text-primary font-medium">{radius}%</span>
                 </Label>
                 <Slider
                   value={[radius]}
@@ -112,7 +113,8 @@ export default function VignettePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  柔和度：<span className="text-primary font-medium">{softness}%</span>
+                  柔和度：
+                  <span className="text-primary font-medium">{softness}%</span>
                 </Label>
                 <Slider
                   value={[softness]}
@@ -124,7 +126,8 @@ export default function VignettePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  强度：<span className="text-primary font-medium">{strength}%</span>
+                  强度：
+                  <span className="text-primary font-medium">{strength}%</span>
                 </Label>
                 <Slider
                   value={[strength]}

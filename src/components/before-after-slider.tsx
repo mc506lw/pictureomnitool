@@ -48,7 +48,7 @@ export function BeforeAfterSlider({
       ref={containerRef}
       className={cn(
         "relative overflow-hidden rounded-md border",
-        "select-none touch-none",
+        "touch-none select-none",
         className
       )}
       onPointerDown={handlePointerDown}
@@ -80,14 +80,14 @@ export function BeforeAfterSlider({
         className="absolute inset-y-0 flex items-center"
         style={{ left: `${ratio}%`, transform: "translateX(-50%)" }}
       >
-        <div className="bg-background border flex h-8 w-8 items-center justify-center rounded-full shadow-sm">
+        <div className="bg-background flex h-8 w-8 items-center justify-center rounded-full border shadow-sm">
           <div className="text-muted-foreground text-[10px]">⟷</div>
         </div>
       </div>
       <div className="absolute bottom-2 left-2 rounded bg-black/60 px-2 py-0.5 text-[10px] text-white">
         原图
       </div>
-      <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 text-[10px] text-white">
+      <div className="absolute right-2 bottom-2 rounded bg-black/60 px-2 py-0.5 text-[10px] text-white">
         处理后
       </div>
     </div>

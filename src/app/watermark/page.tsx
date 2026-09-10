@@ -67,16 +67,19 @@ export default function WatermarkPage() {
   );
   const [watermarkFile, setWatermarkFile] = React.useState<File | null>(null);
 
-  const opts: WatermarkOptions = {
-    mode,
-    text,
-    fontSize,
-    color,
-    opacity,
-    position,
-    rotate,
-    padding,
-  };
+  const opts: WatermarkOptions = React.useMemo(
+    () => ({
+      mode,
+      text,
+      fontSize,
+      color,
+      opacity,
+      position,
+      rotate,
+      padding,
+    }),
+    [mode, text, fontSize, color, opacity, position, rotate, padding]
+  );
 
   const process = useBatchProcess({
     items,

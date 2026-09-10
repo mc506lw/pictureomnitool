@@ -73,7 +73,7 @@ export default function LowPolyPage() {
       const centerX = w / 2;
       const centerY = h / 2;
       const centerPoint: [number, number] = [centerX, centerY];
-      
+
       // Sort points by angle for fan triangulation
       const sorted = points
         .map((p, idx) => ({
@@ -145,7 +145,8 @@ export default function LowPolyPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  三角面数量：<span className="text-primary font-medium">{cells}</span>
+                  三角面数量：
+                  <span className="text-primary font-medium">{cells}</span>
                 </Label>
                 <Slider
                   value={[cells]}

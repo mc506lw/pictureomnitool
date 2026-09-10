@@ -1,12 +1,6 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import sharp from "sharp";
-import {
-  lzwEncode,
-  lzwDecode,
-  encodeGif,
-  decodeGif,
-  medianCut,
-} from "@/lib/gif";
+import { lzwDecode, decodeGif, medianCut, encodeGif } from "@/lib/gif";
 
 describe("sharp + GIF interop", () => {
   let myGif: Uint8Array;

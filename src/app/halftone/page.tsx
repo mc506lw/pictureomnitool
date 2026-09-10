@@ -69,10 +69,7 @@ export default function HalftonePage() {
         quality: 0.92,
         backgroundColor: "#ffffff",
       });
-      const name = withExtension(
-        `${getBaseName(item.name)}-halftone`,
-        format
-      );
+      const name = withExtension(`${getBaseName(item.name)}-halftone`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -110,7 +107,8 @@ export default function HalftonePage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  最大网点：<span className="text-primary font-medium">{dotSize}px</span>
+                  最大网点：
+                  <span className="text-primary font-medium">{dotSize}px</span>
                 </Label>
                 <Slider
                   value={[dotSize]}
@@ -122,7 +120,8 @@ export default function HalftonePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  间距：<span className="text-primary font-medium">{spacing}px</span>
+                  间距：
+                  <span className="text-primary font-medium">{spacing}px</span>
                 </Label>
                 <Slider
                   value={[spacing]}

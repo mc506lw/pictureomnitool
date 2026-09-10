@@ -108,7 +108,10 @@ export default function TornPaperPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  粗糙度：<span className="text-primary font-medium">{roughness}px</span>
+                  粗糙度：
+                  <span className="text-primary font-medium">
+                    {roughness}px
+                  </span>
                 </Label>
                 <Slider
                   value={[roughness]}

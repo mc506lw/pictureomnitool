@@ -118,7 +118,8 @@ export default function EmbossPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  强度：<span className="text-primary font-medium">{strength}x</span>
+                  强度：
+                  <span className="text-primary font-medium">{strength}x</span>
                 </Label>
                 <Slider
                   value={[strength]}

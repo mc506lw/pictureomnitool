@@ -110,7 +110,8 @@ export default function TextOverlayPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  字号：<span className="text-primary font-medium">{size}px</span>
+                  字号：
+                  <span className="text-primary font-medium">{size}px</span>
                 </Label>
                 <Slider
                   value={[size]}
@@ -122,7 +123,8 @@ export default function TextOverlayPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  不透明度：<span className="text-primary font-medium">{opacity}%</span>
+                  不透明度：
+                  <span className="text-primary font-medium">{opacity}%</span>
                 </Label>
                 <Slider
                   value={[opacity]}

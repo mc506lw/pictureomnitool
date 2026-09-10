@@ -23,7 +23,9 @@ export default function PixelArtPage() {
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [pixelSize, setPixelSize] = React.useState(8);
-  const [palette, setPalette] = React.useState<"original" | "gray" | "sepia">("original");
+  const [palette, setPalette] = React.useState<"original" | "gray" | "sepia">(
+    "original"
+  );
   const [format, setFormat] = React.useState<"png" | "jpeg" | "webp">("png");
 
   const process = useBatchProcess({
@@ -126,7 +128,10 @@ export default function PixelArtPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  像素块大小：<span className="text-primary font-medium">{pixelSize}px</span>
+                  像素块大小：
+                  <span className="text-primary font-medium">
+                    {pixelSize}px
+                  </span>
                 </Label>
                 <Slider
                   value={[pixelSize]}
@@ -150,7 +155,11 @@ export default function PixelArtPage() {
                           : "hover:bg-accent"
                       )}
                     >
-                      {p === "original" ? "原色" : p === "gray" ? "灰度" : "复古"}
+                      {p === "original"
+                        ? "原色"
+                        : p === "gray"
+                          ? "灰度"
+                          : "复古"}
                     </button>
                   ))}
                 </div>

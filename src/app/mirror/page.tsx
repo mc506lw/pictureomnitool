@@ -67,8 +67,8 @@ export default function MirrorPage() {
         mode === "horizontal"
           ? "-flip-h"
           : mode === "vertical"
-          ? "-flip-v"
-          : "-flip-hv";
+            ? "-flip-v"
+            : "-flip-hv";
       const name = withExtension(`${getBaseName(item.name)}${suffix}`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },

@@ -16,8 +16,16 @@ import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
 
 const PALETTE = [
-  "#e11d48", "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6",
-  "#ec4899", "#14b8a6", "#f97316", "#6366f1", "#84cc16",
+  "#e11d48",
+  "#f59e0b",
+  "#10b981",
+  "#3b82f6",
+  "#8b5cf6",
+  "#ec4899",
+  "#14b8a6",
+  "#f97316",
+  "#6366f1",
+  "#84cc16",
 ];
 
 export default function StainedGlassPage() {
@@ -56,30 +64,46 @@ export default function StainedGlassPage() {
       const sampleSize = Math.max(1, Math.floor(cellSize / 4));
       for (let y = 0; y < h; y += cellSize) {
         for (let x = 0; x < w; x += cellSize) {
-          const region: { r: number; g: number; b: number; count: number }[] = [];
+          const region: { r: number; g: number; b: number; count: number }[] =
+            [];
           for (let sy = 0; sy < cellSize; sy += sampleSize) {
             for (let sx = 0; sx < cellSize; sx += sampleSize) {
               const px = Math.min(w - 1, x + sx);
               const py = Math.min(h - 1, y + sy);
               const idx = (py * w + px) * 4;
-              region.push({ r: data[idx], g: data[idx + 1], b: data[idx + 2], count: 1 });
+              region.push({
+                r: data[idx],
+                g: data[idx + 1],
+                b: data[idx + 2],
+                count: 1,
+              });
             }
           }
           const sum = region.reduce(
             (acc, c) => ({ r: acc.r + c.r, g: acc.g + c.g, b: acc.b + c.b }),
             { r: 0, g: 0, b: 0 }
           );
-          const avg = { r: sum.r / region.length, g: sum.g / region.length, b: sum.b / region.length };
-          const target = PALETTE.reduce((best, hex) => {
-            const c = hex.replace("#", "");
-            const rgb = [
-              Number.parseInt(c.substring(0, 2), 16),
-              Number.parseInt(c.substring(2, 4), 16),
-              Number.parseInt(c.substring(4, 6), 16),
-            ];
-            const dist = Math.abs(avg.r - rgb[0]) + Math.abs(avg.g - rgb[1]) + Math.abs(avg.b - rgb[2]);
-            return dist < best.dist ? { hex, dist } : best;
-          }, { hex: PALETTE[0], dist: Infinity });
+          const avg = {
+            r: sum.r / region.length,
+            g: sum.g / region.length,
+            b: sum.b / region.length,
+          };
+          const target = PALETTE.reduce(
+            (best, hex) => {
+              const c = hex.replace("#", "");
+              const rgb = [
+                Number.parseInt(c.substring(0, 2), 16),
+                Number.parseInt(c.substring(2, 4), 16),
+                Number.parseInt(c.substring(4, 6), 16),
+              ];
+              const dist =
+                Math.abs(avg.r - rgb[0]) +
+                Math.abs(avg.g - rgb[1]) +
+                Math.abs(avg.b - rgb[2]);
+              return dist < best.dist ? { hex, dist } : best;
+            },
+            { hex: PALETTE[0], dist: Infinity }
+          );
 
           const cw = Math.min(cellSize, w - x);
           const ch = Math.min(cellSize, h - y);
@@ -135,7 +159,8 @@ export default function StainedGlassPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  色块大小：<span className="text-primary font-medium">{cellSize}px</span>
+                  色块大小：
+                  <span className="text-primary font-medium">{cellSize}px</span>
                 </Label>
                 <Slider
                   value={[cellSize]}
@@ -147,7 +172,10 @@ export default function StainedGlassPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  描边宽度：<span className="text-primary font-medium">{strokeWidth}px</span>
+                  描边宽度：
+                  <span className="text-primary font-medium">
+                    {strokeWidth}px
+                  </span>
                 </Label>
                 <Slider
                   value={[strokeWidth]}

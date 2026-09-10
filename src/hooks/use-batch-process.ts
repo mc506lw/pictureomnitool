@@ -27,7 +27,6 @@ export interface BatchProcessState {
  */
 export function useBatchProcess<T>({
   items,
-  getItemId,
   task,
   onItemStart,
   onItemDone,

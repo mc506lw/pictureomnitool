@@ -1,13 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Play,
-  Square as StopSquare,
-  Settings2,
-  ImageIcon,
-  Upload,
-} from "lucide-react";
+import { Play, Square as StopSquare, Settings2, ImageIcon } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -32,7 +26,8 @@ export default function WatermarkImagePage() {
   const [opacity, setOpacity] = React.useState(70);
   const [position, setPosition] = React.useState("bottom-right");
   const [watermarkFile, setWatermarkFile] = React.useState<File | null>(null);
-  const [watermarkImage, setWatermarkImage] = React.useState<HTMLImageElement | null>(null);
+  const [watermarkImage, setWatermarkImage] =
+    React.useState<HTMLImageElement | null>(null);
   const [format, setFormat] = React.useState<"png" | "jpeg" | "webp">("png");
 
   const process = useBatchProcess({
@@ -141,7 +136,8 @@ export default function WatermarkImagePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  缩放：<span className="text-primary font-medium">{scale}%</span>
+                  缩放：
+                  <span className="text-primary font-medium">{scale}%</span>
                 </Label>
                 <Slider
                   value={[scale]}
@@ -153,7 +149,8 @@ export default function WatermarkImagePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  透明度：<span className="text-primary font-medium">{opacity}%</span>
+                  透明度：
+                  <span className="text-primary font-medium">{opacity}%</span>
                 </Label>
                 <Slider
                   value={[opacity]}

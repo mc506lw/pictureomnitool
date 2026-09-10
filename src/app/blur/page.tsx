@@ -116,7 +116,9 @@ export default function BlurPage() {
                   {process.running ? (
                     <>
                       <Progress
-                        value={(process.done / Math.max(1, process.total)) * 100}
+                        value={
+                          (process.done / Math.max(1, process.total)) * 100
+                        }
                         className="flex-1"
                       />
                       <span className="text-muted-foreground text-xs whitespace-nowrap">
@@ -169,7 +171,10 @@ export default function BlurPage() {
   );
 }
 
-function applyBlur(canvas: HTMLCanvasElement, radius: number): HTMLCanvasElement {
+function applyBlur(
+  canvas: HTMLCanvasElement,
+  radius: number
+): HTMLCanvasElement {
   const out = document.createElement("canvas");
   out.width = canvas.width;
   out.height = canvas.height;

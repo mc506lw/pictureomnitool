@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { Thermometer, Play, Square as StopSquare, Settings2 } from "lucide-react";
+import {
+  Thermometer,
+  Play,
+  Square as StopSquare,
+  Settings2,
+} from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -15,7 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
 
-const THERMAL_PALETTES: Record<string, ([number, number, number])[]> = {
+const THERMAL_PALETTES: Record<string, [number, number, number][]> = {
   iron: [
     [0, 0, 0],
     [59, 76, 192],
@@ -139,10 +144,7 @@ export default function ThermalCameraPage() {
         quality: 0.92,
         backgroundColor: "#000000",
       });
-      const name = withExtension(
-        `${getBaseName(item.name)}-thermal`,
-        format
-      );
+      const name = withExtension(`${getBaseName(item.name)}-thermal`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -180,7 +182,8 @@ export default function ThermalCameraPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  平滑半径：<span className="text-primary font-medium">{blur}px</span>
+                  平滑半径：
+                  <span className="text-primary font-medium">{blur}px</span>
                 </Label>
                 <Slider
                   value={[blur]}
@@ -192,7 +195,10 @@ export default function ThermalCameraPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  对比度：<span className="text-primary font-medium">{contrast.toFixed(1)}</span>
+                  对比度：
+                  <span className="text-primary font-medium">
+                    {contrast.toFixed(1)}
+                  </span>
                 </Label>
                 <Slider
                   value={[contrast]}

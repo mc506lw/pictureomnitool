@@ -52,9 +52,18 @@ export default function VintagePhotoPage() {
         const r = data[i];
         const g = data[i + 1];
         const b = data[i + 2];
-        const tr = r * (1 - 0.607 * sepiaAmount) + g * (0.769 * sepiaAmount) + b * (0.189 * sepiaAmount);
-        const tg = r * (0.349 * sepiaAmount) + g * (1 - 0.314 * sepiaAmount) + b * (0.168 * sepiaAmount);
-        const tb = r * (0.272 * sepiaAmount) + g * (0.534 * sepiaAmount) + b * (1 - 0.869 * sepiaAmount);
+        const tr =
+          r * (1 - 0.607 * sepiaAmount) +
+          g * (0.769 * sepiaAmount) +
+          b * (0.189 * sepiaAmount);
+        const tg =
+          r * (0.349 * sepiaAmount) +
+          g * (1 - 0.314 * sepiaAmount) +
+          b * (0.168 * sepiaAmount);
+        const tb =
+          r * (0.272 * sepiaAmount) +
+          g * (0.534 * sepiaAmount) +
+          b * (1 - 0.869 * sepiaAmount);
         data[i] = Math.min(255, Math.max(0, tr));
         data[i + 1] = Math.min(255, Math.max(0, tg));
         data[i + 2] = Math.min(255, Math.max(0, tb));
@@ -72,7 +81,14 @@ export default function VintagePhotoPage() {
         const cx = canvas.width / 2;
         const cy = canvas.height / 2;
         const maxDist = Math.sqrt(cx * cx + cy * cy);
-        const gradient = ctx.createRadialGradient(cx, cy, maxDist * 0.2, cx, cy, maxDist);
+        const gradient = ctx.createRadialGradient(
+          cx,
+          cy,
+          maxDist * 0.2,
+          cx,
+          cy,
+          maxDist
+        );
         gradient.addColorStop(0, "rgba(0,0,0,0)");
         gradient.addColorStop(1, `rgba(0,0,0,${vignette / 100})`);
         ctx.fillStyle = gradient;
@@ -121,7 +137,8 @@ export default function VintagePhotoPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  复古程度：<span className="text-primary font-medium">{sepia}%</span>
+                  复古程度：
+                  <span className="text-primary font-medium">{sepia}%</span>
                 </Label>
                 <Slider
                   value={[sepia]}
@@ -133,7 +150,8 @@ export default function VintagePhotoPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  颗粒：<span className="text-primary font-medium">{grain}</span>
+                  颗粒：
+                  <span className="text-primary font-medium">{grain}</span>
                 </Label>
                 <Slider
                   value={[grain]}
@@ -145,7 +163,8 @@ export default function VintagePhotoPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  暗角：<span className="text-primary font-medium">{vignette}%</span>
+                  暗角：
+                  <span className="text-primary font-medium">{vignette}%</span>
                 </Label>
                 <Slider
                   value={[vignette]}

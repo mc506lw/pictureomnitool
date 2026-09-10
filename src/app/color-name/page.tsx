@@ -68,16 +68,23 @@ export default function ColorNamePage() {
 
       if (mode === "name") {
         for (let i = 0; i < data.length; i += 4) {
-          const rgb: [number, number, number] = [data[i], data[i + 1], data[i + 2]];
-          const closest = NAMED_COLORS.reduce((best, c) => {
-            const hex = c.hex.replace("#", "");
-            const crgb: [number, number, number] = [
-              Number.parseInt(hex.substring(0, 2), 16),
-              Number.parseInt(hex.substring(2, 4), 16),
-              Number.parseInt(hex.substring(4, 6), 16),
-            ];
-            return dist(rgb, crgb) < dist(best, crgb) ? crgb : best;
-          }, [0, 0, 0] as [number, number, number]);
+          const rgb: [number, number, number] = [
+            data[i],
+            data[i + 1],
+            data[i + 2],
+          ];
+          const closest = NAMED_COLORS.reduce(
+            (best, c) => {
+              const hex = c.hex.replace("#", "");
+              const crgb: [number, number, number] = [
+                Number.parseInt(hex.substring(0, 2), 16),
+                Number.parseInt(hex.substring(2, 4), 16),
+                Number.parseInt(hex.substring(4, 6), 16),
+              ];
+              return dist(rgb, crgb) < dist(best, crgb) ? crgb : best;
+            },
+            [0, 0, 0] as [number, number, number]
+          );
           data[i] = closest[0];
           data[i + 1] = closest[1];
           data[i + 2] = closest[2];
@@ -87,7 +94,8 @@ export default function ColorNamePage() {
           const r = data[i];
           const g = data[i + 1];
           const b = data[i + 2];
-          const hex = "#" +
+          const hex =
+            "#" +
             ((1 << 24) + (r << 16) + (g << 8) + b)
               .toString(16)
               .slice(1)

@@ -101,7 +101,8 @@ export default function PolaroidPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  边框宽度：<span className="text-primary font-medium">{border}px</span>
+                  边框宽度：
+                  <span className="text-primary font-medium">{border}px</span>
                 </Label>
                 <Slider
                   value={[border]}
@@ -113,7 +114,10 @@ export default function PolaroidPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  底部留白：<span className="text-primary font-medium">{bottomExtra}px</span>
+                  底部留白：
+                  <span className="text-primary font-medium">
+                    {bottomExtra}px
+                  </span>
                 </Label>
                 <Slider
                   value={[bottomExtra]}

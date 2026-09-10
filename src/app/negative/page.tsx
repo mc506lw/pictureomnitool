@@ -93,7 +93,8 @@ export default function NegativePage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  亮度偏移：<span className="text-primary font-medium">{brightness}</span>
+                  亮度偏移：
+                  <span className="text-primary font-medium">{brightness}</span>
                 </Label>
                 <Slider
                   value={[brightness]}

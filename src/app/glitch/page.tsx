@@ -108,7 +108,8 @@ export default function GlitchPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  偏移强度：<span className="text-primary font-medium">{offset}px</span>
+                  偏移强度：
+                  <span className="text-primary font-medium">{offset}px</span>
                 </Label>
                 <Slider
                   value={[offset]}
@@ -120,7 +121,8 @@ export default function GlitchPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  切片数量：<span className="text-primary font-medium">{sliceCount}</span>
+                  切片数量：
+                  <span className="text-primary font-medium">{sliceCount}</span>
                 </Label>
                 <Slider
                   value={[sliceCount]}
@@ -132,7 +134,10 @@ export default function GlitchPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  切片高度：<span className="text-primary font-medium">{sliceHeight}px</span>
+                  切片高度：
+                  <span className="text-primary font-medium">
+                    {sliceHeight}px
+                  </span>
                 </Label>
                 <Slider
                   value={[sliceHeight]}

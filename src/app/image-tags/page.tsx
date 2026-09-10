@@ -38,9 +38,7 @@ export default function TagsPage() {
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [commonTag, setCommonTag] = React.useState("");
-  const [metaMap, setMetaMap] = React.useState<Map<string, TagMeta>>(
-    new Map()
-  );
+  const [metaMap, setMetaMap] = React.useState<Map<string, TagMeta>>(new Map());
 
   const process = useBatchProcess({
     items,
@@ -146,7 +144,11 @@ export default function TagsPage() {
   };
 
   const uniqueTags = Array.from(
-    new Set(metaMap.size > 0 ? items.flatMap((item) => metaMap.get(item.id)?.tags ?? []) : [])
+    new Set(
+      metaMap.size > 0
+        ? items.flatMap((item) => metaMap.get(item.id)?.tags ?? [])
+        : []
+    )
   );
 
   return (

@@ -6,7 +6,6 @@ import {
   Play,
   Square as StopSquare,
   Settings2,
-  Download,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";

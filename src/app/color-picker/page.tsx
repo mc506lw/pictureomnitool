@@ -47,7 +47,10 @@ export default function ColorPickerPage() {
       const w = canvas.width;
       const h = canvas.height;
 
-      const colorMap = new Map<string, { r: number; g: number; b: number; count: number }>();
+      const colorMap = new Map<
+        string,
+        { r: number; g: number; b: number; count: number }
+      >();
       const r = Math.round(sampleSize / 2);
       for (let y = r; y < h - r; y += sampleSize) {
         for (let x = r; x < w - r; x += sampleSize) {
@@ -69,7 +72,12 @@ export default function ColorPickerPage() {
       }
       const colors = Array.from(colorMap.values())
         .map((c) => ({
-          color: `#${((1 << 24) + (Math.round(c.r / c.count) << 16) + (Math.round(c.g / c.count) << 8) + Math.round(c.b / c.count))
+          color: `#${(
+            (1 << 24) +
+            (Math.round(c.r / c.count) << 16) +
+            (Math.round(c.g / c.count) << 8) +
+            Math.round(c.b / c.count)
+          )
             .toString(16)
             .slice(1)}`,
           count: c.count,
@@ -86,7 +94,12 @@ export default function ColorPickerPage() {
       const swatchWidth = paletteCanvas.width / colors.length;
       colors.forEach((c, idx) => {
         pCtx.fillStyle = c.color;
-        pCtx.fillRect(idx * swatchWidth, 0, Math.max(1, Math.ceil(swatchWidth)), paletteCanvas.height);
+        pCtx.fillRect(
+          idx * swatchWidth,
+          0,
+          Math.max(1, Math.ceil(swatchWidth)),
+          paletteCanvas.height
+        );
       });
 
       const blob = await encodeCanvas(paletteCanvas, format, {
@@ -131,7 +144,10 @@ export default function ColorPickerPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  采样步长：<span className="text-primary font-medium">{sampleSize}px</span>
+                  采样步长：
+                  <span className="text-primary font-medium">
+                    {sampleSize}px
+                  </span>
                 </Label>
                 <Slider
                   value={[sampleSize]}

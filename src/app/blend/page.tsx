@@ -12,7 +12,13 @@ import { decodeImageFile, encodeCanvas } from "@/lib/image-utils";
 import { getBaseName, formatBytes, withExtension, cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
 
@@ -55,8 +61,8 @@ function blendPixel(a: number, b: number, mode: string): number {
         : 255 - (2 * (255 - a) * (255 - b)) / 255;
     case "soft-light":
       return b < 128
-        ? a - (255 - 2 * b) * a * (255 - a) / (255 * 255)
-        : a + (2 * b - 255) * (Math.sqrt(a / 255) * 255 - a) / 255;
+        ? a - ((255 - 2 * b) * a * (255 - a)) / (255 * 255)
+        : a + ((2 * b - 255) * (Math.sqrt(a / 255) * 255 - a)) / 255;
     case "difference":
       return Math.abs(a - b);
     case "exclusion":
@@ -76,7 +82,9 @@ export default function BlendPage() {
   const [mode, setMode] = React.useState<string>("multiply");
   const [opacity, setOpacity] = React.useState(80);
   const [blendFile, setBlendFile] = React.useState<File | null>(null);
-  const [blendImage, setBlendImage] = React.useState<HTMLImageElement | null>(null);
+  const [blendImage, setBlendImage] = React.useState<HTMLImageElement | null>(
+    null
+  );
   const [format, setFormat] = React.useState<"png" | "jpeg" | "webp">("png");
 
   const process = useBatchProcess({
@@ -188,7 +196,8 @@ export default function BlendPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  不透明度：<span className="text-primary font-medium">{opacity}%</span>
+                  不透明度：
+                  <span className="text-primary font-medium">{opacity}%</span>
                 </Label>
                 <Slider
                   value={[opacity]}

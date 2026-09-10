@@ -6,7 +6,6 @@ import {
   Play,
   Square as StopSquare,
   Settings2,
-  Monitor,
 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
@@ -75,7 +74,12 @@ export default function ScreenshotFramePage() {
         quality: 0.92,
         backgroundColor: bg,
       });
-      const suffix = preset === "phone" ? "-phone" : preset === "laptop" ? "-laptop" : "-frame";
+      const suffix =
+        preset === "phone"
+          ? "-phone"
+          : preset === "laptop"
+            ? "-laptop"
+            : "-frame";
       const name = withExtension(`${getBaseName(item.name)}${suffix}`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
@@ -151,7 +155,8 @@ export default function ScreenshotFramePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  内边距：<span className="text-primary font-medium">{padding}px</span>
+                  内边距：
+                  <span className="text-primary font-medium">{padding}px</span>
                 </Label>
                 <Slider
                   value={[padding]}

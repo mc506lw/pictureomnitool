@@ -118,7 +118,8 @@ export default function RipplePage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  波纹半径：<span className="text-primary font-medium">{radius}px</span>
+                  波纹半径：
+                  <span className="text-primary font-medium">{radius}px</span>
                 </Label>
                 <Slider
                   value={[radius]}
@@ -130,7 +131,8 @@ export default function RipplePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  扭曲强度：<span className="text-primary font-medium">{strength}px</span>
+                  扭曲强度：
+                  <span className="text-primary font-medium">{strength}px</span>
                 </Label>
                 <Slider
                   value={[strength]}
@@ -142,7 +144,8 @@ export default function RipplePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  中心 X：<span className="text-primary font-medium">{centerX}%</span>
+                  中心 X：
+                  <span className="text-primary font-medium">{centerX}%</span>
                 </Label>
                 <Slider
                   value={[centerX]}
@@ -154,7 +157,8 @@ export default function RipplePage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  中心 Y：<span className="text-primary font-medium">{centerY}%</span>
+                  中心 Y：
+                  <span className="text-primary font-medium">{centerY}%</span>
                 </Label>
                 <Slider
                   value={[centerY]}

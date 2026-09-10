@@ -53,10 +53,7 @@ export default function PatternPage() {
         quality: 0.92,
         backgroundColor: "#000000",
       });
-      const name = withExtension(
-        `${getBaseName(item.name)}-pattern`,
-        format
-      );
+      const name = withExtension(`${getBaseName(item.name)}-pattern`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -94,7 +91,8 @@ export default function PatternPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  单块尺寸：<span className="text-primary font-medium">{tileSize}px</span>
+                  单块尺寸：
+                  <span className="text-primary font-medium">{tileSize}px</span>
                 </Label>
                 <Slider
                   value={[tileSize]}
@@ -106,7 +104,8 @@ export default function PatternPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  预览列数：<span className="text-primary font-medium">{gridCols}</span>
+                  预览列数：
+                  <span className="text-primary font-medium">{gridCols}</span>
                 </Label>
                 <Slider
                   value={[gridCols]}

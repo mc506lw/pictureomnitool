@@ -1,14 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Columns,
-  Rows,
-  Play,
-  Square,
-  Settings2,
-  GripVertical,
-} from "lucide-react";
+import { Columns, Rows, Play, Square, Settings2 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";

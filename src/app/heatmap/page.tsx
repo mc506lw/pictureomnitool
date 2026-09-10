@@ -75,7 +75,10 @@ export default function HeatmapPage() {
 
       for (let i = 0; i < data.length; i += 4) {
         const lum = (data[i] + data[i + 1] + data[i + 2]) / (255 * 3);
-        const t = Math.min(1, Math.max(0, (invert ? 1 - lum : lum) * intensity));
+        const t = Math.min(
+          1,
+          Math.max(0, (invert ? 1 - lum : lum) * intensity)
+        );
         const [r, g, b] = lerpColor(t);
         data[i] = r;
         data[i + 1] = g;
@@ -124,7 +127,10 @@ export default function HeatmapPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  强度：<span className="text-primary font-medium">{intensity.toFixed(2)}</span>
+                  强度：
+                  <span className="text-primary font-medium">
+                    {intensity.toFixed(2)}
+                  </span>
                 </Label>
                 <Slider
                   value={[intensity]}

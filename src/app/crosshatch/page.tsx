@@ -134,7 +134,8 @@ export default function CrosshatchPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  排线密度：<span className="text-primary font-medium">{density}</span>
+                  排线密度：
+                  <span className="text-primary font-medium">{density}</span>
                 </Label>
                 <Slider
                   value={[density]}
@@ -146,7 +147,8 @@ export default function CrosshatchPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  角度：<span className="text-primary font-medium">{angle}°</span>
+                  角度：
+                  <span className="text-primary font-medium">{angle}°</span>
                 </Label>
                 <Slider
                   value={[angle]}

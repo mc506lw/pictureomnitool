@@ -61,8 +61,8 @@ export default function CartoonPage() {
       for (let y = 1; y < h - 1; y++) {
         for (let x = 1; x < w - 1; x++) {
           const idx = (y * w + x) * 4;
-          const left = ((y) * w + (x - 1)) * 4;
-          const right = ((y) * w + (x + 1)) * 4;
+          const left = (y * w + (x - 1)) * 4;
+          const right = (y * w + (x + 1)) * 4;
           const top = ((y - 1) * w + x) * 4;
           const bottom = ((y + 1) * w + x) * 4;
           const gx =
@@ -130,7 +130,8 @@ export default function CartoonPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  色阶级数：<span className="text-primary font-medium">{levels}</span>
+                  色阶级数：
+                  <span className="text-primary font-medium">{levels}</span>
                 </Label>
                 <Slider
                   value={[levels]}
@@ -142,7 +143,10 @@ export default function CartoonPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  描边强度：<span className="text-primary font-medium">{edgeStrength}</span>
+                  描边强度：
+                  <span className="text-primary font-medium">
+                    {edgeStrength}
+                  </span>
                 </Label>
                 <Slider
                   value={[edgeStrength]}

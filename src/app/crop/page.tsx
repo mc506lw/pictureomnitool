@@ -118,7 +118,6 @@ function CropEditor({
       d.width = dw;
       d.height = dh;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvas, srcW, srcH]);
 
   // aspect 变化 → 即时更换为对应比例的裁剪框（居中）
@@ -348,7 +347,9 @@ export default function CropPage() {
   const [aspect, setAspect] = React.useState<CropAspect>("1:1");
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [rects, setRects] = React.useState<Record<string, Rect>>({});
-  const [outputFormat, setOutputFormat] = React.useState<"png" | "jpeg" | "webp">("png");
+  const [outputFormat, setOutputFormat] = React.useState<
+    "png" | "jpeg" | "webp"
+  >("png");
   const [preview, setPreview] = React.useState<string | null>(null);
 
   const readyItems = items.filter((i) => i.canvas);

@@ -46,7 +46,11 @@ export default function ManifestPage() {
     setProcessing(true);
     const next: ManifestItem[] = [];
     for (const item of items) {
-      let decoded = { canvas: item.canvas, width: item.width ?? 0, height: item.height ?? 0 };
+      let decoded = {
+        canvas: item.canvas,
+        width: item.width ?? 0,
+        height: item.height ?? 0,
+      };
       if (!decoded.canvas && item.file) {
         try {
           decoded = await decodeImageFile(item.file);
@@ -91,10 +95,7 @@ export default function ManifestPage() {
     } else {
       const header = "name,width,height,size,format\n";
       const rows = manifest
-        .map(
-          (m) =>
-            `${m.name},${m.width},${m.height},${m.size},${m.format}`
-        )
+        .map((m) => `${m.name},${m.width},${m.height},${m.size},${m.format}`)
         .join("\n");
       content = header + rows;
       mime = "text/csv";
@@ -146,11 +147,20 @@ export default function ManifestPage() {
               <div className="space-y-2">
                 <Label>操作</Label>
                 <div className="flex items-center gap-2 pt-1">
-                  <Button onClick={buildManifest} disabled={items.length === 0 || processing} className="gap-2">
+                  <Button
+                    onClick={buildManifest}
+                    disabled={items.length === 0 || processing}
+                    className="gap-2"
+                  >
                     <Play className="h-4 w-4" />
                     生成清单
                   </Button>
-                  <Button variant="outline" onClick={downloadManifest} disabled={manifest.length === 0} className="gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={downloadManifest}
+                    disabled={manifest.length === 0}
+                    className="gap-2"
+                  >
                     <FileJson className="h-4 w-4" />
                     下载清单
                   </Button>
@@ -192,9 +202,12 @@ export default function ManifestPage() {
                           <div className="bg-muted h-10 w-10 rounded" />
                         )}
                         <div className="min-w-0 flex-1">
-                          <div className="truncate text-sm font-medium">{m.name}</div>
+                          <div className="truncate text-sm font-medium">
+                            {m.name}
+                          </div>
                           <div className="text-muted-foreground text-xs">
-                            {m.width} × {m.height} · {formatBytes(m.size)} · {m.format.toUpperCase()}
+                            {m.width} × {m.height} · {formatBytes(m.size)} ·{" "}
+                            {m.format.toUpperCase()}
                           </div>
                         </div>
                       </div>

@@ -115,7 +115,9 @@ export default function PixelatePage() {
                   {process.running ? (
                     <>
                       <Progress
-                        value={(process.done / Math.max(1, process.total)) * 100}
+                        value={
+                          (process.done / Math.max(1, process.total)) * 100
+                        }
                         className="flex-1"
                       />
                       <span className="text-muted-foreground text-xs whitespace-nowrap">
@@ -168,7 +170,10 @@ export default function PixelatePage() {
   );
 }
 
-function applyPixelate(canvas: HTMLCanvasElement, pixelSize: number): HTMLCanvasElement {
+function applyPixelate(
+  canvas: HTMLCanvasElement,
+  pixelSize: number
+): HTMLCanvasElement {
   const w = canvas.width;
   const h = canvas.height;
   const out = document.createElement("canvas");

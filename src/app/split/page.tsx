@@ -1,13 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Grid3X3,
-  Play,
-  Square as StopSquare,
-  Settings2,
-  Download,
-} from "lucide-react";
+import { Grid3X3, Play, Square as StopSquare, Settings2 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";

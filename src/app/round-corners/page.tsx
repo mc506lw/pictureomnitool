@@ -1,12 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Circle,
-  Play,
-  Square as StopSquare,
-  Settings2,
-} from "lucide-react";
+import { Circle, Play, Square as StopSquare, Settings2 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -122,7 +117,8 @@ export default function RoundCornersPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  圆角半径：<span className="text-primary font-medium">{radius}px</span>
+                  圆角半径：
+                  <span className="text-primary font-medium">{radius}px</span>
                 </Label>
                 <Slider
                   value={[radius]}

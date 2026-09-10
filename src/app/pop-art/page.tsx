@@ -16,9 +16,33 @@ import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
 
 const PALETTES = [
-  { name: "默认", colors: [[255, 0, 0], [0, 255, 255], [255, 255, 0], [255, 0, 255]] },
-  { name: "冷色", colors: [[0, 100, 255], [0, 255, 200], [200, 0, 255], [255, 255, 255]] },
-  { name: "暖色", colors: [[255, 80, 0], [255, 220, 0], [255, 0, 120], [255, 255, 255]] },
+  {
+    name: "默认",
+    colors: [
+      [255, 0, 0],
+      [0, 255, 255],
+      [255, 255, 0],
+      [255, 0, 255],
+    ],
+  },
+  {
+    name: "冷色",
+    colors: [
+      [0, 100, 255],
+      [0, 255, 200],
+      [200, 0, 255],
+      [255, 255, 255],
+    ],
+  },
+  {
+    name: "暖色",
+    colors: [
+      [255, 80, 0],
+      [255, 220, 0],
+      [255, 0, 120],
+      [255, 255, 255],
+    ],
+  },
 ];
 
 export default function PopArtPage() {
@@ -121,7 +145,8 @@ export default function PopArtPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  色阶：<span className="text-primary font-medium">{levels}</span>
+                  色阶：
+                  <span className="text-primary font-medium">{levels}</span>
                 </Label>
                 <Slider
                   value={[levels]}
@@ -133,7 +158,10 @@ export default function PopArtPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  对比度：<span className="text-primary font-medium">{contrast.toFixed(1)}</span>
+                  对比度：
+                  <span className="text-primary font-medium">
+                    {contrast.toFixed(1)}
+                  </span>
                 </Label>
                 <Slider
                   value={[contrast]}

@@ -25,7 +25,9 @@ export default function HalftoneCustomPage() {
   const [dotSize, setDotSize] = React.useState(6);
   const [gap, setGap] = React.useState(2);
   const [contrast, setContrast] = React.useState(1.2);
-  const [shape, setShape] = React.useState<"circle" | "square" | "diamond">("circle");
+  const [shape, setShape] = React.useState<"circle" | "square" | "diamond">(
+    "circle"
+  );
   const [format, setFormat] = React.useState<"png" | "jpeg" | "webp">("png");
 
   const process = useBatchProcess({
@@ -130,7 +132,8 @@ export default function HalftoneCustomPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  网点大小：<span className="text-primary font-medium">{dotSize}px</span>
+                  网点大小：
+                  <span className="text-primary font-medium">{dotSize}px</span>
                 </Label>
                 <Slider
                   value={[dotSize]}
@@ -142,7 +145,8 @@ export default function HalftoneCustomPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  间距：<span className="text-primary font-medium">{gap}px</span>
+                  间距：
+                  <span className="text-primary font-medium">{gap}px</span>
                 </Label>
                 <Slider
                   value={[gap]}
@@ -154,7 +158,10 @@ export default function HalftoneCustomPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  对比度：<span className="text-primary font-medium">{contrast.toFixed(1)}</span>
+                  对比度：
+                  <span className="text-primary font-medium">
+                    {contrast.toFixed(1)}
+                  </span>
                 </Label>
                 <Slider
                   value={[contrast]}

@@ -58,8 +58,14 @@ export default function AsciiArtPage() {
           const g = data[idx + 1];
           const b = data[idx + 2];
           const lum = Math.min(255, Math.max(0, (r + g + b) / 3)) / 255;
-          const adjusted = Math.min(1, Math.max(0, Math.pow(lum, 1 / contrast)));
-          const chIdx = Math.min(CHARS.length - 1, Math.max(0, Math.round(adjusted * (CHARS.length - 1))));
+          const adjusted = Math.min(
+            1,
+            Math.max(0, Math.pow(lum, 1 / contrast))
+          );
+          const chIdx = Math.min(
+            CHARS.length - 1,
+            Math.max(0, Math.round(adjusted * (CHARS.length - 1)))
+          );
           text += CHARS[chIdx];
         }
         text += "\n";
@@ -67,7 +73,9 @@ export default function AsciiArtPage() {
 
       const textBlob = new Blob([text], { type: "text/plain;charset=utf-8" });
       const name = withExtension(`${getBaseName(item.name)}-ascii`, "txt");
-      updateItem(item.id, { result: { blob: textBlob, name, size: textBlob.size } });
+      updateItem(item.id, {
+        result: { blob: textBlob, name, size: textBlob.size },
+      });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
     onItemError: (i, err) =>
@@ -104,7 +112,8 @@ export default function AsciiArtPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  字符宽度：<span className="text-primary font-medium">{width}</span>
+                  字符宽度：
+                  <span className="text-primary font-medium">{width}</span>
                 </Label>
                 <Slider
                   value={[width]}
@@ -116,7 +125,10 @@ export default function AsciiArtPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  对比度：<span className="text-primary font-medium">{contrast.toFixed(2)}</span>
+                  对比度：
+                  <span className="text-primary font-medium">
+                    {contrast.toFixed(2)}
+                  </span>
                 </Label>
                 <Slider
                   value={[contrast]}

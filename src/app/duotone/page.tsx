@@ -113,7 +113,9 @@ export default function DuotonePage() {
                     onChange={(e) => setColor1(e.target.value)}
                     className="h-9 w-16 rounded-md border bg-transparent"
                   />
-                  <span className="text-muted-foreground text-xs">{color1}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {color1}
+                  </span>
                 </div>
               </div>
               <div className="space-y-2">
@@ -125,7 +127,9 @@ export default function DuotonePage() {
                     onChange={(e) => setColor2(e.target.value)}
                     className="h-9 w-16 rounded-md border bg-transparent"
                   />
-                  <span className="text-muted-foreground text-xs">{color2}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {color2}
+                  </span>
                 </div>
               </div>
               <div className="space-y-2">

@@ -46,7 +46,9 @@ export default function RainbowGradientPage() {
       const rad = (angle * Math.PI) / 180;
       const dx = Math.cos(rad);
       const dy = Math.sin(rad);
-      const len = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
+      const len = Math.sqrt(
+        canvas.width * canvas.width + canvas.height * canvas.height
+      );
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
       const gradient = ctx.createLinearGradient(
@@ -56,8 +58,13 @@ export default function RainbowGradientPage() {
         cy + dy * len
       );
       const colors = [
-        "#ff0000", "#ff7f00", "#ffff00", "#00ff00",
-        "#0000ff", "#4b0082", "#9400d3",
+        "#ff0000",
+        "#ff7f00",
+        "#ffff00",
+        "#00ff00",
+        "#0000ff",
+        "#4b0082",
+        "#9400d3",
       ];
       colors.forEach((c, idx) => {
         gradient.addColorStop(idx / (colors.length - 1), c);
@@ -73,10 +80,7 @@ export default function RainbowGradientPage() {
         quality: 0.92,
         backgroundColor: "#000000",
       });
-      const name = withExtension(
-        `${getBaseName(item.name)}-rainbow`,
-        format
-      );
+      const name = withExtension(`${getBaseName(item.name)}-rainbow`, format);
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -114,7 +118,8 @@ export default function RainbowGradientPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  角度：<span className="text-primary font-medium">{angle}°</span>
+                  角度：
+                  <span className="text-primary font-medium">{angle}°</span>
                 </Label>
                 <Slider
                   value={[angle]}
@@ -126,7 +131,8 @@ export default function RainbowGradientPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  不透明度：<span className="text-primary font-medium">{opacity}%</span>
+                  不透明度：
+                  <span className="text-primary font-medium">{opacity}%</span>
                 </Label>
                 <Slider
                   value={[opacity]}

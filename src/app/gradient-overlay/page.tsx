@@ -1,12 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Play,
-  Square as StopSquare,
-  Settings2,
-  ImageIcon,
-} from "lucide-react";
+import { Play, Square as StopSquare, Settings2, ImageIcon } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -17,7 +12,13 @@ import { decodeImageFile, encodeCanvas } from "@/lib/image-utils";
 import { getBaseName, formatBytes, withExtension, cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 
 export default function GradientOverlayPage() {
@@ -58,7 +59,12 @@ export default function GradientOverlayPage() {
       const ctx = target.getContext("2d")!;
       ctx.drawImage(src, 0, 0);
       const colors = presets[preset]?.colors ?? presets.sunset.colors;
-      const gradient = ctx.createLinearGradient(0, 0, target.width, target.height);
+      const gradient = ctx.createLinearGradient(
+        0,
+        0,
+        target.width,
+        target.height
+      );
       colors.forEach((color, index) => {
         gradient.addColorStop(index / Math.max(1, colors.length - 1), color);
       });
@@ -135,7 +141,8 @@ export default function GradientOverlayPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  不透明度：<span className="text-primary font-medium">{opacity}%</span>
+                  不透明度：
+                  <span className="text-primary font-medium">{opacity}%</span>
                 </Label>
                 <input
                   type="range"

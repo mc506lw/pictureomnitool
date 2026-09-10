@@ -105,7 +105,8 @@ export default function GhostTrailPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  残影层数：<span className="text-primary font-medium">{steps}</span>
+                  残影层数：
+                  <span className="text-primary font-medium">{steps}</span>
                 </Label>
                 <Slider
                   value={[steps]}
@@ -117,7 +118,8 @@ export default function GhostTrailPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  偏移距离：<span className="text-primary font-medium">{shift}px</span>
+                  偏移距离：
+                  <span className="text-primary font-medium">{shift}px</span>
                 </Label>
                 <Slider
                   value={[shift]}
@@ -129,7 +131,8 @@ export default function GhostTrailPage() {
               </div>
               <div className="space-y-2">
                 <Label>
-                  残影浓度：<span className="text-primary font-medium">{fade}%</span>
+                  残影浓度：
+                  <span className="text-primary font-medium">{fade}%</span>
                 </Label>
                 <Slider
                   value={[fade]}

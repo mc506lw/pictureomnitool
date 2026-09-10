@@ -1,7 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { ArrowLeftRight, Play, Square as StopSquare, Settings2 } from "lucide-react";
+import {
+  ArrowLeftRight,
+  Play,
+  Square as StopSquare,
+  Settings2,
+} from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -23,7 +28,9 @@ export default function PixelSortPage() {
   const updateItem = useBatchStore((s) => s.updateItem);
 
   const [threshold, setThreshold] = React.useState(180);
-  const [direction, setDirection] = React.useState<"horizontal" | "vertical">("horizontal");
+  const [direction, setDirection] = React.useState<"horizontal" | "vertical">(
+    "horizontal"
+  );
   const [format, setFormat] = React.useState<"png" | "jpeg" | "webp">("png");
 
   const process = useBatchProcess({
@@ -102,7 +109,10 @@ export default function PixelSortPage() {
         quality: 0.92,
         backgroundColor: "#000000",
       });
-      const name = withExtension(`${getBaseName(item.name)}-pixel-sort`, format);
+      const name = withExtension(
+        `${getBaseName(item.name)}-pixel-sort`,
+        format
+      );
       updateItem(item.id, { result: { blob, name, size: blob.size } });
     },
     onItemDone: (i) => updateItem(i.id, { status: "done" }),
@@ -140,7 +150,8 @@ export default function PixelSortPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label>
-                  亮度阈值：<span className="text-primary font-medium">{threshold}</span>
+                  亮度阈值：
+                  <span className="text-primary font-medium">{threshold}</span>
                 </Label>
                 <Slider
                   value={[threshold]}

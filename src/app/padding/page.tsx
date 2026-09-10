@@ -1,12 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Square,
-  Play,
-  Square as StopSquare,
-  Settings2,
-} from "lucide-react";
+import { Square, Play, Square as StopSquare, Settings2 } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { PageHeader } from "@/components/page-header";
 import { FileDropzone } from "@/components/file-dropzone";
@@ -109,7 +104,8 @@ export default function PaddingPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="space-y-2">
                 <Label>
-                  内边距：<span className="text-primary font-medium">{padding}px</span>
+                  内边距：
+                  <span className="text-primary font-medium">{padding}px</span>
                 </Label>
                 <Slider
                   value={[padding]}
